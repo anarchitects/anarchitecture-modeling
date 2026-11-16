@@ -1,5 +1,16 @@
 # AnarchitectureModeling
 
+## AI-assisted contributions
+
+Start with [AGENTS.md](AGENTS.md), the canonical mandatory governance preflight
+for planning, implementation and review. It includes the public contribution
+baseline and the maintainer review path for contributors without private Meta
+access. Claude and Copilot instructions reference the same workflow.
+
+The Nx quickstart below describes tooling capabilities; it is not authorization
+to release packages or change repository visibility. Check current configuration
+and the preflight before executing setup or release operations.
+
 <a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
 
 ✨ Your new, shiny [Nx workspace](https://nx.dev) is ready ✨.
