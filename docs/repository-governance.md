@@ -43,7 +43,7 @@ Authenticated API checks and the repository's Advanced Security page established
 | Paid security features                       | Code Security and secret-scanning features disabled; no paid product activated        |
 | Private vulnerability reporting API          | HTTP 404; email reporting is the documented route                                     |
 | Renovate access                              | GitHub App installation 129132893 covers all repositories and is not suspended        |
-| Renovate execution                           | Not established by app access; configuration is new in this contribution              |
+| Renovate execution                           | Initially Silent; verified Interactive execution is recorded below                    |
 
 The security UI was inspected without changing settings. GitHub documents a
 separate [malware-alert control](https://docs.github.com/en/code-security/how-tos/secure-your-supply-chain/secure-your-dependencies/configure-malware-alerts);
@@ -100,9 +100,12 @@ The tag list remained empty and main stayed at
 restrictions were verified by configuration only; no existing release was used
 as a destructive test fixture.
 
-A passing PR's merge eligibility remains to be checked after this contribution
-is pushed; no merge is authorized by this verification. The existing `main`
-check is scaffold evidence. [#10](https://github.com/anarchitects/anarchitecture-modeling/issues/10)
+[PR #29](https://github.com/anarchitects/anarchitecture-modeling/pull/29) was
+blocked while its required check was pending and became clean/mergeable after
+[Actions run 44067626921](https://github.com/anarchitects/anarchitecture-modeling/actions/runs/44067626921)
+passed on `3ff2c0472accbd9ee00941194cf3570caf458b1b`. The owner-side merge produced
+`eafd3b610c7fe74de89c45674535cc9f1e4851fe`. This demonstrates passing-PR eligibility;
+it is still scaffold CI. [#10](https://github.com/anarchitects/anarchitecture-modeling/issues/10)
 must preserve a stable required outcome when package/affected checks replace it.
 
 ## Routine dependency updates
@@ -125,18 +128,43 @@ supports Yarn lockfile maintenance and the pinned `packageManager` through
 Corepack. Local validation is recorded with the PR. It does not prove hosted
 manager extraction, lockfile execution, scheduling or PR creation.
 
-To complete this part of #6, after the configuration is accepted on main, record
-Mend-hosted Renovate's effective interactive mode and a successful run using that
-exact commit. Inspect the resolved no-automerge/security-ownership settings,
-dashboard, extracted managers, schedule and lockfile result. Record a scheduled
-update PR or a concrete no-updates result. Installation access alone is insufficient.
+## Hosted execution evidence — 17 November 2026
+
+Johan confirmed the repository was in Silent mode. The repository-specific Mend
+setting was changed to Interactive, retaining Community (Free), automated PRs,
+require-config and onboarding settings. No organization default, paid engine,
+credential or merge setting was changed.
+
+Mend Renovate 44.244.0 completed
+[job 8355c184-5957-4af6-90d0-732bdbd813b0](https://developer.mend.io/github/anarchitects/anarchitecture-modeling/-/job/8355c184-5957-4af6-90d0-732bdbd813b0)
+at **11:55:11 CET**, duration 24 seconds, result `done`, onboarded/enabled. Logs
+identify base SHA `eafd3b610c7fe74de89c45674535cc9f1e4851fe`, the merged
+`renovate.json`, no config migration, npm and GitHub Actions extraction across two
+files (11 dependencies), both automerge paths false, dedicated Renovate security
+updates disabled, Brussels timezone and the configured Monday schedule.
+
+[Dependency Dashboard #30](https://github.com/anarchitects/anarchitecture-modeling/issues/30)
+was created. All five proposals, including lockfile maintenance, were
+`not-scheduled` on Tuesday. No dependency branches/PRs or lockfile rewrite were
+executed in this run. This proves effective activation, config loading, extraction,
+dashboard creation and schedule rejection; scheduled artifact generation remains
+to be observed in the maintenance window.
+
+The run also exposed a Node policy mismatch: GitHub Actions extracts the runtime
+as `depName: node`, `packageName: actions/node-versions`, datasource
+`github-releases`. The original datasource-only rule did not match it, allowing
+an unintended Node 26 proposal. The correction matches package identities
+`node` and `actions/node-versions`, retaining `>=24 <25`. A hosted rerun against
+the merged correction must confirm the Node 26 proposal disappears before #6's
+Renovate check is accepted. No dependency upgrade is part of this correction.
 
 ## Remaining acceptance
 
 - [x] Johan approved the branch/tag controls; live settings and rejection probes verified.
-- [ ] Verify passing-PR eligibility under the new main protection.
-- [ ] Effective Renovate execution is evidenced against the merged configuration.
-- [ ] Contributor/ownership/security documents are accepted on main.
+- [x] Passing-PR eligibility verified before owner-side merge of PR #29.
+- [x] Interactive Renovate execution evidenced against merged configuration.
+- [ ] Verify the Node policy correction in a hosted run after merge.
+- [x] Contributor/ownership/security documents merged through PR #29.
 - [ ] Johan accepts the complete bounded outcome of #6.
 
 Actual package-task/cache proof belongs to #10, full versioning/publication

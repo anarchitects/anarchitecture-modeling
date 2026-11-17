@@ -28,7 +28,7 @@
     },
     {
       "description": "Stay on the selected Node 24 line until a deliberate toolchain change.",
-      "matchDatasources": ["node-version"],
+      "matchPackageNames": ["node", "actions/node-versions"],
       "allowedVersions": ">=24 <25"
     }
   ]
