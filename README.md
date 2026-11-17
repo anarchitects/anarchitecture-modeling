@@ -45,8 +45,10 @@ routine updates through [renovate.json](renovate.json). Both require human revie
 and merge. A configuration file alone does not establish hosted execution.
 
 The [extraction inventory](docs/extraction-inventory.md) pins the source files,
-public exports, portable tests and consumer dependencies for epic #3. Seam
-acceptance and package extraction remain separate follow-ups.
+public exports, portable tests and consumer dependencies for epic #3. The
+[file-level extraction boundary](docs/extraction-boundary.md) records the portable
+and host dispositions proposed for #11’s owner review. Package extraction remains
+a separate follow-up.
 
 ## Licensing and release status
 
