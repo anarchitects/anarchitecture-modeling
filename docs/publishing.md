@@ -48,8 +48,10 @@ and unpacked sizes, file inventory and complete manifest. It contains no authori
 to release. `verify-archives.mjs` prepares twice and compares the actual tarballs,
 reads their manifests/entry points/legal placeholders and checks the tar inventory.
 This is same-source/toolchain reproducibility; it does not promise cross-version
-compiler or npm equivalence. #20 supplies clean external-consumer installation
-evidence. #22 must also review package README wording for the exact release.
+compiler or npm equivalence. The [#20 independent consumer proof](independent-consumer.md)
+checks fresh npm installation and public behavior; the preview workflow checks its
+exact archives and retains the evidence alongside them. #22 must also review
+package README wording for the exact release.
 
 The manual `publish.yml` workflow defaults to **preview**. Its prepare job has
 read-only repository access, no publishing token or OIDC permission, runs Nx

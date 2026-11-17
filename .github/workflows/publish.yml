@@ -77,6 +77,9 @@ jobs:
         env:
           VERSION_MODE: ${{ inputs.version_mode }}
         run: node tools/publishing/prepare.mjs tmp/publish-candidate "$VERSION_MODE"
+      - name: Prove the exact preview in an independent npm consumer
+        if: inputs.operation == 'preview'
+        run: node tools/consumer/check.mjs tmp/publish-candidate/consumer-evidence tmp/publish-candidate
       - name: Verify reviewed preview run identity
         if: inputs.operation == 'publish'
         env:

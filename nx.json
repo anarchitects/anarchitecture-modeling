@@ -61,6 +61,7 @@
       "{workspaceRoot}/tools/ci/**/*",
       "{workspaceRoot}/tools/release/**/*",
       "{workspaceRoot}/tools/publishing/**/*",
+      "{workspaceRoot}/tools/consumer/**/*",
       "{workspaceRoot}/.github/workflows/publish.yml",
       {
         "runtime": "node -p \"process.version + '-' + process.platform + '-' + process.arch\""
