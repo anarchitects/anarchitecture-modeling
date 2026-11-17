@@ -1,0 +1,35 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "enabledManagers": ["npm", "github-actions"],
+  "dependencyDashboard": { "enabled": true },
+  "timezone": "Europe/Brussels",
+  "schedule": ["* 0-5 * * 1"],
+  "prHourlyLimit": 1,
+  "prConcurrentLimit": 3,
+  "automerge": false,
+  "platformAutomerge": false,
+  "vulnerabilityAlerts": { "enabled": false },
+  "osvVulnerabilityAlerts": false,
+  "semanticCommits": "enabled",
+  "semanticCommitType": "chore",
+  "semanticCommitScope": null,
+  "separateMajorMinor": true,
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["* 0-5 * * 1"]
+  },
+  "packageRules": [
+    {
+      "description": "Keep Nx packages aligned; review migrations and major upgrades explicitly.",
+      "matchManagers": ["npm"],
+      "matchPackageNames": ["nx", "@nx/**"],
+      "groupName": "Nx toolchain",
+      "rangeStrategy": "pin"
+    },
+    {
+      "description": "Stay on the selected Node 24 line until a deliberate toolchain change.",
+      "matchDatasources": ["node-version"],
+      "allowedVersions": ">=24 <25"
+    }
+  ]
+}
