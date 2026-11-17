@@ -5,10 +5,19 @@ __metadata:
   version: 10
   cacheKey: 10c0
 
-"@anarchitects/modeling-core@workspace:packages/modeling-core":
+"@anarchitects/modeling-core@workspace:*, @anarchitects/modeling-core@workspace:packages/modeling-core":
   version: 0.0.0-use.local
   resolution: "@anarchitects/modeling-core@workspace:packages/modeling-core"
   dependencies:
+    tslib: "npm:^2.3.0"
+  languageName: unknown
+  linkType: soft
+
+"@anarchitects/modeling-metamodel@workspace:packages/modeling-metamodel":
+  version: 0.0.0-use.local
+  resolution: "@anarchitects/modeling-metamodel@workspace:packages/modeling-metamodel"
+  dependencies:
+    "@anarchitects/modeling-core": "workspace:*"
     tslib: "npm:^2.3.0"
   languageName: unknown
   linkType: soft
