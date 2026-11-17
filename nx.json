@@ -2,7 +2,14 @@
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "analytics": false,
   "namedInputs": {
-    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "default": [
+      "{projectRoot}/**/*",
+      "sharedGlobals",
+      "!{projectRoot}/dist/**/*",
+      "!{projectRoot}/out-tsc/**/*",
+      "!{projectRoot}/test-output/**/*",
+      "!{projectRoot}/tsconfig.tsbuildinfo"
+    ],
     "production": ["default"],
     "sharedGlobals": [
       "{workspaceRoot}/nx.json",
@@ -14,7 +21,9 @@
       "{workspaceRoot}/tools/ci/**/*",
       {
         "runtime": "node -p \"process.version + '-' + process.platform + '-' + process.arch\""
-      }
+      },
+      "{workspaceRoot}/eslint.config.mjs",
+      "{workspaceRoot}/vitest.config.mts"
     ]
   },
   "targetDefaults": {
@@ -23,9 +32,19 @@
       "inputs": ["default", "^default"],
       "dependsOn": ["^build"]
     },
-    "typecheck": { "cache": true, "inputs": ["default", "^default"] },
-    "test": { "cache": true, "inputs": ["default", "^default"] },
-    "lint": { "cache": true, "inputs": ["default", "^default"] }
+    "typecheck": {
+      "cache": true,
+      "inputs": ["default", "^default"]
+    },
+    "test": {
+      "cache": true,
+      "inputs": ["default", "^default"],
+      "dependsOn": ["^build"]
+    },
+    "lint": {
+      "cache": true,
+      "inputs": ["default", "^default"]
+    }
   },
   "plugins": [
     {
@@ -40,6 +59,20 @@
           "buildDepsName": "build-deps",
           "watchDepsName": "watch-deps"
         }
+      }
+    },
+    {
+      "plugin": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "lint"
+      }
+    },
+    {
+      "plugin": "@nx/vitest",
+      "options": {
+        "testTargetName": "test",
+        "ciTargetName": "test-ci",
+        "testMode": "watch"
       }
     }
   ],
