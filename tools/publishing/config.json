@@ -1,0 +1,19 @@
+{
+  "enabled": false,
+  "repository": "anarchitects/anarchitecture-modeling",
+  "owner": "vrxj81",
+  "ownerId": 5003361,
+  "environment": "npm-release",
+  "workflow": "publish.yml",
+  "registry": "https://registry.npmjs.org",
+  "license": {
+    "status": "pending",
+    "spdx": "UNLICENSED",
+    "licenseFile": "tools/publishing/LICENSE.pending",
+    "noticeFile": "tools/publishing/NOTICE.pending"
+  },
+  "packages": {
+    "modeling-core": "Host-neutral modeling identities, semantic models, values and independent diagram-view data.",
+    "modeling-metamodel": "Composable modeling profiles, semantic validation, bounded commands and portable document lifecycle."
+  }
+}
