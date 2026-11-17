@@ -94,8 +94,21 @@ disabled. It runs only on demand or when its own proof files change; it does not
 duplicate every ordinary package CI run or replace the required `main` check.
 It is a controlled credential-free hosted proof, **not a real fork/Dependabot event**.
 
-Hosted credential-free and cancellation results will be linked in the PR after
-execution. Actual fork/Dependabot event coverage remains unavailable under current
+Hosted proof at head `8e20de87d38acdecda7feae0e978591a67c98322`, tested merge
+`63e0d4996c89ca2f4785d51a08a00f205868b7ae`:
+
+- [Credential-free run 44115982326](https://github.com/anarchitects/anarchitecture-modeling/actions/runs/44115982326)
+  succeeded. The real core-build request produced an explicit remote authorization
+  rejection with no supplied Nx credentials. With `NX_NO_CLOUD=true`, all 12 real
+  tasks then passed, 0/12 cache hits, 22.1s Nx duration / 19.4s critical path.
+- [CI run 44115981877 attempt 1](https://github.com/anarchitects/anarchitecture-modeling/actions/runs/44115981877/attempts/1)
+  was deliberately cancelled while `Validate affected projects or all projects`
+  was active. Required job `main` and that step concluded `cancelled`;
+  `nx fix-ci` was skipped. This proves cancellation remains cancellation instead
+  of being masked by self-healing/cleanup. The job was then requested to rerun;
+  its recovery and the final PR-head checks are recorded in the PR.
+
+Actual fork/Dependabot event coverage remains unavailable under current
 repository settings. Before expanding repository access, execute a real event
 probe and review its secret/cache boundaries. Owner acceptance of the bounded
 private-repository result must acknowledge this limitation; it is not silently
