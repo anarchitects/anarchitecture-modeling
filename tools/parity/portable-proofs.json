@@ -1,0 +1,114 @@
+{
+  "sourceRevision": "b83c78e7a70e1434a6bf9101d7bbf43467becf7f",
+  "cases": 1183,
+  "specs": [
+    {
+      "package": "modeling-core",
+      "path": "src/lib/identity.spec.ts",
+      "cases": 12,
+      "sha256": "6de79476aa7d91ed5c90d8aa98668a5a98a4c47bb3fe768bd9a996523bf06f50"
+    },
+    {
+      "package": "modeling-core",
+      "path": "src/lib/modeling-core.spec.ts",
+      "cases": 4,
+      "sha256": "bdbf176379760a0aefcf4a6913f1344f2feee61b5c86d546781ec50b7d4be948"
+    },
+    {
+      "package": "modeling-metamodel",
+      "path": "src/lib/modeling-metamodel.spec.ts",
+      "cases": 3,
+      "sha256": "6f83290b24897fb64f48a225e4b0847e3a90df10aa4ec740d1a873d27868365c"
+    },
+    {
+      "package": "modeling-metamodel",
+      "path": "src/lib/composition.spec.ts",
+      "cases": 25,
+      "sha256": "02e96944d7725ade4193c5281f485459a9dcde676d7567fd8d23adfb943cb505"
+    },
+    {
+      "package": "modeling-metamodel",
+      "path": "src/lib/notation.spec.ts",
+      "cases": 22,
+      "sha256": "450f81e0321668e3daad34fe9b51b1a4b7a6cf483e13079de699a83acb010c99"
+    },
+    {
+      "package": "modeling-metamodel",
+      "path": "src/lib/validation.spec.ts",
+      "cases": 25,
+      "sha256": "45d2f5aeff46c7a544d9932540a3e3314ad5bc839e647c2b8d9380878762ddca"
+    },
+    {
+      "package": "modeling-metamodel",
+      "path": "src/lib/change-plans.spec.ts",
+      "cases": 19,
+      "sha256": "4a174558dc3e7939ccdf2bb5679dcc98616a78a0e5db9e695b96e5706e4d10b1"
+    },
+    {
+      "package": "modeling-metamodel",
+      "path": "src/lib/relational-proof.spec.ts",
+      "cases": 9,
+      "sha256": "147de8c30a284ca88719157086ec8b1053eb7f0ef5ddb00169aea2f4c09bce36"
+    },
+    {
+      "package": "modeling-metamodel",
+      "path": "src/lib/mapping-proof.spec.ts",
+      "cases": 16,
+      "sha256": "f22489e76a106f810d77f703d8b9c22c4698625c7ac3b2c3f19a1de8dc4e4b85"
+    },
+    {
+      "package": "modeling-metamodel",
+      "path": "src/lib/dimensional-proof.spec.ts",
+      "cases": 12,
+      "sha256": "a9b6e96d036fce9e613300ab3c1c072f4fa1357261ebce578b7ea79c06362390"
+    },
+    {
+      "package": "modeling-metamodel",
+      "path": "src/lib/medallion-proof.spec.ts",
+      "cases": 16,
+      "sha256": "4e862e5d44e6a15686249e369e4b2dda7a0068c0dfe6e03ab6be5d2665533dd8"
+    },
+    {
+      "package": "modeling-metamodel",
+      "path": "src/lib/vault-proof.spec.ts",
+      "cases": 17,
+      "sha256": "5f5c79bcc9edf6a64ef6433c668df1ac08a75915416cdfc14e5454926e76e748"
+    },
+    {
+      "package": "modeling-metamodel",
+      "path": "src/lib/foundation-integration.spec.ts",
+      "cases": 6,
+      "sha256": "197f4f7a9b6a997b84147b9e909f5b49ee347abaa2203a446c37f8de8df93972"
+    },
+    {
+      "package": "modeling-metamodel",
+      "path": "src/lib/document-session.spec.ts",
+      "cases": 11,
+      "sha256": "9303c9c883b4b28d29cec042fa8633f054e7d031c9a4a1a4be9dc431be6dd680"
+    },
+    {
+      "package": "modeling-metamodel",
+      "path": "src/lib/semantic-commands.spec.ts",
+      "cases": 25,
+      "sha256": "0ea318ac7c76228e5e479f2cab4362d9bf6ac5a6687133acf8d98408d26a00b3"
+    },
+    {
+      "package": "modeling-metamodel",
+      "path": "src/lib/view-commands.spec.ts",
+      "cases": 24,
+      "sha256": "79bc399ad77713bc0f65b0f16508c946788468c2deebc84260cabfa2094f774f"
+    },
+    {
+      "package": "modeling-metamodel",
+      "path": "src/lib/session-commands.spec.ts",
+      "cases": 24,
+      "sha256": "f6380f653119f778062c9044e5fd3af3eda7207629a1a42b9c5f438e7fb0a9fc"
+    },
+    {
+      "package": "modeling-metamodel",
+      "path": "src/lib/document-codec.spec.ts",
+      "cases": 913,
+      "sha256": "a7d087cbbaadf4d1d62670cd6e737fbb68528ae41e959be6b21d0d1fb386c909"
+    }
+  ]
+}

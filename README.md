@@ -57,6 +57,8 @@ maps historical source issues and PRs to current executable fixtures. The
 ESM/declaration resolution and the verified tarball contents.
 [Dependency-boundary evidence](docs/dependency-boundaries.md) covers source,
 declarations, packed artifacts, runtime provenance and the installed closure.
+The [integrated parity gate](docs/integrated-parity.md) assembles all seven proof
+pressures and lifecycle equivalence through built public entries for #19 review.
 
 ## Licensing and release status
 
