@@ -16,7 +16,8 @@
         "{workspaceRoot}/tools/proofs/**/*",
         "{workspaceRoot}/tools/packaging/**/*",
         "{workspaceRoot}/tools/boundaries/**/*",
-        "{workspaceRoot}/tools/parity/**/*"
+        "{workspaceRoot}/tools/parity/**/*",
+        "{workspaceRoot}/docs/consumer/**/*"
       ]
     },
     "foundation-smoke": {
@@ -40,7 +41,8 @@
         "default",
         "^default",
         "{workspaceRoot}/tools/packaging/**/*",
-        "{workspaceRoot}/tools/boundaries/**/*"
+        "{workspaceRoot}/tools/boundaries/**/*",
+        "{workspaceRoot}/docs/consumer/**/*"
       ],
       "outputs": []
     },

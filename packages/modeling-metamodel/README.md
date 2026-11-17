@@ -1,44 +1,52 @@
 # @anarchitects/modeling-metamodel
 
-Host-neutral pack/profile composition, validation and provenance, notation/view
-bindings, bounded change/default plans, semantic/view commands, guarded session
-history and a portable versioned document codec. The package depends inward on
-`@anarchitects/modeling-core`; hosts supply trusted context and own adoption,
-authorization, storage and UI.
+Host-neutral exact pack/profile composition, semantic validation, notation
+bindings, bounded defaults and commands, guarded session history and a portable
+versioned codec. Metamodel depends inward on `@anarchitects/modeling-core`;
+hosts supply trusted context and own authorization, adoption, storage and UI.
 
-The implementation and original tests are extracted unchanged from Archimatrix
-`b83c78e7a70e1434a6bf9101d7bbf43467becf7f`. The
-[extraction record](https://github.com/anarchitects/anarchitecture-modeling/blob/main/docs/metamodel-extraction.md) provides provenance,
-declaration/behavior parity and configuration adaptations. The
-[accepted portable/host boundary](https://github.com/anarchitects/anarchitecture-modeling/blob/main/docs/extraction-boundary.md) records the
-consumer obligations in detail.
+**Unreleased:** this package remains private at `0.0.0`. No registry availability,
+publication clearance or consumer adoption is claimed. The first official version
+is planned as `0.0.1`, subject to separate owner authorization and artifact review.
 
-Preserved compatibility includes exact version pins, explicit unsupported
-coverage, authored overrides, atomic rejection, exact receipt replay, reviewed
-deletion/reversal and no implicit migration. The historical
-`archimatrix-document` envelope stays at version 1 with semantic model format 2.
-Session defaults remain 100 live transactions and 10,000 retained command
-receipts; the codec caps command/applied-plan receipts at 256 each. Consumers
-must coordinate those distinct limits before durable adoption. Reopening keeps
-retry evidence but starts empty live undo/redo stacks. Decode returns the original
-caller-owned bytes; it does not grant editing permission or persistence guarantees.
+## Public contract
 
-From the workspace root, with Node 24 and pinned Yarn:
+Use named package-root imports. Built ESM resolves to `dist/index.js` and types to
+`dist/index.d.ts`; `package.json` is also exported. Source/implementation deep
+imports are not exported. No custom source conditions or path aliases are needed.
 
-```sh
-yarn install --immutable
-yarn nx run-many -t build test lint typecheck --projects=modeling-core,modeling-metamodel
-```
+Current compatibility evidence: Node 24 ESM and TypeScript 6.0.3 with strict
+`NodeNext` resolution. No CommonJS build, browser/bundler support or older runtime/
+compiler matrix is claimed. Runtime artifacts exclude tests, source, maps and Nx.
+`tslib` is a runtime dependency; metamodel additionally pins the packed core version.
+Core and metamodel versions are independent, so inspect the actual dependency pair.
 
-Ordinary ESM imports use `dist/index.js` with `dist/index.d.ts` declarations.
-Original source tests and additional built-entry/boundary checks run through Nx;
-synthetic fixtures and development tooling are excluded from runtime build output.
+On `0.x`, compatible features/fixes increment patch and breaking changes increment
+minor. Stabilization at `1.0.0` requires an explicit decision. Package versions,
+profile/pack pins, model revisions and document-format versions are distinct.
+The portable codec retains `archimatrix-document` envelope 1 / model format 2 and
+never migrates implicitly.
 
-The built entry supports Node 24 ESM and TypeScript `NodeNext` resolution without
-custom source conditions or aliases. Source and implementation deep imports are
-not exported. Packed files contain runtime JavaScript/declarations and metadata;
-source, maps, tests and tooling are excluded. See the
-[packaging evidence](https://github.com/anarchitects/anarchitecture-modeling/blob/main/docs/package-entry-points.md)
-for exact contents, compatibility and verification limits. No CJS/browser support
-is claimed. The package remains private at `0.0.0`; publication and consumer
-adoption require their separate gates.
+## Consumer documentation
+
+- [Guide and compatibility](https://github.com/anarchitects/anarchitecture-modeling/blob/main/docs/consumer/README.md)
+- [Complete public API reference](https://github.com/anarchitects/anarchitecture-modeling/blob/main/docs/consumer/api.md)
+- [Executable lifecycle example](https://github.com/anarchitects/anarchitecture-modeling/blob/main/docs/consumer/examples/lifecycle.mts)
+- [Migration and rollback](https://github.com/anarchitects/anarchitecture-modeling/blob/main/docs/consumer/migration.md)
+
+These pages require no private governance or application-source knowledge.
+Installation commands remain release templates until actual versions and integrity
+are recorded. The example is compiled/executed against locally packed APIs;
+registry installation is a separate verification step.
+
+Semantic identity is independent of view occurrences/layout. Exact pins and explicit
+unsupported coverage are preserved. Prepared commands do not commit; the host must
+authorize and atomically recheck revisions. Reopen retains retry receipts but starts
+empty undo/redo stacks. Live history defaults (100 transactions / 10,000 command receipts)
+exceed the codec's 256-per-receipt-collection cap: encode and check limits before
+adopting a durable change. Pruning live history does not delete retry receipts.
+
+Synthetic examples are not standards certification. No method taxonomy, renderer,
+universal transformation engine, persistence, authorization or collaboration
+implementation ships here. Report security issues privately to
+**johan@anarchitects.dev**. No support SLA is promised for unreleased contracts.

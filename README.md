@@ -6,6 +6,15 @@ the identities `@anarchitects/modeling-core` and
 Archimatrix is the first consumer. Both packages now build and test independently;
 core and metamodel parity are accepted. Publication remains a separate gate.
 
+## Using the packages
+
+Start with the [consumer guide](docs/consumer/README.md),
+[public API reference](docs/consumer/api.md) and
+[migration guide](docs/consumer/migration.md). The
+[executable lifecycle example](docs/consumer/examples/lifecycle.mts) is compiled
+and run against packed APIs. Both packages remain private at `0.0.0`; the guide
+distinguishes tested artifact behavior from future registry installation.
+
 ## Contributing and ownership
 
 Start with [CONTRIBUTING.md](CONTRIBUTING.md) for development, commit and PR
@@ -58,7 +67,7 @@ ESM/declaration resolution and the verified tarball contents.
 [Dependency-boundary evidence](docs/dependency-boundaries.md) covers source,
 declarations, packed artifacts, runtime provenance and the installed closure.
 The [integrated parity gate](docs/integrated-parity.md) assembles all seven proof
-pressures and lifecycle equivalence through built public entries for #19 review.
+pressures and lifecycle equivalence through built public entries, accepted under #19.
 
 ## Licensing and release status
 
