@@ -49,6 +49,8 @@ The workspace is already connected to Nx Cloud; do not reconnect it. The
 affected selection and the extraction verification handoff.
 [Repository governance](docs/repository-governance.md) records effective controls
 separately from proposed settings and pending checks.
+The [release policy](docs/releases.md) defines independent versions, commit
+lifecycle checks, safe previews and the owner-authorization handoff.
 
 Dependabot handles vulnerability alerts and security updates. Renovate handles
 routine updates through [renovate.json](renovate.json). Both require human review
