@@ -35,9 +35,17 @@ describe('core runtime boundaries', () => {
         ),
       ).toContain('no-restricted-imports');
     }
+    expect(
+      await diagnostics(
+        "import * as meta from '@anarchitects/modeling-metamodel'; void meta;",
+      ),
+    ).toContain('@nx/enforce-module-boundaries');
   });
   it('rejects re-exports and dynamic loading as well as ordinary imports', async () => {
     expect(await diagnostics("export * from 'node:fs';")).toContain(
+      'no-restricted-imports',
+    );
+    expect(await diagnostics("export { readFile } from 'node:fs';")).toContain(
       'no-restricted-imports',
     );
     for (const code of [
@@ -59,6 +67,7 @@ describe('core runtime boundaries', () => {
       readFileSync(new URL('../package.json', import.meta.url), 'utf8'),
     );
     expect(manifest.dependencies).toEqual({ tslib: '^2.3.0' });
+    expect(manifest.private).toBe(true);
     expect(manifest.peerDependencies).toBeUndefined();
     expect(manifest.optionalDependencies).toBeUndefined();
   });

@@ -25,8 +25,30 @@
     "targets": {
       "test": {
         "dependsOn": [
-          "build"
+          "build",
+          "foundation-smoke"
+        ],
+        "inputs": [
+          "default",
+          "^default",
+          "{workspaceRoot}/tools/proofs/**/*"
         ]
+      },
+      "foundation-smoke": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "node tools/proofs/foundation-smoke.mjs"
+        },
+        "dependsOn": [
+          "build"
+        ],
+        "cache": true,
+        "inputs": [
+          "default",
+          "^default",
+          "{workspaceRoot}/tools/proofs/**/*"
+        ],
+        "outputs": []
       }
     }
   },

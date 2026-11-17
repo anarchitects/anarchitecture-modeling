@@ -40,6 +40,9 @@ describe('metamodel runtime boundaries', () => {
     expect(await diagnostics("export * from 'node:fs';")).toContain(
       'no-restricted-imports',
     );
+    expect(await diagnostics("export { readFile } from 'node:fs';")).toContain(
+      'no-restricted-imports',
+    );
     for (const code of [
       "void import('node:fs');",
       "const name = 'node:fs'; void import(name);",
@@ -67,6 +70,7 @@ describe('metamodel runtime boundaries', () => {
       '@anarchitects/modeling-core': 'workspace:*',
       tslib: '^2.3.0',
     });
+    expect(manifest.private).toBe(true);
     expect(manifest.peerDependencies).toBeUndefined();
     expect(manifest.optionalDependencies).toBeUndefined();
   });
