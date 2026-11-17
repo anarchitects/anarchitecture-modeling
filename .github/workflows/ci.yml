@@ -73,5 +73,12 @@ jobs:
           COMPARISON_HEAD: ${{ steps.shas.outputs.head }}
         run: node tools/ci/validate.mjs
 
+      - name: Verify publishing authorization and deterministic private archives
+        env:
+          NX_NO_CLOUD: 'true'
+        run: |
+          node --test tools/publishing/*.test.mjs
+          node tools/publishing/verify-archives.mjs
+
       - run: yarn nx fix-ci
         if: ${{ !cancelled() && env.NX_NO_CLOUD != 'true' }}

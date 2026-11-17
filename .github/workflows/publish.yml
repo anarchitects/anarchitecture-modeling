@@ -1,0 +1,138 @@
+name: Prepare or publish Foundation packages
+
+on:
+  workflow_dispatch:
+    inputs:
+      operation:
+        description: Preview is read-only; publication requires separate owner authorization
+        type: choice
+        options: [preview, publish]
+        default: preview
+      version_mode:
+        description: First distribution or versions calculated from release history
+        type: choice
+        options: [first, next]
+        default: first
+      authentication:
+        description: Bootstrap only for new packages; OIDC for established packages
+        type: choice
+        options: [oidc, bootstrap]
+        default: oidc
+      candidate_run:
+        description: Successful preview run ID for this exact main commit (publish only)
+        type: string
+      authorization_comment:
+        description: Owner authorization comment ID on issue 23 (publish only)
+        type: string
+      readiness_comment:
+        description: Owner readiness comment ID on issue 22 (publish only)
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: foundation-publication
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read
+    env:
+      NX_NO_CLOUD: 'true'
+      NX_DAEMON: 'false'
+    outputs:
+      enabled: ${{ steps.policy.outputs.enabled }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - run: corepack enable
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: yarn
+      - run: npm install --global npm@11.19.1 --ignore-scripts
+      - run: yarn install --immutable
+      - name: Read activation policy
+        id: policy
+        run: node -e 'require("node:fs").appendFileSync(process.env.GITHUB_OUTPUT, `enabled=${require("./tools/publishing/config.json").enabled}\n`)'
+      - name: Reject publication while disabled
+        if: inputs.operation == 'publish' && steps.policy.outputs.enabled != 'true'
+        run: |
+          echo 'Publication is disabled pending issue 23 activation.' >&2
+          exit 1
+      - name: Validate candidate sources and built outputs
+        if: inputs.operation == 'preview'
+        run: |
+          yarn nx run-many -t build test lint typecheck boundary-check package-check built-proof-check
+          node --test tools/release/*.test.mjs tools/publishing/*.test.mjs
+      - name: Prepare immutable archives (no publication)
+        if: inputs.operation == 'preview'
+        env:
+          VERSION_MODE: ${{ inputs.version_mode }}
+        run: node tools/publishing/prepare.mjs tmp/publish-candidate "$VERSION_MODE"
+      - name: Verify reviewed preview run identity
+        if: inputs.operation == 'publish'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CANDIDATE_RUN: ${{ inputs.candidate_run }}
+        run: node tools/publishing/check-preview-run.mjs
+      - uses: actions/download-artifact@v8
+        if: inputs.operation == 'publish'
+        with:
+          name: foundation-candidate
+          path: tmp/publish-candidate/
+          run-id: ${{ inputs.candidate_run }}
+          github-token: ${{ github.token }}
+      - uses: actions/upload-artifact@v7
+        with:
+          name: foundation-candidate
+          path: tmp/publish-candidate/
+          if-no-files-found: error
+          retention-days: 7
+
+  publish:
+    needs: prepare
+    if: inputs.operation == 'publish' && needs.prepare.outputs.enabled == 'true' && github.ref == 'refs/heads/main' && github.actor == 'vrxj81'
+    runs-on: ubuntu-latest
+    environment: npm-release
+    permissions:
+      contents: read
+      issues: read
+      actions: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - run: corepack enable
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+      - run: npm install --global npm@11.19.1 --ignore-scripts
+      - run: yarn install --immutable
+      - uses: actions/download-artifact@v8
+        with:
+          name: foundation-candidate
+          path: tmp/publish-candidate/
+      - name: Recheck exact owner authorization and publish reviewed bytes
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NODE_AUTH_TOKEN: ${{ inputs.authentication == 'bootstrap' && secrets.NPM_BOOTSTRAP_TOKEN || '' }}
+          AUTHORIZATION_COMMENT: ${{ inputs.authorization_comment }}
+          READINESS_COMMENT: ${{ inputs.readiness_comment }}
+        run: node tools/publishing/publish.mjs tmp/publish-candidate "$AUTHORIZATION_COMMENT" "$READINESS_COMMENT"
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: foundation-publication-receipt
+          path: tmp/publish-candidate/publication-receipt.json
+          if-no-files-found: ignore
