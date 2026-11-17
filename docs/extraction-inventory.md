@@ -152,7 +152,8 @@ Archimatrix's #57 → #58 → #59 follow-ups own its artifact-based adoption/cle
 | Current two package test targets at the pinned revision                               | 18 spec files / 1,183 passing cases, including 913 codec cases after the #38 corpus split. Current portable baseline only.                                                                          |
 | Current built-entry smoke                                                             | Ordinary Node resolution of both built exports, including codec round-trip and session undo/redo/reopen retries. Not a packed or published consumer test.                                           |
 
-#11 must resolve these B1 seams file by file with Johan's acceptance. This list
+#11’s [file-level boundary review](extraction-boundary.md) proposes a disposition
+for each B1 seam below; Johan’s acceptance remains separate. This list
 records current behavior and proposed disposition; it does not accept the split.
 
 | Seam / files                                                                                                                                              | Behavior to preserve and ownership question                                                                                                                                                                                                                                              |
