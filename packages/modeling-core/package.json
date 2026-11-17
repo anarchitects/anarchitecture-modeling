@@ -9,28 +9,20 @@
   "exports": {
     "./package.json": "./package.json",
     ".": {
-      "@archimatrix/source": "./src/index.ts",
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "default": "./dist/index.js"
     }
   },
-  "nx": {
-    "name": "modeling-core",
-    "tags": [
-      "scope:foundation",
-      "type:core",
-      "lifecycle:unreleased"
-    ],
-    "targets": {
-      "test": {
-        "dependsOn": [
-          "build"
-        ]
-      }
-    }
-  },
   "dependencies": {
     "tslib": "^2.3.0"
+  },
+  "files": [
+    "dist/**/*.js",
+    "dist/**/*.d.ts",
+    "README.md"
+  ],
+  "engines": {
+    "node": "^24.0.0"
   }
 }

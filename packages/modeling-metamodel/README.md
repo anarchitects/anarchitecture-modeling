@@ -8,9 +8,9 @@ authorization, storage and UI.
 
 The implementation and original tests are extracted unchanged from Archimatrix
 `b83c78e7a70e1434a6bf9101d7bbf43467becf7f`. The
-[extraction record](../../docs/metamodel-extraction.md) provides provenance,
+[extraction record](https://github.com/anarchitects/anarchitecture-modeling/blob/main/docs/metamodel-extraction.md) provides provenance,
 declaration/behavior parity and configuration adaptations. The
-[accepted portable/host boundary](../../docs/extraction-boundary.md) records the
+[accepted portable/host boundary](https://github.com/anarchitects/anarchitecture-modeling/blob/main/docs/extraction-boundary.md) records the
 consumer obligations in detail.
 
 Preserved compatibility includes exact version pins, explicit unsupported
@@ -34,9 +34,11 @@ Ordinary ESM imports use `dist/index.js` with `dist/index.d.ts` declarations.
 Original source tests and additional built-entry/boundary checks run through Nx;
 synthetic fixtures and development tooling are excluded from runtime build output.
 
-The package stays private at `0.0.0`. Its existing `@archimatrix/source` condition
-and workspace dependency remain until #16’s packaging review. The [proof migration record](../../docs/proofs/README.md) maps #13’s historical
-evidence to current tests; the test target also runs the original built-public-entry
-smoke. Remaining gates include #17 artifact-level independence checks and
-#19 integrated parity acceptance. Release and final licensing/distribution
-clearance remain separate gates.
+The built entry supports Node 24 ESM and TypeScript `NodeNext` resolution without
+custom source conditions or aliases. Source and implementation deep imports are
+not exported. Packed files contain runtime JavaScript/declarations and metadata;
+source, maps, tests and tooling are excluded. See the
+[packaging evidence](https://github.com/anarchitects/anarchitecture-modeling/blob/main/docs/package-entry-points.md)
+for exact contents, compatibility and verification limits. No CJS/browser support
+is claimed. The package remains private at `0.0.0`; publication and consumer
+adoption require their separate gates.

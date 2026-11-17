@@ -52,7 +52,9 @@ and host dispositions accepted under #11. The [core extraction record](docs/core
 documents unchanged source, declarations, tests and movement-only configuration
 adaptations accepted under #12. The [metamodel extraction record](docs/metamodel-extraction.md)
 records #15’s accepted parity. The [proof migration record](docs/proofs/README.md)
-maps historical source issues and PRs to current executable fixtures.
+maps historical source issues and PRs to current executable fixtures. The
+[built-entry and packaging record](docs/package-entry-points.md) describes ordinary
+ESM/declaration resolution and the verified tarball contents.
 
 ## Licensing and release status
 
