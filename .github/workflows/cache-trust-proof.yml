@@ -1,0 +1,35 @@
+name: Cache trust proof
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/workflows/cache-trust-proof.yml'
+      - 'tools/ci/credential-free-proof.mjs'
+
+permissions:
+  contents: read
+
+jobs:
+  credential-free:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      NX_NO_CLOUD: 'true'
+      NX_CLOUD_ACCESS_TOKEN: ''
+      NX_CLOUD_AUTH_TOKEN: ''
+      NX_CLOUD_PERSONAL_ACCESS_TOKEN: ''
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - run: corepack enable
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: 'yarn'
+      - run: yarn install --immutable
+      - name: Prove anonymous remote denial
+        run: node tools/ci/credential-free-proof.mjs
+      - name: Verify real packages without Nx Cloud
+        run: yarn nx run-many -t lint test build typecheck --projects=modeling-core,modeling-metamodel

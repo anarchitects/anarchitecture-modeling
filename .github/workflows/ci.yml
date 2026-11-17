@@ -18,7 +18,7 @@ jobs:
       name: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'nx-cloud-main' || 'nx-cloud-pr' }}
       deployment: false
     env:
-      NX_CLOUD_ACCESS_TOKEN: ${{ github.event_name == 'push' && secrets.NX_CLOUD_ACCESS_TOKEN || github.event_name == 'pull_request' && secrets.NX_CLOUD_READ_ONLY_TOKEN || '' }}
+      NX_CLOUD_ACCESS_TOKEN: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && secrets.NX_CLOUD_ACCESS_TOKEN || github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]' && secrets.NX_CLOUD_READ_ONLY_TOKEN || '' }}
       # Forks and Dependabot receive no Actions secrets; retain local validation.
       NX_NO_CLOUD: ${{ github.event_name == 'pull_request' && (github.event.pull_request.head.repo.full_name != github.repository || github.actor == 'dependabot[bot]') }}
     steps:
@@ -29,12 +29,7 @@ jobs:
           persist-credentials: false
 
       - name: Verify CI authentication configuration
-        if: env.NX_NO_CLOUD != 'true'
-        run: |
-          if [ -z "$NX_CLOUD_ACCESS_TOKEN" ]; then
-            echo "::error::The Nx Cloud token for this CI trust level is missing. See docs/ci.md."
-            exit 1
-          fi
+        run: node tools/ci/verify-auth.mjs
 
       - run: corepack enable
 
