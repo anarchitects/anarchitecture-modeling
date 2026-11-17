@@ -9,7 +9,8 @@
         "default",
         "^default",
         "{workspaceRoot}/tools/proofs/**/*",
-        "{workspaceRoot}/tools/packaging/**/*"
+        "{workspaceRoot}/tools/packaging/**/*",
+        "{workspaceRoot}/tools/boundaries/**/*"
       ]
     },
     "foundation-smoke": {
@@ -27,9 +28,28 @@
       "options": {
         "command": "node tools/packaging/check-packages.mjs"
       },
+      "dependsOn": ["build", "boundary-check"],
+      "cache": false,
+      "inputs": [
+        "default",
+        "^default",
+        "{workspaceRoot}/tools/packaging/**/*",
+        "{workspaceRoot}/tools/boundaries/**/*"
+      ],
+      "outputs": []
+    },
+    "boundary-check": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node --test tools/boundaries/policy.test.mjs && node tools/boundaries/check-workspace.mjs"
+      },
       "dependsOn": ["build"],
       "cache": false,
-      "inputs": ["default", "^default", "{workspaceRoot}/tools/packaging/**/*"],
+      "inputs": [
+        "default",
+        "^default",
+        "{workspaceRoot}/tools/boundaries/**/*"
+      ],
       "outputs": []
     }
   }

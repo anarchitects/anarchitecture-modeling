@@ -154,3 +154,11 @@ arrive. Extraction is not blocked on completing both packages first. Record:
 
 Release configuration and exact scope/type enforcement remain [#14](https://github.com/anarchitects/anarchitecture-modeling/issues/14).
 Publication, visibility and consumer adoption remain separate gates.
+
+## Runtime and artifact boundary verification
+
+The [#17 boundary record](dependency-boundaries.md) describes the uncached
+`modeling-metamodel:boundary-check` and `package-check` prerequisites of metamodel
+tests. Build/test/lint/typecheck caching remains enabled; Git/layout, installed
+dependency closure and actual tarball verification run fresh. Both checks preserve
+legitimate metamodel → local core linking and reject unreviewed runtime artifacts.
