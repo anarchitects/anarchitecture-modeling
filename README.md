@@ -51,6 +51,11 @@ The [license/provenance review](docs/license-provenance-review.md) and its
 rights confirmation and remaining artifact checks. Scaffold MIT metadata is not
 final clearance for extracted assets.
 
+The [public-readiness gate](docs/public-readiness.md) defines the evidence and
+separate decisions required for repository disclosure and package distribution.
+Its [review template](docs/templates/public-readiness-review.md) is unfilled;
+the final candidate review remains #22 and authorized execution remains #23.
+
 This repository remains private. Release configuration, final artifact review,
 visibility approval and publication are separate work. CI success, a merged PR
 or an accepted architecture decision does not authorize those operations.
