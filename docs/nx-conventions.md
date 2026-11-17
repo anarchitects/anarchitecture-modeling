@@ -18,7 +18,8 @@ Preserve the source manifests' Nx names, npm identities and tags:
 | `modeling-metamodel` | `@anarchitects/modeling-metamodel` | `packages/modeling-metamodel` | `scope:foundation`, `type:metamodel`, `lifecycle:unreleased` |
 
 These destinations match the existing Yarn `packages/*` workspace pattern.
-Set `nx.name` explicitly in each manifest. Metamodel depends on core through a
+Set `name` explicitly in each package’s `project.json`; keep Nx tags/targets
+there so tooling configuration is excluded from packed package metadata. Metamodel depends on core through a
 Yarn workspace dependency and TypeScript project reference; core never depends
 on metamodel. Use the package manager to link workspace packages. Consumers use
 public entry points; no sibling-repository source paths or private shared package.

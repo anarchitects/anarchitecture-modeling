@@ -9,51 +9,21 @@
   "exports": {
     "./package.json": "./package.json",
     ".": {
-      "@archimatrix/source": "./src/index.ts",
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "default": "./dist/index.js"
     }
   },
-  "nx": {
-    "name": "modeling-metamodel",
-    "tags": [
-      "scope:foundation",
-      "type:metamodel",
-      "lifecycle:unreleased"
-    ],
-    "targets": {
-      "test": {
-        "dependsOn": [
-          "build",
-          "foundation-smoke"
-        ],
-        "inputs": [
-          "default",
-          "^default",
-          "{workspaceRoot}/tools/proofs/**/*"
-        ]
-      },
-      "foundation-smoke": {
-        "executor": "nx:run-commands",
-        "options": {
-          "command": "node tools/proofs/foundation-smoke.mjs"
-        },
-        "dependsOn": [
-          "build"
-        ],
-        "cache": true,
-        "inputs": [
-          "default",
-          "^default",
-          "{workspaceRoot}/tools/proofs/**/*"
-        ],
-        "outputs": []
-      }
-    }
-  },
   "dependencies": {
     "@anarchitects/modeling-core": "workspace:*",
     "tslib": "^2.3.0"
+  },
+  "files": [
+    "dist/**/*.js",
+    "dist/**/*.d.ts",
+    "README.md"
+  ],
+  "engines": {
+    "node": "^24.0.0"
   }
 }

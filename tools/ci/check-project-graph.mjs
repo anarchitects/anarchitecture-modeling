@@ -82,10 +82,7 @@ if (
     const manifest = JSON.parse(
       readFileSync(`${graph.nodes[name].data.root}/package.json`, 'utf8'),
     );
-    if (
-      manifest.name !== `@anarchitects/${name}` ||
-      manifest.nx?.name !== name
-    ) {
+    if (manifest.name !== `@anarchitects/${name}`) {
       throw new Error(`${name}: preserve npm and Nx identities`);
     }
   }

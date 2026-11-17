@@ -4,7 +4,8 @@ Implementation record for [Modeling #13](https://github.com/anarchitects/anarchi
 17 November 2026. Source: **Archimatrix `b83c78e7a70e1434a6bf9101d7bbf43467becf7f`**.
 This follows the accepted [#11 boundary](../extraction-boundary.md),
 [#12 core parity](../core-extraction.md) and [#15 metamodel parity](../metamodel-extraction.md).
-Johan’s acceptance of #13 remains separate from this implementation and PR merge.
+[Johan explicitly accepted #13 proof-parity](https://github.com/anarchitects/anarchitecture-modeling/issues/13#issuecomment-6950414736)
+after PR #38 merged at `e41ae08cc4375710d4ff1554c6394c67239592ac`.
 
 All 18 original package specs already moved **byte-for-byte** in Modeling
 [PR #36](https://github.com/anarchitects/anarchitecture-modeling/pull/36) and
@@ -181,7 +182,6 @@ Local AGENTS and accepted ADR 0001/0002 apply at Modeling base
 Blueprint `af4f88517302937dc23c0da4763579d0cca83604` remains consumer-boundary
 context only; no content or dependency moves from it.
 
-Johan owns bounded proof-parity acceptance. #13 is ready for that review only after
-its implementation checks pass; merge does not supply acceptance. This does not
+Johan accepted the bounded proof-parity outcome of #13 separately from merge. This does not
 complete release controls (#14), packaging (#16), independent artifacts (#17),
 integrated parity (#19), consumer adoption or public clearance/publication (#22/#23).

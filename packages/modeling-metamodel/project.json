@@ -1,0 +1,36 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "modeling-metamodel",
+  "tags": ["scope:foundation", "type:metamodel", "lifecycle:unreleased"],
+  "targets": {
+    "test": {
+      "dependsOn": ["build", "foundation-smoke", "package-check"],
+      "inputs": [
+        "default",
+        "^default",
+        "{workspaceRoot}/tools/proofs/**/*",
+        "{workspaceRoot}/tools/packaging/**/*"
+      ]
+    },
+    "foundation-smoke": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/proofs/foundation-smoke.mjs"
+      },
+      "dependsOn": ["build"],
+      "cache": true,
+      "inputs": ["default", "^default", "{workspaceRoot}/tools/proofs/**/*"],
+      "outputs": []
+    },
+    "package-check": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/packaging/check-packages.mjs"
+      },
+      "dependsOn": ["build"],
+      "cache": false,
+      "inputs": ["default", "^default", "{workspaceRoot}/tools/packaging/**/*"],
+      "outputs": []
+    }
+  }
+}
