@@ -35,7 +35,8 @@ Original source tests and additional built-entry/boundary checks run through Nx;
 synthetic fixtures and development tooling are excluded from runtime build output.
 
 The package stays private at `0.0.0`. Its existing `@archimatrix/source` condition
-and workspace dependency remain until #16’s packaging review. #13 retains proof
-document migration and traceability, #17 artifact-level independence checks and
+and workspace dependency remain until #16’s packaging review. The [proof migration record](../../docs/proofs/README.md) maps #13’s historical
+evidence to current tests; the test target also runs the original built-public-entry
+smoke. Remaining gates include #17 artifact-level independence checks and
 #19 integrated parity acceptance. Release and final licensing/distribution
 clearance remain separate gates.

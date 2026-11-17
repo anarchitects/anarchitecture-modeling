@@ -1,7 +1,8 @@
 # Metamodel extraction and parity evidence
 
 Implementation for [#15](https://github.com/anarchitects/anarchitecture-modeling/issues/15),
-17 November 2026. **Johan’s metamodel parity acceptance remains pending.**
+17 November 2026. **[Johan accepted metamodel parity](https://github.com/anarchitects/anarchitecture-modeling/issues/15#issuecomment-6949969946)**
+after PR #37 merged at `bb6290db203ed1345253d6ddece4e5631838c5ef`.
 Core [#12 was explicitly accepted](https://github.com/anarchitects/anarchitecture-modeling/issues/12#issuecomment-6949062372)
 after PR #36 merged at `dd985fe6aee2aa8ea1cc2b7ee5942cdf28c9cf45`.
 

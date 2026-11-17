@@ -4,7 +4,7 @@ An independent, host-neutral TypeScript modeling capability. The packages retain
 the identities `@anarchitects/modeling-core` and
 `@anarchitects/modeling-metamodel`; metamodel may depend on core, never the reverse.
 Archimatrix is the first consumer. Both packages now build and test independently;
-metamodel parity acceptance and publication remain in progress.
+core and metamodel parity are accepted. Publication remains a separate gate.
 
 ## Contributing and ownership
 
@@ -51,7 +51,8 @@ public exports, portable tests and consumer dependencies for epic #3. The
 and host dispositions accepted under #11. The [core extraction record](docs/core-extraction.md)
 documents unchanged source, declarations, tests and movement-only configuration
 adaptations accepted under #12. The [metamodel extraction record](docs/metamodel-extraction.md)
-provides #15’s evidence for Johan’s parity review.
+records #15’s accepted parity. The [proof migration record](docs/proofs/README.md)
+maps historical source issues and PRs to current executable fixtures.
 
 ## Licensing and release status
 
