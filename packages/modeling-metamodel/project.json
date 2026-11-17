@@ -4,13 +4,19 @@
   "tags": ["scope:foundation", "type:metamodel", "lifecycle:unreleased"],
   "targets": {
     "test": {
-      "dependsOn": ["build", "foundation-smoke", "package-check"],
+      "dependsOn": [
+        "build",
+        "foundation-smoke",
+        "package-check",
+        "built-proof-check"
+      ],
       "inputs": [
         "default",
         "^default",
         "{workspaceRoot}/tools/proofs/**/*",
         "{workspaceRoot}/tools/packaging/**/*",
-        "{workspaceRoot}/tools/boundaries/**/*"
+        "{workspaceRoot}/tools/boundaries/**/*",
+        "{workspaceRoot}/tools/parity/**/*"
       ]
     },
     "foundation-smoke": {
@@ -49,6 +55,24 @@
         "default",
         "^default",
         "{workspaceRoot}/tools/boundaries/**/*"
+      ],
+      "outputs": []
+    },
+    "built-proof-check": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/parity/check-built-proofs.mjs"
+      },
+      "dependsOn": ["build"],
+      "cache": false,
+      "inputs": [
+        "default",
+        "^default",
+        "{workspaceRoot}/tools/parity/**/*",
+        "{workspaceRoot}/tools/boundaries/runtime-baseline.json",
+        {
+          "env": "FOUNDATION_PARITY_SOURCE_ROOT"
+        }
       ],
       "outputs": []
     }

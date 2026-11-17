@@ -2,7 +2,8 @@
 
 Implementation evidence for [#17](https://github.com/anarchitects/anarchitecture-modeling/issues/17),
 from accepted #16 / PR #39 at `01e80165db4c17aa0797f639c57ddd2d1702a948`,
-17 November 2026. Johan’s acceptance of this bounded outcome remains pending.
+17 November 2026. [Johan explicitly accepted #17](https://github.com/anarchitects/anarchitecture-modeling/issues/17#issuecomment-6951192812)
+after PR #40 merged at `7fe8bda4c93856da47ee4544cac6728b4eb27a13`.
 The [accepted architecture](adr/0001-modeling-foundation-boundaries.md),
 [extraction boundary](extraction-boundary.md) and
 [built-entry evidence](package-entry-points.md) define the two-package scope.
