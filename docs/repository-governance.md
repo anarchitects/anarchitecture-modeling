@@ -167,7 +167,8 @@ Renovate check is accepted. No dependency upgrade is part of this correction.
 - [x] Contributor/ownership/security documents merged through PR #29.
 - [ ] Johan accepts the complete bounded outcome of #6.
 
-Actual package-task/cache proof belongs to #10, full versioning/publication
-controls to #14, and final disclosure/artifact clearance to #8/#22. The release
-workflow and commit-scope enforcement are not implemented by these documents.
+Actual package-task/cache proof belongs to #10, version policy to #14,
+publication workflow to #18, and final disclosure/artifact clearance to #8/#22.
+The subsequent [release policy](releases.md) supplies commit-scope enforcement
+and version/candidate checks; the publishing workflow remains a separate handoff.
 Do not close #6 merely because this documentation PR is merged or CI is green.

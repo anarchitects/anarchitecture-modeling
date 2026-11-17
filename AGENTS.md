@@ -175,6 +175,17 @@ private sources into public artifacts to satisfy the preflight.
 
 ## Nx execution and verification
 
+### Commit and release intent
+
+Follow [the release policy](docs/releases.md). Validate exact commit scopes against
+the resolved Nx graph. Changes within an unreleased package require non-breaking
+`init(<exact-project-name>): ...`; split mixed package/lifecycle changes so both
+commits and the proposed squash message express correct intent. Repository-wide
+work may use an unscoped allowed type. Nx Conventional Commits calculate versions;
+do not introduce version plans or silently choose an arbitrary version. Use the
+preview-only wrapper for release dry runs. Candidate evidence checks do not grant
+owner authorization; production tags and publication require explicit approval.
+
 Retain the generated instructions below. Use this workspace's pinned Yarn and
 installed Nx version, inspect available skills/MCP tools and resolve actual project
 names/targets before choosing commands. Use `nx affected` with trustworthy base/head

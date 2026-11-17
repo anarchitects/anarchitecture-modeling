@@ -57,10 +57,10 @@ After first publication, use normal reviewed release intent. Packages on `0.x`
 remain there until Johan explicitly accepts a `1.0.0` stabilization candidate;
 compatible features and fixes increment patch, breaking changes increment minor.
 
-[#14](https://github.com/anarchitects/anarchitecture-modeling/issues/14) owns the
-complete Nx type mapping, non-bumping `init`, scope/type enforcement, release
-dry runs and first-publication checks. These controls are not implemented by this
-guide. First official distribution of each new Foundation package must be exactly
+The [release policy](docs/releases.md) defines the complete Nx type mapping,
+non-bumping `init`, graph-derived scope/type enforcement, dry runs and candidate
+checks. CI validates new commits and the proposed squash message; keep PR titles
+consistent with package lifecycle. First official distribution of each new Foundation package must be exactly
 `0.0.1`, with manifest, tag and artifact agreement. No release command is part of
 the contributor quickstart.
 

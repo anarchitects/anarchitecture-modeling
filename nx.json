@@ -1,6 +1,46 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "analytics": false,
+  "release": {
+    "projects": ["modeling-core", "modeling-metamodel"],
+    "projectsRelationship": "independent",
+    "releaseTag": {
+      "pattern": "{projectName}@{version}",
+      "requireSemver": true
+    },
+    "version": {
+      "conventionalCommits": true,
+      "adjustSemverBumpsForZeroMajorVersion": true,
+      "updateDependents": "always",
+      "versionPrefix": "",
+      "preserveLocalDependencyProtocols": true
+    },
+    "conventionalCommits": {
+      "useCommitScope": false,
+      "types": {
+        "init": { "semverBump": "none" },
+        "feat": { "semverBump": "minor" },
+        "fix": { "semverBump": "patch" },
+        "perf": { "semverBump": "patch" },
+        "refactor": { "semverBump": "patch" },
+        "revert": { "semverBump": "patch" },
+        "docs": { "semverBump": "none" },
+        "chore": { "semverBump": "none" },
+        "style": { "semverBump": "none" },
+        "test": { "semverBump": "none" },
+        "e2e": { "semverBump": "none" },
+        "build": { "semverBump": "none" },
+        "ci": { "semverBump": "none" }
+      }
+    },
+    "git": {
+      "commit": false,
+      "tag": false,
+      "push": false,
+      "stageChanges": false
+    },
+    "changelog": { "workspaceChangelog": false, "projectChangelogs": false }
+  },
   "namedInputs": {
     "default": [
       "{projectRoot}/**/*",
@@ -19,6 +59,7 @@
       "{workspaceRoot}/tsconfig*.json",
       "{workspaceRoot}/.github/workflows/ci.yml",
       "{workspaceRoot}/tools/ci/**/*",
+      "{workspaceRoot}/tools/release/**/*",
       {
         "runtime": "node -p \"process.version + '-' + process.platform + '-' + process.arch\""
       },
