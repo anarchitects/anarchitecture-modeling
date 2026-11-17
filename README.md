@@ -44,6 +44,10 @@ Dependabot handles vulnerability alerts and security updates. Renovate handles
 routine updates through [renovate.json](renovate.json). Both require human review
 and merge. A configuration file alone does not establish hosted execution.
 
+The [extraction inventory](docs/extraction-inventory.md) pins the source files,
+public exports, portable tests and consumer dependencies for epic #3. Seam
+acceptance and package extraction remain separate follow-ups.
+
 ## Licensing and release status
 
 The [license/provenance review](docs/license-provenance-review.md) and its
