@@ -1,101 +1,54 @@
-# AnarchitectureModeling
+# Modeling Foundation
 
-## AI-assisted contributions
+An independent, host-neutral TypeScript modeling capability. The planned packages
+retain the identities `@anarchitects/modeling-core` and
+`@anarchitects/modeling-metamodel`; metamodel may depend on core, never the reverse.
+Archimatrix is the first consumer. Extraction and publication remain in progress:
+this workspace currently has no Nx projects or package targets.
 
-Start with [AGENTS.md](AGENTS.md), the canonical mandatory governance preflight
-for planning, implementation and review. It includes the public contribution
-baseline and the maintainer review path for contributors without private Meta
-access. Claude and Copilot instructions reference the same workflow.
+## Contributing and ownership
 
-The Nx quickstart below describes tooling capabilities; it is not authorization
-to release packages or change repository visibility. Check current configuration
-and the preflight before executing setup or release operations.
+Start with [CONTRIBUTING.md](CONTRIBUTING.md) for development, commit and PR
+conventions, and [AGENTS.md](AGENTS.md) for the mandatory governance preflight.
+[OWNERSHIP.md](OWNERSHIP.md) records decision and maintenance responsibilities.
+Report vulnerabilities privately using [SECURITY.md](SECURITY.md).
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+The accepted [architecture decisions](docs/adr/README.md) distinguish existing
+behavior from future contracts. Generic runtime code stays independent of host
+applications, frameworks, persistence and method-specific semantics.
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is ready ✨.
+## Development
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/nx-api/js?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
-
-## Generate a library
-
-```sh
-npx nx g @nx/js:lib packages/pkg1 --publishable --importPath=@my-org/pkg1
-```
-
-## Run tasks
-
-To build the library use:
+Use Node 24 and the pinned Yarn 4.18.1. Nx and `@nx/js` are pinned to 24.0.6.
 
 ```sh
-npx nx build pkg1
+corepack enable
+yarn install --immutable
+yarn nx show projects --json
 ```
 
-To run any task with Nx use:
+Resolve project names and targets before running package commands. An empty
+project list or a successful run with zero tasks does not verify package behavior.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for validation and lifecycle guidance.
 
-```sh
-npx nx <target> <project-name>
-```
+## CI and dependency maintenance
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+The workspace is already connected to Nx Cloud; do not reconnect it. The
+[CI record](docs/ci.md) explains credentials, self-healing and remaining cache proofs.
+[Repository governance](docs/repository-governance.md) records effective controls
+separately from proposed settings and pending checks.
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+Dependabot handles vulnerability alerts and security updates. Renovate handles
+routine updates through [renovate.json](renovate.json). Both require human review
+and merge. A configuration file alone does not establish hosted execution.
 
-## Versioning and releasing
+## Licensing and release status
 
-To version and release the library use
+The [license/provenance review](docs/license-provenance-review.md) and its
+[inventory](docs/license-provenance-inventory.md) record the Apache-2.0 direction,
+rights confirmation and remaining artifact checks. Scaffold MIT metadata is not
+final clearance for extracted assets.
 
-```
-npx nx release
-```
-
-Pass `--dry-run` to see what would happen without actually releasing the library.
-
-[Learn more about Nx release &raquo;](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Keep TypeScript project references up to date
-
-Nx automatically updates TypeScript [project references](https://www.typescriptlang.org/docs/handbook/project-references.html) in `tsconfig.json` files to ensure they remain accurate based on your project dependencies (`import` or `require` statements). This sync is automatically done when running tasks such as `build` or `typecheck`, which require updated references to function correctly.
-
-To manually trigger the process to sync the project graph dependencies information to the TypeScript project references, run the following command:
-
-```sh
-npx nx sync
-```
-
-You can enforce that the TypeScript project references are always in the correct state when running in CI by adding a step to your CI job configuration that runs the following command:
-
-```sh
-npx nx sync:check
-```
-
-[Learn more about nx sync](https://nx.dev/reference/nx-commands#sync)
-
-## CI and Nx Cloud
-
-This workspace is already connected to Nx Cloud through merged PR #1. Do not
-run `nx connect` again. See [the CI baseline and verification record](docs/ci.md)
-for authentication, self-healing, current run evidence and the package-cache
-checks retained for issue #10.
-
-## Install Nx Console
-
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
-
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Useful links
-
-Learn more:
-
-- [Learn more about this workspace setup](https://nx.dev/nx-api/js?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-And join the Nx community:
-
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+This repository remains private. Release configuration, final artifact review,
+visibility approval and publication are separate work. CI success, a merged PR
+or an accepted architecture decision does not authorize those operations.

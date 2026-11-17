@@ -1,7 +1,8 @@
 ## Change and scope
 
-Describe the problem, resulting behavior and owning issue. Use `Refs #...` for a
-partial deliverable; do not close a broader issue prematurely.
+Describe the problem and resulting behavior. Always link the owning issue:
+`Closes #...` for its complete agreed outcome, or `Refs #...` for a partial
+deliverable with the remaining work stated explicitly.
 
 ## Governance preflight
 

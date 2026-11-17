@@ -54,9 +54,12 @@ do not execute PR code with elevated `pull_request_target` credentials.
 
 GitHub reported `main` as **unprotected** during this review. The environment's
 main-only restriction is configured, but it does not establish review/merge
-protection. Repository protection remains a governance gap to reconcile with
-[#6](https://github.com/anarchitects/anarchitecture-modeling/issues/6), even though
-that issue is closed. No branch-protection settings were changed in this work.
+protection. This was a governance gap at the time of #5. The subsequent
+[#6](https://github.com/anarchitects/anarchitecture-modeling/issues/6) revisit
+reopened that issue and applied owner-approved main protection and a temporary
+tag freeze. See the [current governance evidence](repository-governance.md)
+for readback, rejection probes and remaining acceptance. Those settings were
+not part of the original #5 change.
 
 `actions` and `contents` permissions remain read-only. Checkout does not persist
 its GitHub credential. Environment access does not create deployment records.
@@ -98,17 +101,18 @@ failure to analyze; calling the command is not proof that a fix was generated or
 accepted. No auto-apply setting is inferred. Fixes retain normal review and owner
 acceptance; self-healing does not authorize merge or release.
 
-Before closing #5:
+Johan accepted the bounded #5 review after PR #27 merged at
+`6fbbfa6547a3e66706c818ea89af5aefb0c94973`; #5 is closed. The subsequent
+[PR run](https://github.com/anarchitects/anarchitecture-modeling/actions/runs/44056716030)
+and [main run](https://github.com/anarchitects/anarchitecture-modeling/actions/runs/44057108811)
+passed with separate credentials and masked token entries. Both ran zero tasks.
+PR self-healing was enabled with no fixable tasks; main self-healing was skipped
+for the long-lived branch. This establishes connection/authentication evidence,
+not actual package-cache behavior.
 
-- [ ] Record a successful PR run after the read-only-token wiring and inspect its
-      logs for authentication errors or credential exposure.
-- [ ] After owner-authorized merge, record a main run using the restricted write
-      token. Do not weaken the environment policy to test it from a PR.
-- [ ] Record credential-free fork/Dependabot behavior and actual cache-access
-      enforcement when meaningful targets exist; distinguish settings inspection
-      from a demonstrated rejected write.
-- [ ] Johan accepts the bounded connection/authentication review and the #10
-      handoff. This document alone does not close #5 or epic #2.
+Credential-free fork/Dependabot execution and actual cache-access enforcement
+remain #10 checks when meaningful targets exist. The #6 protection work does not
+complete these package proofs or accept epic #2.
 
 ## Package-task proof handoff to #10
 
