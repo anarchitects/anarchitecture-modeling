@@ -88,3 +88,8 @@ Retain upstream copyright and notices, identify copied/generated material and
 confirm authority to contribute it. See the
 [license/provenance review](docs/license-provenance-review.md). Final license
 files and artifact clearance remain separate from this contribution workflow.
+
+Before public disclosure or distribution, apply the
+[public-readiness gate](docs/public-readiness.md) to the exact candidate. Keep
+sensitive findings outside this repository and use the review template for the
+restricted record. This gate does not block private extraction or local tests.
