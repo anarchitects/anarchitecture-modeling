@@ -258,6 +258,78 @@ try {
   console.log(
     'Packed Node ESM, exported package metadata, blocked deep imports and strict TypeScript NodeNext declarations passed without source conditions or workspace redirects.',
   );
+  // The exact consumer example linked by the guide is compiled and executed
+  // against extracted archives. No source aliases or workspace package links.
+  const example = join(temporary, 'lifecycle.mts');
+  cpSync(join(root, 'docs/consumer/examples/lifecycle.mts'), example);
+  const exampleProgram = ts.createProgram([example], {
+    ...options,
+    noEmit: false,
+    outDir: join(temporary, 'example-output'),
+  });
+  const exampleDiagnostics = ts.getPreEmitDiagnostics(exampleProgram);
+  assert.equal(
+    exampleDiagnostics.length,
+    0,
+    ts.formatDiagnosticsWithColorAndContext(exampleDiagnostics, {
+      getCanonicalFileName: (file) => file,
+      getCurrentDirectory: () => temporary,
+      getNewLine: () => '\n',
+    }),
+  );
+  for (const source of exampleProgram.getSourceFiles()) {
+    const file = resolve(source.fileName);
+    assert.ok(
+      file.startsWith(temporary + '/') || file.startsWith(compilerLib + '/'),
+      `Example escaped packed consumer: ${file}`,
+    );
+  }
+  const apiReference = readFileSync(join(root, 'docs/consumer/api.md'), 'utf8');
+  const checker = exampleProgram.getTypeChecker();
+  for (const name of packageNames) {
+    const entry = exampleProgram.getSourceFile(
+      join(temporary, 'node_modules', '@anarchitects', name, 'dist/index.d.ts'),
+    );
+    assert.ok(entry, `Missing packed declaration entry for ${name}`);
+    const exports = checker.getExportsOfModule(
+      checker.getSymbolAtLocation(entry),
+    );
+    for (const [kind, flag] of [
+      ['runtime', ts.SymbolFlags.Value],
+      ['types', ts.SymbolFlags.Type],
+    ]) {
+      const marker = `<!-- exports:${name}:${kind} -->`;
+      const start = apiReference.indexOf(marker);
+      assert.notEqual(
+        start,
+        -1,
+        `Missing documented export list: ${name}/${kind}`,
+      );
+      const block = apiReference.slice(start + marker.length).trimStart();
+      assert.ok(block.startsWith('```text\n'), 'Expected a fenced export list');
+      const documented = block
+        .slice('```text\n'.length)
+        .split('\n```')[0]
+        .trim()
+        .split('\n');
+      const actual = exports
+        .filter((symbol) => symbol.flags & flag)
+        .map((symbol) => symbol.name)
+        .sort();
+      assert.deepEqual(
+        documented,
+        actual,
+        `Public API reference drift: ${name}/${kind}`,
+      );
+    }
+  }
+  console.log(
+    'Consumer API reference matches all 54 core and 116 metamodel root exports (runtime/type split).',
+  );
+  assert.equal(exampleProgram.emit().emitSkipped, false);
+  process.stdout.write(
+    run(process.execPath, ['example-output/lifecycle.mjs'], temporary),
+  );
 } finally {
   rmSync(temporary, { recursive: true, force: true });
 }

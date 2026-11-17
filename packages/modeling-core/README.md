@@ -1,34 +1,52 @@
 # @anarchitects/modeling-core
 
-Host-neutral model identities, structured values, containment, references,
-revision/change primitives and separate diagram-view data. Structural/reference
-and view validation reports diagnostics without adopting changes or repairing
-caller data. Metamodel semantics, executable context, persistence and host
-lifecycle belong outside core.
+Host-neutral identities, semantic models, structured values, containment, local
+references, revision/change primitives and independent diagram-view data.
+Structural/reference/view checks report diagnostics without mutating caller data.
+Core has no metamodel, framework, host or tooling runtime dependency.
 
-This is the unchanged core implementation extracted from Archimatrix at
-`b83c78e7a70e1434a6bf9101d7bbf43467becf7f`. See the
-[extraction record](https://github.com/anarchitects/anarchitecture-modeling/blob/main/docs/core-extraction.md) for file/test provenance,
-public declaration parity and configuration adaptations. The semantic model
-format remains version 2; package versions and opaque model revisions are separate.
+**Unreleased:** this package remains private at `0.0.0`. No registry availability,
+publication clearance or consumer adoption is claimed. The first official version
+is planned as `0.0.1`, subject to separate owner authorization and artifact review.
 
-From the workspace root, using Node 24 and pinned Yarn:
+## Public contract
 
-```sh
-yarn install --immutable
-yarn nx run-many -t build test lint typecheck --projects=modeling-core
-```
+Use named package-root imports. Built ESM resolves to `dist/index.js` and types to
+`dist/index.d.ts`; `package.json` is also exported. Source/implementation deep
+imports are not exported. No custom source conditions or path aliases are needed.
 
-The ordinary package entry resolves to `dist/index.js`, with declarations at
-`dist/index.d.ts`. Tests exercise this built entry as well as the original source
-fixtures. `tslib` is the only declared runtime dependency. Runtime code has no
-metamodel, framework, host, database or tooling dependency.
+Current compatibility evidence: Node 24 ESM and TypeScript 6.0.3 with strict
+`NodeNext` resolution. No CommonJS build, browser/bundler support or older runtime/
+compiler matrix is claimed. Runtime artifacts exclude tests, source, maps and Nx.
+`tslib` is a runtime dependency; metamodel additionally pins the packed core version.
+Core and metamodel versions are independent, so inspect the actual dependency pair.
 
-The built entry supports Node 24 ESM and TypeScript `NodeNext` resolution without
-custom source conditions or aliases. Source and implementation deep imports are
-not exported. Packed files contain runtime JavaScript/declarations and metadata;
-source, maps, tests and tooling are excluded. See the
-[packaging evidence](https://github.com/anarchitects/anarchitecture-modeling/blob/main/docs/package-entry-points.md)
-for exact contents, compatibility and verification limits. No CJS/browser support
-is claimed. The package remains private at `0.0.0`; publication and consumer
-adoption require their separate gates.
+On `0.x`, compatible features/fixes increment patch and breaking changes increment
+minor. Stabilization at `1.0.0` requires an explicit decision. Package versions,
+profile/pack pins, model revisions and document-format versions are distinct.
+The portable codec retains `archimatrix-document` envelope 1 / model format 2 and
+never migrates implicitly.
+
+## Consumer documentation
+
+- [Guide and compatibility](https://github.com/anarchitects/anarchitecture-modeling/blob/main/docs/consumer/README.md)
+- [Complete public API reference](https://github.com/anarchitects/anarchitecture-modeling/blob/main/docs/consumer/api.md)
+- [Executable lifecycle example](https://github.com/anarchitects/anarchitecture-modeling/blob/main/docs/consumer/examples/lifecycle.mts)
+- [Migration and rollback](https://github.com/anarchitects/anarchitecture-modeling/blob/main/docs/consumer/migration.md)
+
+These pages require no private governance or application-source knowledge.
+Installation commands remain release templates until actual versions and integrity
+are recorded. The example is compiled/executed against locally packed APIs;
+registry installation is a separate verification step.
+
+Semantic identity is independent of view occurrences/layout. Exact pins and explicit
+unsupported coverage are preserved. Prepared commands do not commit; the host must
+authorize and atomically recheck revisions. Reopen retains retry receipts but starts
+empty undo/redo stacks. Live history defaults (100 transactions / 10,000 command receipts)
+exceed the codec's 256-per-receipt-collection cap: encode and check limits before
+adopting a durable change. Pruning live history does not delete retry receipts.
+
+Synthetic examples are not standards certification. No method taxonomy, renderer,
+universal transformation engine, persistence, authorization or collaboration
+implementation ships here. Report security issues privately to
+**johan@anarchitects.dev**. No support SLA is promised for unreleased contracts.

@@ -1,11 +1,12 @@
 # Integrated Foundation parity gate
 
-Review candidate for [#19](https://github.com/anarchitects/anarchitecture-modeling/issues/19)
+Accepted evidence for [#19](https://github.com/anarchitects/anarchitecture-modeling/issues/19)
 and extraction [epic #3](https://github.com/anarchitects/anarchitecture-modeling/issues/3),
 17 November 2026. Modeling base: `7fe8bda4c93856da47ee4544cac6728b4eb27a13`.
-**Johan’s explicit acceptance of this assembled outcome remains pending.**
-All direct prerequisites (#13 and #17) are accepted; merge and green CI alone do
-not accept #19 or the assembled extraction epic.
+**[Johan explicitly accepted #19](https://github.com/anarchitects/anarchitecture-modeling/issues/19#issuecomment-6951810221)**
+after PR #41 merged at `36fef74de1d2bdf6fd53ca7ab3809b6b4c5a8e13`.
+All direct prerequisites (#13 and #17) are accepted. This records #19's outcome;
+the parent epic's aggregate acceptance remains separate.
 
 ## Baseline and proof method
 
@@ -156,9 +157,9 @@ establish remote cache transfer, DTE economics or complete #10’s remaining gat
 - #20 retains fresh independent package-manager installation. #14/#18 release
   controls, #22/#23 disclosure/distribution and Archimatrix adoption remain separate.
   Package parity does not approve a version tag, publication or visibility change.
-- Johan accepts #19’s assembled bounded behavior preservation explicitly. All
-  extraction child evidence is now assembled for that decision; this record does
-  not infer acceptance of #19 or epic #3 from tests or PR merge.
+- Johan explicitly accepted #19’s assembled bounded behavior preservation in the
+  linked acceptance record. This does not infer acceptance of epic #3 from tests
+  or PR merge.
 
 ## Governance
 
