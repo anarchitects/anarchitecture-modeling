@@ -21,9 +21,13 @@ test('only complete ancestor history narrows verification', (t) => {
   git('config', 'core.hooksPath', '/dev/null');
   git('config', 'user.name', 'CI fixture');
   git('config', 'user.email', 'ci@example.invalid');
-  git('commit', '--allow-empty', '-m', 'base');
+  writeFileSync(join(cwd, 'source.txt'), 'base');
+  git('add', '.');
+  git('commit', '-m', 'base');
   const base = git('rev-parse', 'HEAD');
-  git('commit', '--allow-empty', '-m', 'head');
+  writeFileSync(join(cwd, 'source.txt'), 'head');
+  git('add', '.');
+  git('commit', '-m', 'head');
   const head = git('rev-parse', 'HEAD');
   const valid = { status: 'success', base, head, cwd };
   assert.equal(selectComparison(valid).mode, 'affected');
@@ -45,6 +49,13 @@ test('only complete ancestor history narrows verification', (t) => {
   assert.equal(selectComparison({ ...valid, base: unrelated }).mode, 'all');
   writeFileSync(join(cwd, '.git/shallow'), `${base}\n`);
   assert.equal(selectComparison(valid).mode, 'all');
+  rmSync(join(cwd, '.git/shallow'));
+  const baseTree = git('rev-parse', `${base}^{tree}`);
+  rmSync(join(cwd, '.git/objects', baseTree.slice(0, 2), baseTree.slice(2)));
+  assert.equal(
+    selectComparison(valid).reason,
+    'comparison trees or diff unavailable',
+  );
 });
 
 test('fallback runs all targets and task failures/signals cannot pass', () => {

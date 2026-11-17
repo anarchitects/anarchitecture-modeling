@@ -73,7 +73,9 @@ the fresh-state behavior under test. Library verification always runs via Nx.
 
 ## Affected selection and the required check
 
-The workflow fetches complete history. The upstream `nrwl/nx-set-shas@v5.1.0`
+The workflow fetches complete history and objects, without a partial-clone filter.
+Historical trees must be available after checkout removes its credentials.
+The upstream `nrwl/nx-set-shas@v5.1.0`
 action uses a PR merge-base for PRs and the previous successful `ci.yml` push on
 main for pushes. Its `per-commit` lookup excludes the current commit and examines
 up to 100 preceding first-parent commits. API failure, no successful predecessor
@@ -81,7 +83,7 @@ or exhausted lookup makes selection fall back to all projects. We explicitly
 disable its permissive `HEAD~1` fallback and do not export unverified Nx variables.
 
 `tools/ci/validate.mjs` verifies full commit SHAs, available commits, non-shallow
-history, ancestry and equality of the proposed head to the checked-out HEAD.
+history, ancestry, a readable diff and equality of the proposed head to the checked-out HEAD.
 Equal base/head also falls back to all. A valid comparison runs `yarn nx affected
 -t lint test build typecheck --base=... --head=...`; otherwise it runs `yarn nx
 run-many -t lint test build typecheck`. A failing Nx comparison/task fails the
@@ -108,7 +110,8 @@ Observed locally on 17 November 2026, Node 24.22.3/macOS arm64:
 
 - Valid ancestor selection; broad fallback for missing/malformed/unavailable
   commits, failed/skipped/cancelled lookup, wrong/equal head, unrelated history
-  and shallow history; nonzero exits and interrupted subprocesses cannot pass.
+  shallow history and missing historical trees; nonzero exits and interrupted
+  subprocesses cannot pass.
 - Graph admission and rejection, including incomplete targets and reverse edges.
 - Actual Nx selection: unrelated Markdown selects none; metamodel source selects
   metamodel; core source selects both.

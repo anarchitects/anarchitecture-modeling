@@ -12,7 +12,12 @@ export function selectComparison({ status, base, head, cwd = process.cwd() }) {
   if (![base, head].every((sha) => /^[a-f0-9]{40}$/.test(sha ?? ''))) {
     return all('missing or malformed commit SHA');
   }
-  const git = (...args) => spawnSync('git', args, { cwd, encoding: 'utf8' });
+  const git = (...args) =>
+    spawnSync('git', args, {
+      cwd,
+      encoding: 'utf8',
+      env: { ...process.env, GIT_TERMINAL_PROMPT: '0' },
+    });
   if (git('rev-parse', '--is-shallow-repository').stdout?.trim() !== 'false') {
     return all('incomplete Git history');
   }
@@ -31,6 +36,14 @@ export function selectComparison({ status, base, head, cwd = process.cwd() }) {
     git('merge-base', '--is-ancestor', base, head).status !== 0
   ) {
     return all('comparison does not span an ancestor and checkout');
+  }
+  // A partial clone can contain commits but omit the historical trees. Check
+  // the same diff Nx will need before allowing it to narrow validation.
+  if (
+    git('diff', '--name-only', '--no-renames', '--relative', '-z', base, head)
+      .status !== 0
+  ) {
+    return all('comparison trees or diff unavailable');
   }
   return {
     mode: 'affected',

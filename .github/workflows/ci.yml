@@ -24,7 +24,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
-          filter: tree:0
+          # Affected needs historical trees after checkout removes credentials.
           fetch-depth: 0
           persist-credentials: false
 
