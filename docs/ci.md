@@ -16,9 +16,11 @@ verified; package-cache proofs and the remaining checks below are not complete.
   the root `yarn.lock` and `.yarnrc.yml` tracked for reproducible installs.
 - The TypeScript plugin supplies build/typecheck conventions, but the resolved
   graph currently has **zero projects and zero tasks**. No package tests have run.
-- CI runs `yarn nx run-many -t lint test build typecheck` on main pushes and PRs.
-  Broad selection is temporary; [#10](https://github.com/anarchitects/anarchitecture-modeling/issues/10)
-  owns actual targets, trustworthy affected comparisons and conservative fallback.
+- CI runs affected lint/test/build/typecheck targets on main pushes and PRs with
+  verified history, falling back to all projects if comparison is unavailable.
+  The [#10 conventions baseline](nx-conventions.md) specifies graph admission,
+  required-check behavior, local infrastructure proofs and the remaining package
+  and remote-cache verification. The required check remains `main`.
 - `actions/setup-node` caches Yarn downloads, not `node_modules` or Nx task outputs.
   These caches must not be counted as remote task-cache hits.
 - Distributed execution is disabled: there is no useful task workload to distribute.

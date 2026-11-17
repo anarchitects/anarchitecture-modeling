@@ -4,7 +4,28 @@
   "namedInputs": {
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
     "production": ["default"],
-    "sharedGlobals": ["{workspaceRoot}/.github/workflows/ci.yml"]
+    "sharedGlobals": [
+      "{workspaceRoot}/nx.json",
+      "{workspaceRoot}/package.json",
+      "{workspaceRoot}/yarn.lock",
+      "{workspaceRoot}/.yarnrc.yml",
+      "{workspaceRoot}/tsconfig*.json",
+      "{workspaceRoot}/.github/workflows/ci.yml",
+      "{workspaceRoot}/tools/ci/**/*",
+      {
+        "runtime": "node -p \"process.version + '-' + process.platform + '-' + process.arch\""
+      }
+    ]
+  },
+  "targetDefaults": {
+    "build": {
+      "cache": true,
+      "inputs": ["default", "^default"],
+      "dependsOn": ["^build"]
+    },
+    "typecheck": { "cache": true, "inputs": ["default", "^default"] },
+    "test": { "cache": true, "inputs": ["default", "^default"] },
+    "lint": { "cache": true, "inputs": ["default", "^default"] }
   },
   "plugins": [
     {

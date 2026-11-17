@@ -24,7 +24,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
-          filter: tree:0
+          # Affected needs historical trees after checkout removes credentials.
           fetch-depth: 0
           persist-credentials: false
 
@@ -46,8 +46,31 @@ jobs:
 
       - run: yarn install --immutable
 
-      # Broad scaffold validation until #10 establishes package targets/affected selection.
-      - run: yarn nx run-many -t lint test build typecheck
+      # A lookup failure must widen verification, never fall back to HEAD~1.
+      - name: Find affected comparison
+        id: shas
+        uses: nrwl/nx-set-shas@v5.1.0
+        continue-on-error: true
+        with:
+          main-branch-name: main
+          workflow-id: ci.yml
+          last-successful-event: push
+          lookup-strategy: per-commit
+          error-on-no-successful-workflow: true
+          set-environment-variables-for-job: false
+
+      - name: Verify CI selection and graph policy
+        run: |
+          node --test tools/ci/*.test.mjs
+          yarn nx graph --file=tmp/ci-project-graph.json
+          node tools/ci/check-project-graph.mjs tmp/ci-project-graph.json
+
+      - name: Validate affected projects or all projects
+        env:
+          COMPARISON_STATUS: ${{ steps.shas.outcome }}
+          COMPARISON_BASE: ${{ steps.shas.outputs.base }}
+          COMPARISON_HEAD: ${{ steps.shas.outputs.head }}
+        run: node tools/ci/validate.mjs
 
       - run: yarn nx fix-ci
         if: ${{ !cancelled() && env.NX_NO_CLOUD != 'true' }}

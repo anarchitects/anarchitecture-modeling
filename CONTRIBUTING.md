@@ -29,9 +29,11 @@ and run actual targets with `yarn nx run <exact-project-name>:<target>`.
 Use the project graph rather than assuming target names or reading only partial
 project configuration. Prefix Nx commands with `yarn`; do not use a global Nx.
 
-CI currently runs `yarn nx run-many -t lint test build typecheck`.
-[#10](https://github.com/anarchitects/anarchitecture-modeling/issues/10) owns
-package targets, affected selection, fallback and local/remote cache proofs.
+CI runs affected lint/test/build/typecheck tasks with a verified base/head, falling
+back to all projects when the comparison is unavailable. The
+[Nx conventions](docs/nx-conventions.md) define exact identities, graph admission,
+inputs, outputs and the remaining real-package/remote-cache proofs under
+[#10](https://github.com/anarchitects/anarchitecture-modeling/issues/10).
 Report zero tasks and skipped checks honestly. For Markdown/JSON-only changes,
 check changed files with `yarn prettier --check <files>` and `git diff --check`;
 do not invent runtime test evidence. Keep `.yarn/` untracked and ignored.
