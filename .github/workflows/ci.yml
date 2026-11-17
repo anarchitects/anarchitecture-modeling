@@ -39,3 +39,6 @@ jobs:
       # Prepend any command with "nx record --" to record its logs to Nx Cloud
       # - run: yarn nx record -- echo Hello World
       - run: yarn nx run-many -t lint test build typecheck
+
+      - run: yarn nx fix-ci
+        if: always()
