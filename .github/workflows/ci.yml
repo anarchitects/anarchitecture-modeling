@@ -80,5 +80,17 @@ jobs:
           node --test tools/publishing/*.test.mjs
           node tools/publishing/verify-archives.mjs
 
+      - name: Prove a fresh independent npm consumer
+        env:
+          NX_NO_CLOUD: 'true'
+        run: node tools/consumer/check.mjs tmp/independent-consumer
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: independent-consumer-evidence
+          path: tmp/independent-consumer/
+          if-no-files-found: error
+          retention-days: 7
+
       - run: yarn nx fix-ci
         if: ${{ !cancelled() && env.NX_NO_CLOUD != 'true' }}

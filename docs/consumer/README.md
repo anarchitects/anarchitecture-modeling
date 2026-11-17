@@ -32,14 +32,18 @@ Do not substitute `latest`, workspace references or a sibling source checkout fo
 the reviewed artifacts. Runtime dependencies are core → `tslib`, and metamodel →
 core + `tslib`; Nx and the compiler are development tools, not consumer runtimes.
 
-| Surface           | Current evidence / contract                                                            |
-| ----------------- | -------------------------------------------------------------------------------------- |
-| JavaScript        | Node 24, ESM; package root resolves to `dist/index.js`                                 |
-| TypeScript        | 6.0.3, strict `NodeNext`, declarations at `dist/index.d.ts`, `skipLibCheck: false`     |
-| Imports           | Named root imports and the exported `package.json` metadata subpath                    |
-| Private paths     | `src/*`, `dist/*` and implementation helpers are not exported                          |
-| Other runtimes    | No tested CommonJS build, browser/bundler matrix, older Node or compiler support claim |
-| Editor navigation | Shipped declarations; source/declaration maps are not shipped                          |
+| Surface           | Current evidence / contract                                                                                    |
+| ----------------- | -------------------------------------------------------------------------------------------------------------- |
+| JavaScript        | Node 24, ESM; package root resolves to `dist/index.js`                                                         |
+| TypeScript        | 6.0.3, strict `NodeNext` and `Node16` ESM resolution, declarations at `dist/index.d.ts`, `skipLibCheck: false` |
+| Imports           | Named root imports and the exported `package.json` metadata subpath                                            |
+| Private paths     | `src/*`, `dist/*` and implementation helpers are not exported                                                  |
+| Other runtimes    | No tested CommonJS build, browser/bundler matrix, older Node or compiler support claim                         |
+| Editor navigation | Shipped declarations; source/declaration maps are not shipped                                                  |
+
+The [independent consumer proof](../independent-consumer.md) records fresh npm
+installation, runtime dependency closure and the exact observed platform matrix.
+`Node16` names a compiler resolution mode, not support for the Node 16 runtime.
 
 For TypeScript consumers, use `.mts`, or `.ts` with a nearest `package.json`
 containing `"type": "module"`. A minimal verification configuration is:
