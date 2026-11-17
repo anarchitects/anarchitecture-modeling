@@ -35,6 +35,8 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for validation and lifecycle guidance.
 
 The workspace is already connected to Nx Cloud; do not reconnect it. The
 [CI record](docs/ci.md) explains credentials, self-healing and remaining cache proofs.
+[Nx conventions](docs/nx-conventions.md) define package identities, graph checks,
+affected selection and the extraction verification handoff.
 [Repository governance](docs/repository-governance.md) records effective controls
 separately from proposed settings and pending checks.
 
