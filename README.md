@@ -3,8 +3,8 @@
 An independent, host-neutral TypeScript modeling capability. The packages retain
 the identities `@anarchitects/modeling-core` and
 `@anarchitects/modeling-metamodel`; metamodel may depend on core, never the reverse.
-Archimatrix is the first consumer. The core package now builds and tests
-independently; metamodel extraction and publication remain in progress.
+Archimatrix is the first consumer. Both packages now build and test independently;
+metamodel parity acceptance and publication remain in progress.
 
 ## Contributing and ownership
 
@@ -25,7 +25,7 @@ Use Node 24 and the pinned Yarn 4.18.1. Nx and `@nx/js` are pinned to 24.0.6.
 corepack enable
 yarn install --immutable
 yarn nx show projects --json
-yarn nx run-many -t build test lint typecheck --projects=modeling-core
+yarn nx run-many -t build test lint typecheck --projects=modeling-core,modeling-metamodel
 ```
 
 Resolve project names and targets before running package commands. An empty
@@ -50,7 +50,8 @@ public exports, portable tests and consumer dependencies for epic #3. The
 [file-level extraction boundary](docs/extraction-boundary.md) records the portable
 and host dispositions accepted under #11. The [core extraction record](docs/core-extraction.md)
 documents unchanged source, declarations, tests and movement-only configuration
-adaptations for #12; its parity outcome awaits Johan’s acceptance.
+adaptations accepted under #12. The [metamodel extraction record](docs/metamodel-extraction.md)
+provides #15’s evidence for Johan’s parity review.
 
 ## Licensing and release status
 

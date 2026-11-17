@@ -23,11 +23,11 @@ yarn install --immutable
 yarn nx show projects --json
 ```
 
-The current graph contains `modeling-core`, with build, test, lint and typecheck
-targets. Verify it with:
+The current graph contains `modeling-core` and `modeling-metamodel`, each with
+build, test, lint and typecheck targets. Verify both with:
 
 ```sh
-yarn nx run-many -t build test lint typecheck --projects=modeling-core
+yarn nx run-many -t build test lint typecheck --projects=modeling-core,modeling-metamodel
 ```
 
 As projects arrive, inspect `yarn nx show project <exact-project-name> --json`

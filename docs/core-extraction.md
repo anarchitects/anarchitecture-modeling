@@ -1,7 +1,7 @@
 # Core extraction and parity evidence
 
 Implementation for [#12](https://github.com/anarchitects/anarchitecture-modeling/issues/12),
-17 November 2026. **Johan’s parity acceptance remains pending.** The package builds
+17 November 2026. **Johan explicitly accepted core parity under [#12](https://github.com/anarchitects/anarchitecture-modeling/issues/12#issuecomment-6949062372) after PR #36 merged.** The package builds
 independently; this record does not authorize publication or consumer cutover.
 
 ## Source and movement boundary
@@ -138,4 +138,4 @@ verification. #14 owns releases. PWG’s Meta #56 review proceeds in parallel.
 The package remains private and unreleased. The existing rights/provenance review
 applies, but scaffold license metadata is not final package clearance. #22/#23
 retain final candidate review and separately authorized disclosure/distribution.
-Johan’s explicit #12 acceptance is separate from green tests and PR merge.
+Johan’s explicit #12 acceptance is recorded separately from green tests and PR merge.

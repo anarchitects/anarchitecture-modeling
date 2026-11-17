@@ -5,6 +5,9 @@
   "references": [
     {
       "path": "./packages/modeling-core"
+    },
+    {
+      "path": "./packages/modeling-metamodel"
     }
   ]
 }

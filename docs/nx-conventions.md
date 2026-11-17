@@ -2,8 +2,9 @@
 
 Baseline for [#10](https://github.com/anarchitects/anarchitecture-modeling/issues/10).
 The original empty-graph baseline permits extraction to start. The graph now
-contains **modeling-core**, with real build/test/lint/typecheck targets; see the
-[#12 extraction evidence](core-extraction.md). Metamodel and remote cache proofs
+contains **modeling-core and modeling-metamodel**, with eight real targets and
+one inward dependency; see the [#12](core-extraction.md) and
+[#15 extraction evidence](metamodel-extraction.md). Remote cache/trust proofs
 remain outstanding. Johan accepts the outcome. PWG's parallel Meta #56 review
 retains its registration/distribution scope.
 
@@ -48,8 +49,8 @@ outputs, prerequisites and synchronization generators, not only its manifest.
 | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `build`     | Existing `@nx/js/typescript` plugin infers from a valid `tsconfig.lib.json`; `^build` orders dependency builds. Retain inferred JavaScript/declaration/map/build-info outputs and prove all required artifacts restore. Root `emitDeclarationOnly` must be deliberately overridden for a JavaScript-producing package. |
 | `typecheck` | Inspect the TypeScript plugin's inferred command, reference prerequisites and outputs. Reject disabled/echo-only targets. Avoid overlapping incremental/output files with simultaneous builds.                                                                                                                         |
-| `test`      | Inferred by `@nx/vitest` for core. Its public-entry tests depend on its own build; workspace dependency builds remain prerequisites when introduced.                                                                                                                                                                   |
-| `lint`      | Inferred by `@nx/eslint/plugin` for core, with runtime import restrictions and negative fixtures. Root lint/test configuration is included in shared inputs.                                                                                                                                                           |
+| `test`      | Inferred by `@nx/vitest` for both libraries. Public-entry tests depend on the owning build; metamodel build orders core build first.                                                                                                                                                                                   |
+| `lint`      | Inferred by `@nx/eslint/plugin` for both libraries, with runtime import restrictions and negative fixtures. Root lint/test configuration is included in shared inputs.                                                                                                                                                 |
 
 `targetDefaults` makes those four deterministic targets cacheable, includes
 `default` and `^default`, and preserves plugin outputs. Target defaults do **not**
@@ -126,13 +127,15 @@ Initial scaffold observations on 17 November 2026, Node 24.22.3/macOS arm64:
 - At that baseline the real graph was empty; graph generation/check took approximately 0.56 s.
   No real library test, artifact restoration or remote task-cache result follows.
 
-DTE remains deferred. The initial graph had no tasks; #12 adds one library
-with four short tasks and local cache restoration evidence. This does not yet
-establish a benefit from adding runners. DTE startup, remote
+DTE remains deferred. Both libraries now have targets, reaching the revisit
+trigger below. #15 records eight cold local tasks in about 2.9 seconds and a
+2.3-second critical path, plus real local cache restoration/invalidation. The
+remaining hosted/remote measurements and owner decision stay in #10; these
+local results do not establish a benefit from adding runners. DTE startup, remote
 transfer, worker utilization and cost are **not measured**, and synthetic fixture
 timings are not a distribution benchmark. Maintain one runner and no DTE workers.
-Johan/maintainers must revisit when both real libraries have targets, or sooner
-if a substantial independent task workload appears. Record cold/warm total CI
+Johan/maintainers now have both real libraries available for that review in #10;
+revisit again if a substantial independent task workload appears. Record cold/warm total CI
 time, selection/install overhead, longest task/dependency chain, cache transfer,
 worker startup, memory and runner-seconds before selecting capacity. Use measured
 benefit and equal outputs/failure behavior to decide whether distribution helps.
