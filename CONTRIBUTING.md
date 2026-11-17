@@ -23,7 +23,13 @@ yarn install --immutable
 yarn nx show projects --json
 ```
 
-The current scaffold returns `[]`: there are no package projects or tests yet.
+The current graph contains `modeling-core`, with build, test, lint and typecheck
+targets. Verify it with:
+
+```sh
+yarn nx run-many -t build test lint typecheck --projects=modeling-core
+```
+
 As projects arrive, inspect `yarn nx show project <exact-project-name> --json`
 and run actual targets with `yarn nx run <exact-project-name>:<target>`.
 Use the project graph rather than assuming target names or reading only partial
@@ -43,7 +49,7 @@ do not invent runtime test evidence. Keep `.yarn/` untracked and ignored.
 Use Conventional Commits. Repository-wide work may be unscoped, for example
 `docs: clarify contribution workflow`. Every scope must exactly match a project
 name returned by the active Nx graph; a folder, npm scope or release-group name
-is not a substitute. With the current empty graph, use unscoped repository commits.
+is not a substitute. Use unscoped commits for repository-wide changes.
 
 Before a package's first release, use `init(<exact-nx-project-name>): ...` for
 package development, without breaking-change intent. `init` must be non-bumping.

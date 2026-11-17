@@ -1,9 +1,10 @@
 # Nx package and CI conventions
 
 Baseline for [#10](https://github.com/anarchitects/anarchitecture-modeling/issues/10).
-The real graph currently has **zero library projects**. This baseline permits
-extraction to start; it does not claim the extracted packages, tests or remote
-cache proofs exist. Johan accepts the outcome. PWG's parallel Meta #56 review
+The original empty-graph baseline permits extraction to start. The graph now
+contains **modeling-core**, with real build/test/lint/typecheck targets; see the
+[#12 extraction evidence](core-extraction.md). Metamodel and remote cache proofs
+remain outstanding. Johan accepts the outcome. PWG's parallel Meta #56 review
 retains its registration/distribution scope.
 
 ## Package identities and boundaries
@@ -47,8 +48,8 @@ outputs, prerequisites and synchronization generators, not only its manifest.
 | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `build`     | Existing `@nx/js/typescript` plugin infers from a valid `tsconfig.lib.json`; `^build` orders dependency builds. Retain inferred JavaScript/declaration/map/build-info outputs and prove all required artifacts restore. Root `emitDeclarationOnly` must be deliberately overridden for a JavaScript-producing package. |
 | `typecheck` | Inspect the TypeScript plugin's inferred command, reference prerequisites and outputs. Reject disabled/echo-only targets. Avoid overlapping incremental/output files with simultaneous builds.                                                                                                                         |
-| `test`      | Not inferred by the currently installed plugins. Extraction must install/configure the chosen test tooling and expose real tests/fixtures through Nx. Model build prerequisites if tests consume built exports.                                                                                                        |
-| `lint`      | Not inferred by the currently installed plugins. Extraction must supply real lint and runtime-boundary validation, with relevant configuration in inputs.                                                                                                                                                              |
+| `test`      | Inferred by `@nx/vitest` for core. Its public-entry tests depend on its own build; workspace dependency builds remain prerequisites when introduced.                                                                                                                                                                   |
+| `lint`      | Inferred by `@nx/eslint/plugin` for core, with runtime import restrictions and negative fixtures. Root lint/test configuration is included in shared inputs.                                                                                                                                                           |
 
 `targetDefaults` makes those four deterministic targets cacheable, includes
 `default` and `^default`, and preserves plugin outputs. Target defaults do **not**
@@ -106,7 +107,7 @@ installed Nx binary. They do not add projects to the production graph or call
 Nx Cloud. The two-project fixture uses synthetic `run-commands` builds, not
 extracted TypeScript or consumer contracts.
 
-Observed locally on 17 November 2026, Node 24.22.3/macOS arm64:
+Initial scaffold observations on 17 November 2026, Node 24.22.3/macOS arm64:
 
 - Valid ancestor selection; broad fallback for missing/malformed/unavailable
   commits, failed/skipped/cancelled lookup, wrong/equal head, unrelated history
@@ -122,11 +123,12 @@ Observed locally on 17 November 2026, Node 24.22.3/macOS arm64:
 - One local fixture run measured 354 ms cold, 265 ms warm and 266 ms for clean
   restoration; all five infrastructure tests completed in 3.60 s. These small
   synthetic measurements establish test overhead, not production speedups.
-- The real graph remains empty; graph generation/check took approximately 0.56 s.
+- At that baseline the real graph was empty; graph generation/check took approximately 0.56 s.
   No real library test, artifact restoration or remote task-cache result follows.
 
-DTE is deferred: the real workload has zero tasks/zero runnable critical path;
-there is nothing to distribute or avoid by adding runners. DTE startup, remote
+DTE remains deferred. The initial graph had no tasks; #12 adds one library
+with four short tasks and local cache restoration evidence. This does not yet
+establish a benefit from adding runners. DTE startup, remote
 transfer, worker utilization and cost are **not measured**, and synthetic fixture
 timings are not a distribution benchmark. Maintain one runner and no DTE workers.
 Johan/maintainers must revisit when both real libraries have targets, or sooner

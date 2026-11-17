@@ -1,10 +1,10 @@
 # Modeling Foundation
 
-An independent, host-neutral TypeScript modeling capability. The planned packages
-retain the identities `@anarchitects/modeling-core` and
+An independent, host-neutral TypeScript modeling capability. The packages retain
+the identities `@anarchitects/modeling-core` and
 `@anarchitects/modeling-metamodel`; metamodel may depend on core, never the reverse.
-Archimatrix is the first consumer. Extraction and publication remain in progress:
-this workspace currently has no Nx projects or package targets.
+Archimatrix is the first consumer. The core package now builds and tests
+independently; metamodel extraction and publication remain in progress.
 
 ## Contributing and ownership
 
@@ -25,6 +25,7 @@ Use Node 24 and the pinned Yarn 4.18.1. Nx and `@nx/js` are pinned to 24.0.6.
 corepack enable
 yarn install --immutable
 yarn nx show projects --json
+yarn nx run-many -t build test lint typecheck --projects=modeling-core
 ```
 
 Resolve project names and targets before running package commands. An empty
@@ -47,8 +48,9 @@ and merge. A configuration file alone does not establish hosted execution.
 The [extraction inventory](docs/extraction-inventory.md) pins the source files,
 public exports, portable tests and consumer dependencies for epic #3. The
 [file-level extraction boundary](docs/extraction-boundary.md) records the portable
-and host dispositions proposed for #11’s owner review. Package extraction remains
-a separate follow-up.
+and host dispositions accepted under #11. The [core extraction record](docs/core-extraction.md)
+documents unchanged source, declarations, tests and movement-only configuration
+adaptations for #12; its parity outcome awaits Johan’s acceptance.
 
 ## Licensing and release status
 

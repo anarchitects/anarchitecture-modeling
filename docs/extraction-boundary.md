@@ -1,6 +1,6 @@
 # Portable document/session and host persistence boundary
 
-**Status: ready for Johan’s review; #11 outcome acceptance pending.**
+**Status: accepted by Johan under [#11][issue11] after PR #35 merged.**
 Prepared 17 November 2026 for [Modeling #11][issue11], under [epic #3][epic3].
 This applies accepted [ADR 0001](adr/0001-modeling-foundation-boundaries.md) to
 actual files. It selects no new API, persistence abstraction, format or package.
@@ -12,7 +12,7 @@ unchanged. The [file/fixture manifest](extraction-files.md) and
 [170-name public surface](extraction-public-surface.md) remain the complete
 accounting baseline. No code moves in this review.
 
-## Disposition for owner acceptance
+## Accepted disposition
 
 Keep all existing core and metamodel runtime source in their respective packages.
 Document/session coordination belongs in metamodel because it combines core data
@@ -29,8 +29,9 @@ application, persistence, authorization and collaboration services.
 
 This is a classification of the accepted behavior, not a redesign. Source tests
 and helpers do not become production APIs. No additional package or new ADR is
-needed to apply the existing accepted responsibility split. Johan’s acceptance
-of this file-level result is still required by #11.
+needed to apply the existing accepted responsibility split. Johan explicitly
+accepted this file-level result after PR #35 merged at
+`3db4366621e98936b92dbc4c91b5ecdb3dc3aae6`; #11 records the decision.
 
 ## Portable files and rationale
 
@@ -157,7 +158,7 @@ No UI mock, synthetic method fixture or filesystem adapter enters a package tarb
 
 These rows discharge the six ambiguity groups identified in the accepted inventory
 at the design-review level. File placement and behavior are specified above;
-**Johan’s acceptance remains pending for all six**.
+**Johan accepted all six under #11**.
 
 | Inventory ambiguity                                      | Selected disposition                                                                                                                                                  | Evidence                  |
 | -------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------- |
@@ -229,7 +230,7 @@ checks under Modeling’s toolchain. Those remain #12/#15/#13/#16/#17/#19 work.
 ## Authority, remaining gates and acceptance
 
 The owner for this bounded result is Johan, per [OWNERSHIP.md](../OWNERSHIP.md).
-Record his explicit acceptance on #11 separately from PR merge. Once accepted,
+His explicit acceptance is recorded on #11 separately from PR merge.
 #12 and #15 can use this disposition subject to their own direct prerequisites;
 #11 does not itself move source or establish extracted parity.
 
