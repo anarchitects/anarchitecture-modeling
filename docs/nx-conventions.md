@@ -4,8 +4,10 @@ Baseline for [#10](https://github.com/anarchitects/anarchitecture-modeling/issue
 The original empty-graph baseline permits extraction to start. The graph now
 contains **modeling-core and modeling-metamodel**, with eight real targets and
 one inward dependency; see the [#12](core-extraction.md) and
-[#15 extraction evidence](metamodel-extraction.md). Remote cache/trust proofs
-remain outstanding. Johan accepts the outcome. PWG's parallel Meta #56 review
+[#15 extraction evidence](metamodel-extraction.md). The
+[CI acceptance review](ci-verification.md) records remote reuse/isolation,
+credential checks, hosted-probe scope and the measured decision to retain one runner.
+Johan accepts the outcome. PWG's parallel Meta #56 review
 retains its registration/distribution scope.
 
 ## Package identities and boundaries
@@ -128,21 +130,16 @@ Initial scaffold observations on 17 November 2026, Node 24.22.3/macOS arm64:
 - At that baseline the real graph was empty; graph generation/check took approximately 0.56 s.
   No real library test, artifact restoration or remote task-cache result follows.
 
-DTE remains deferred. Both libraries now have targets, reaching the revisit
-trigger below. #15 records eight cold local tasks in about 2.9 seconds and a
-2.3-second critical path, plus real local cache restoration/invalidation. The
-remaining hosted/remote measurements and owner decision stay in #10; these
-local results do not establish a benefit from adding runners. DTE startup, remote
-transfer, worker utilization and cost are **not measured**, and synthetic fixture
-timings are not a distribution benchmark. Maintain one runner and no DTE workers.
-Johan/maintainers now have both real libraries available for that review in #10;
-revisit again if a substantial independent task workload appears. Record cold/warm total CI
-time, selection/install overhead, longest task/dependency chain, cache transfer,
-worker startup, memory and runner-seconds before selecting capacity. Use measured
-benefit and equal outputs/failure behavior to decide whether distribution helps.
+DTE remains deferred after the two-library review. The
+[current measurement and revisit criteria](ci-verification.md#dte-decision-retain-one-runner)
+replace the initial "when both libraries exist" trigger. Retain one runner and no
+DTE workers: the measured dependency chain leaves little scheduling benefit.
+Worker startup/transfer, utilization and cost are unmeasured; no distributed
+speedup is claimed. Owner acceptance remains separate.
 
-Keep #10 open for package-specific evidence as #12 (core) and #15 (metamodel)
-arrive. Extraction is not blocked on completing both packages first. Record:
+The original extraction handoff required the following evidence; the
+[acceptance review](ci-verification.md) reconciles completed observations and
+remaining event-specific limits instead of treating the old empty graph as current:
 
 - Resolved real targets/inputs/outputs/prerequisites and runtime-boundary tests.
 - Real positive/negative affected cases and source/dependency/config/environment

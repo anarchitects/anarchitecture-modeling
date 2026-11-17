@@ -2,7 +2,9 @@
 
 Review for [issue #5](https://github.com/anarchitects/anarchitecture-modeling/issues/5),
 17 November 2026. Johan owns acceptance. Connection and scaffold execution are
-verified; package-cache proofs and the remaining checks below are not complete.
+verified. The [current #10 acceptance review](ci-verification.md) reconciles the
+later package-cache proofs, event trust checks and outstanding acceptance limits;
+the original baseline observations below remain historical evidence.
 
 ## Configuration
 
@@ -25,7 +27,7 @@ verified; package-cache proofs and the remaining checks below are not complete.
 - `actions/setup-node` caches Yarn downloads, not `node_modules` or Nx task outputs.
   These caches must not be counted as remote task-cache hits.
 - Distributed execution remains disabled. Johan/maintainers revisit in #10
-  when both libraries have targets, measuring
+  using the [two-library measurement and revisit policy](ci-verification.md#dte-decision-retain-one-runner), measuring
   cold/warm duration, dependency critical path, startup overhead and compute cost.
   No worker count is selected without that evidence.
 
