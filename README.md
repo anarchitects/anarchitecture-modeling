@@ -55,6 +55,8 @@ records #15’s accepted parity. The [proof migration record](docs/proofs/README
 maps historical source issues and PRs to current executable fixtures. The
 [built-entry and packaging record](docs/package-entry-points.md) describes ordinary
 ESM/declaration resolution and the verified tarball contents.
+[Dependency-boundary evidence](docs/dependency-boundaries.md) covers source,
+declarations, packed artifacts, runtime provenance and the installed closure.
 
 ## Licensing and release status
 

@@ -2,7 +2,8 @@
 
 Implementation for [#16](https://github.com/anarchitects/anarchitecture-modeling/issues/16),
 17 November 2026, from Modeling `e41ae08cc4375710d4ff1554c6394c67239592ac`.
-Johan’s acceptance of this packaging outcome remains pending. Accepted
+[Johan explicitly accepted #16](https://github.com/anarchitects/anarchitecture-modeling/issues/16#issuecomment-6950822557)
+after PR #39 merged at `01e80165db4c17aa0797f639c57ddd2d1702a948`. Accepted
 [core parity](core-extraction.md), [metamodel parity](metamodel-extraction.md) and
 [proof parity](proofs/README.md) provide the behavior baseline.
 

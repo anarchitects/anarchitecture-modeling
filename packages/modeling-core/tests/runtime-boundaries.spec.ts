@@ -27,6 +27,11 @@ describe('core runtime boundaries', () => {
       'node:sqlite',
       'better-sqlite3',
       '@prisma/client',
+      'pg',
+      '@anarchitects/blueprint',
+      '@anarchitects/private-shared',
+      '#source',
+      '@archimatrix/source',
       '@anarchitects/modeling-core/src/lib/identity.js',
     ]) {
       expect(

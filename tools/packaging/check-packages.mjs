@@ -14,6 +14,17 @@ import { tmpdir } from 'node:os';
 import { dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import ts from 'typescript';
+import {
+  checkHelper,
+  checkManifest,
+  inspectLayer,
+} from '../boundaries/policy.mjs';
+const boundaryBaseline = JSON.parse(
+  readFileSync(
+    new URL('../boundaries/runtime-baseline.json', import.meta.url),
+    'utf8',
+  ),
+);
 
 const root = fileURLToPath(new URL('../../', import.meta.url));
 const temporary = realpathSync(
@@ -76,6 +87,17 @@ try {
     mkdirSync(destination, { recursive: true });
     run('tar', ['-xzf', archive, '--strip-components=1', '-C', destination]);
     const manifest = readJson(join(destination, 'package.json'));
+    checkManifest(manifest, name, {
+      packed: true,
+      coreVersion: versions['modeling-core'],
+    });
+    for (const layer of ['javascript', 'declaration'])
+      inspectLayer(
+        join(destination, 'dist'),
+        name,
+        layer,
+        boundaryBaseline.packages[name][layer],
+      );
     assert.equal(manifest.name, `@anarchitects/${name}`);
     assert.equal(manifest.version, versions[name]);
     assert.equal(
@@ -133,6 +155,12 @@ try {
     dirname(fileURLToPath(import.meta.resolve('tslib/package.json'))),
     join(temporary, 'node_modules', 'tslib'),
     { recursive: true },
+  );
+  checkHelper(
+    readJson(join(temporary, 'node_modules', 'tslib', 'package.json')),
+  );
+  console.log(
+    'Packed runtime/declaration imports, provenance and compiler-helper dependency closure passed.',
   );
   writeFileSync(
     join(temporary, 'package.json'),
