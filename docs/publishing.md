@@ -32,9 +32,11 @@ independent, versioned distribution manifests. Each tarball contains:
 - Existing ESM entry points and declarations under `dist/`, Node `^24.0.0`
   engine support and the same exports. There is no CommonJS build.
 - A package-specific description, repository URL and package directory,
-  consumer documentation URL and issue URL.
+  consumer documentation URL pinned to the source commit and issue URL.
 - Only the accepted runtime JavaScript/declaration inventory, `package.json`,
-  README, LICENSE and NOTICE. No source maps are emitted or referenced; source,
+  README, LICENSE, NOTICE and a bounded `docs/` bundle (consumer guide, API,
+  migration/release notes and the executable lifecycle example). No source maps
+  are emitted or referenced; runtime source,
   tests, fixtures, credentials, build state and lifecycle scripts are excluded.
 - An exact core dependency in the metamodel manifest, using the core candidate
   version or its Nx baseline. `workspace:`, `file:`, `link:` and private-source
@@ -207,3 +209,21 @@ reconcile lifecycle metadata, source versions and lockfile through reviewed PRs.
 Live environment approval, scope control, bootstrap authentication, OIDC
 exchange and npm provenance are external gates. Local tests use synthetic
 authorization records; they prove rejection logic, not an executed deployment.
+
+## Documentation verification
+
+The [package documentation gate](package-documentation.md) is part of candidate
+review. Staging derives the package-specific README from reviewed source, pins
+online references/homepage to the source SHA and includes offline guides/examples.
+Archive, installed-consumer and disabled-publisher checks compare these exact bytes
+with the reviewed source; they also check bundled relative links/anchors. These
+checks do not establish remote URL accessibility or registry rendering.
+
+Before #22 sign-off, review each README and its exact candidate version, supported
+matrix, install path and limitations. Before #23 activation, reconcile preview-only
+wording and local-tarball instructions with the intended exact public versions,
+then regenerate/review archives and run their examples. Never silently transform a
+preview into a published-availability claim. After authorized publication, inspect
+each actual npm version page and its links, and run the documented registry install
+and quick starts. Record URLs/observations and handle mismatches through the normal
+owner-authorized release process. Keep immutable published artifacts unchanged.

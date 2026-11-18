@@ -6,6 +6,7 @@ import { digest, checkManifest } from '../boundaries/policy.mjs';
 import { config } from './prepare.mjs';
 import { authorize } from './authorization.mjs';
 import { verifyLegalFiles } from './legal.mjs';
+import { verifyDocumentation } from './documentation.mjs';
 
 // Fail before any network request or external mutation while activation is pending.
 assert.equal(config.enabled, true, 'Publication disabled until #23 activation');
@@ -68,7 +69,7 @@ const branchPolicies = await pages(
   'branch_policies',
 );
 const workflow = await github(`actions/workflows/${config.workflow}`);
-for (const issue of [20, 21, 22, 44]) {
+for (const issue of [20, 21, 22, 44, 55]) {
   const gate = await github(`issues/${issue}`);
   assert.equal(gate.state, 'closed', `Readiness gate #${issue} is open`);
   assert.equal(gate.state_reason, 'completed');
@@ -97,6 +98,13 @@ for (const [name, artifact] of Object.entries(report.artifacts)) {
   assert.equal(manifest.license, config.license.spdx);
   assert.notEqual(manifest.license, 'UNLICENSED');
   verifyLegalFiles(manifest, read, config.license);
+  verifyDocumentation(
+    name,
+    manifest,
+    read,
+    report.sourceSha,
+    config.repository,
+  );
   checkManifest(manifest, name, {
     packed: true,
     coreVersion:

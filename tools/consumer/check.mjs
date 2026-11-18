@@ -31,6 +31,10 @@ import {
 } from '../boundaries/policy.mjs';
 import { config, prepare } from '../publishing/prepare.mjs';
 import { verifyLegalFiles } from '../publishing/legal.mjs';
+import {
+  verifyDocumentation,
+  quickStart,
+} from '../publishing/documentation.mjs';
 
 const root = fileURLToPath(new URL('../../', import.meta.url));
 const json = (file) => JSON.parse(readFileSync(file, 'utf8'));
@@ -127,10 +131,10 @@ const report = {
   moduleResolution: ['NodeNext', 'Node16'],
   artifacts: {},
   runtimeClosure: {},
+  documentation: {},
   checks: [],
 };
 try {
-  const dependencies = {};
   for (const name of names) {
     const artifact = candidate.artifacts[name];
     assert.equal(basename(artifact.file), artifact.file);
@@ -141,7 +145,10 @@ try {
       'Candidate archive hash mismatch',
     );
     cpSync(archive, join(consumer, 'artifacts', artifact.file));
-    dependencies[`@anarchitects/${name}`] = `file:artifacts/${artifact.file}`;
+    cpSync(
+      archive,
+      join(consumer, name === 'modeling-core' ? 'core.tgz' : 'metamodel.tgz'),
+    );
     report.artifacts[name] = {
       version: artifact.artifactVersion,
       sha256: artifact.sha256,
@@ -151,16 +158,66 @@ try {
       files: artifact.files,
     };
   }
-  write(join(consumer, 'package.json'), {
-    name: 'foundation-independent-consumer',
-    version: '0.0.0',
-    private: true,
-    type: 'module',
-    dependencies,
-  });
-  console.log(
-    run('npm', ['install', '--ignore-scripts', '--no-audit', '--no-fund']),
-  );
+  const runReadme = (name) => {
+    const readme = readFileSync(
+      join(consumer, 'node_modules', '@anarchitects', name, 'README.md'),
+      'utf8',
+    );
+    const example = quickStart(readme);
+    writeFileSync(join(consumer, 'quickstart.mjs'), example.source + '\n');
+    const observed = node(['quickstart.mjs']).trim();
+    assert.equal(observed, example.output, `${name}: README expected output`);
+    return {
+      expected: example.output,
+      observed,
+      readmeSha256: digest(readme),
+      sourceSha256: digest(example.source),
+    };
+  };
+  for (const name of names) {
+    // Each README starts with no package configuration or installed dependencies.
+    // Retain only the supplied archives and this run's isolated npm cache.
+    for (const path of [
+      'node_modules',
+      'package.json',
+      'package-lock.json',
+      'quickstart.mjs',
+    ])
+      rmSync(join(consumer, path), { recursive: true, force: true });
+    const artifact = candidate.artifacts[name];
+    const read = (path) =>
+      execFileSync(
+        'tar',
+        ['-xOf', join(candidateDirectory, artifact.file), `package/${path}`],
+        { encoding: 'utf8' },
+      );
+    const example = verifyDocumentation(
+      name,
+      artifact.manifest,
+      read,
+      candidate.sourceSha,
+      config.repository,
+    );
+    const commands = example.install.split('\n');
+    // Execute the documented install steps, without a shell or arbitrary code.
+    const expected = [
+      'npm init -y',
+      `npm install --save-exact ./core.tgz${name === 'modeling-metamodel' ? ' ./metamodel.tgz' : ''}`,
+    ];
+    assert.deepEqual(
+      commands,
+      expected,
+      'Review changes to README install commands',
+    );
+    for (const command of commands)
+      console.log(run('npm', command.split(' ').slice(1)));
+    if (name === 'modeling-core')
+      assert.deepEqual(inventory(), ['@anarchitects/modeling-core', 'tslib']);
+    report.documentation[name] = {
+      commands: [...commands, 'node quickstart.mjs'],
+      ...runReadme(name),
+    };
+  }
   assert.deepEqual(inventory(), [
     '@anarchitects/modeling-core',
     '@anarchitects/modeling-metamodel',
@@ -227,6 +284,13 @@ try {
       (path) => readFileSync(join(directory, path)),
       config.license,
     );
+    verifyDocumentation(
+      name,
+      manifest,
+      (path) => readFileSync(join(directory, path)),
+      candidate.sourceSha,
+      config.repository,
+    );
     report.runtimeClosure[specifier] = {
       version: manifest.version,
       dependencies: manifest.dependencies,
@@ -254,13 +318,19 @@ try {
     ['tools/proofs/foundation-smoke.mjs', 'smoke.mjs'],
     ['tools/consumer/types.mts', 'types.mts'],
     ['tools/consumer/typecheck.mjs', 'typecheck.mjs'],
-    ['docs/consumer/examples/lifecycle.mts', 'lifecycle.mts'],
   ])
     cpSync(join(root, source), join(consumer, destination));
+  cpSync(
+    join(
+      consumer,
+      'node_modules/@anarchitects/modeling-metamodel/docs/examples/lifecycle.mts',
+    ),
+    join(consumer, 'lifecycle.mts'),
+  );
   console.log(node(['runtime.mjs']));
   console.log(node(['smoke.mjs']));
   report.checks.push(
-    'runtime-only install: exact files/exports/legal placeholders/dependency closure; no compiler or Nx; public behavior and negative cases',
+    'runtime-only install: exact files/exports/legal files/documentation/dependency closure; core-only and paired README quick starts; no compiler or Nx; public behavior and negative cases',
   );
 
   // Remove the actual core package, then use a fresh process (no ESM module cache).
@@ -366,6 +436,7 @@ try {
   );
   console.log(node(['runtime.mjs']));
   console.log(node(['smoke.mjs']));
+  for (const name of names) runReadme(name);
   console.log(node(['typecheck.mjs']));
   for (const mode of report.moduleResolution)
     console.log(node([`out-${mode}/lifecycle.mjs`]));

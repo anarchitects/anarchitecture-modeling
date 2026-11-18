@@ -18,6 +18,7 @@ import {
   checkManifest,
   inspectLayer,
 } from '../boundaries/policy.mjs';
+import { documentationFiles } from './documentation.mjs';
 
 const root = fileURLToPath(new URL('../../', import.meta.url));
 export const config = JSON.parse(
@@ -106,7 +107,16 @@ export function prepare(output, mode = 'first') {
           cpSync(file, destination);
         }
       }
-      cpSync(join(source, 'README.md'), join(stage, 'README.md'));
+      const documentation = documentationFiles(
+        name,
+        version,
+        sourceSha,
+        config.repository,
+      );
+      for (const [path, content] of Object.entries(documentation.files)) {
+        mkdirSync(dirname(join(stage, path)), { recursive: true });
+        writeFileSync(join(stage, path), content);
+      }
       cpSync(join(root, config.license.licenseFile), join(stage, 'LICENSE'));
       cpSync(join(root, config.license.noticeFile), join(stage, 'NOTICE'));
       const prepared = {
@@ -120,12 +130,13 @@ export function prepare(output, mode = 'first') {
           url: `git+https://github.com/${config.repository}.git`,
           directory: `packages/${name}`,
         },
-        homepage: `https://github.com/${config.repository}/tree/main/docs/consumer`,
+        homepage: documentation.homepage,
         bugs: { url: `https://github.com/${config.repository}/issues` },
         files: [
           'dist/**/*.js',
           'dist/**/*.d.ts',
           'README.md',
+          'docs/**',
           'LICENSE',
           'NOTICE',
         ],

@@ -5,6 +5,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { config, prepare } from './prepare.mjs';
 import { verifyLegalFiles } from './legal.mjs';
+import { verifyDocumentation } from './documentation.mjs';
 
 // Fresh-state verification, never cache this command. A clean commit binds bytes.
 execFileSync('yarn', ['nx', 'run-many', '-t', 'build'], { stdio: 'inherit' });
@@ -31,6 +32,13 @@ try {
     assert.equal(a.manifest.license, 'Apache-2.0');
     assert.equal(a.manifestVersion, '0.0.1');
     verifyLegalFiles(a.manifest, read, config.license);
+    verifyDocumentation(
+      name,
+      a.manifest,
+      read,
+      first.sourceSha,
+      config.repository,
+    );
     assert.match(read('NOTICE'), /Optimalist BV and Anarchitects contributors/);
     assert.equal(a.manifest.repository.directory, `packages/${name}`);
     assert.equal(a.manifest.type, 'module');

@@ -102,3 +102,16 @@ Before public disclosure or distribution, apply the
 [public-readiness gate](docs/public-readiness.md) to the exact candidate. Keep
 sensitive findings outside this repository and use the review template for the
 restricted record. This gate does not block private extraction or local tests.
+
+## Public package documentation
+
+Each intended public package owns a README with a complete installation/quick-start
+path and accurate limits. Public-behavior changes update the README, linked guides,
+examples and migration/support information in the same PR; when none are needed,
+record why the consumer contract is unchanged. See the
+[documentation coverage and verification](docs/package-documentation.md).
+
+Run the actual quick starts from the exact staged archives in independent consumers.
+Keep consumer instructions free of contributor setup, internal delivery history and
+private-source dependencies. Presence/format checks do not replace semantic review.
+Do not claim registry availability or public-link access before live verification.
