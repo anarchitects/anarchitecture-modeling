@@ -2,8 +2,10 @@
 
 Work for [#44](https://github.com/anarchitects/anarchitecture-modeling/issues/44),
 started 18 November 2026 from `b93d0bb26dae38f3063637ed03051df54bc0b7c8`.
-This is a verification plan and dated settings record. **Neither genuine event
-has been verified yet.** #44 remains open and blocks final #22 readiness acceptance.
+This is a verification plan and dated settings record. **The genuine private-fork
+event passed; the genuine Dependabot event remains pending.** See the
+[retained fork evidence and window deviation](private-fork-ci-evidence.md).
+#44 remains open and blocks final #22 readiness acceptance.
 The accepted bounded [#10 evidence](ci-verification.md) remains valid within its
 documented scope. Owner: Johan; organization-level settings require organization
 administrator authority. No publication or visibility change is authorized here.
@@ -71,12 +73,13 @@ sequence. It records the additional organization-wide decision, direct owner
 operation, isolation checks, deadlines and restoration/abort procedures. Preparing
 or merging it does not authorize its execution.
 
-At the latest 18 November readback, organization private forking remains disabled.
+After the initial rollback, organization private forking remained disabled.
 Modeling's workflow token default is read-only with PR approval permission off.
 Organization and Modeling fork-workflow settings were separately saved as run
 enabled, write-token forwarding off, secrets/variables forwarding off and approval
-required. Those Actions settings remain configured after the forking rollback;
-they are distinct from permission to create private forks.
+required. Those Actions settings remained configured after that initial rollback;
+they were subsequently restored after the approved controlled window. The
+[execution record](private-fork-ci-evidence.md) supersedes this historical snapshot.
 
 ### Retained probe requirements
 
