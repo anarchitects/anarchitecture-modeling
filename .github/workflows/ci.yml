@@ -19,9 +19,9 @@ jobs:
       name: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'nx-cloud-main' || 'nx-cloud-pr' }}
       deployment: false
     env:
-      NX_CLOUD_ACCESS_TOKEN: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && secrets.NX_CLOUD_ACCESS_TOKEN || github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]' && secrets.NX_CLOUD_READ_ONLY_TOKEN || '' }}
+      NX_CLOUD_ACCESS_TOKEN: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && secrets.NX_CLOUD_ACCESS_TOKEN || github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.user.login && github.event.pull_request.user.login != 'dependabot[bot]' && github.actor != 'dependabot[bot]' && secrets.NX_CLOUD_READ_ONLY_TOKEN || '' }}
       # Forks and Dependabot receive no Actions secrets; retain local validation.
-      NX_NO_CLOUD: ${{ github.event_name == 'pull_request' && (github.event.pull_request.head.repo.full_name != github.repository || github.actor == 'dependabot[bot]') }}
+      NX_NO_CLOUD: ${{ github.event_name == 'pull_request' && (github.event.pull_request.head.repo.full_name != github.repository || !github.event.pull_request.user.login || github.event.pull_request.user.login == 'dependabot[bot]' || github.actor == 'dependabot[bot]') }}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -94,3 +94,12 @@ jobs:
 
       - run: yarn nx fix-ci
         if: ${{ !cancelled() && env.NX_NO_CLOUD != 'true' }}
+
+      - name: Retain sanitized CI event evidence
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: ci-event-trust
+          path: tmp/ci-trust.json
+          if-no-files-found: ignore
+          retention-days: 7

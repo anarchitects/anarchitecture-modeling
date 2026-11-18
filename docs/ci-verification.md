@@ -108,6 +108,10 @@ Hosted proof at head `8e20de87d38acdecda7feae0e978591a67c98322`, tested merge
   of being masked by self-healing/cleanup. The job was then requested to rerun;
   its recovery and the final PR-head checks are recorded in the PR.
 
+The [#44 private event probe plan](private-ci-event-probes.md) records current
+settings, preparation changes and required owner decisions. It contains no claim
+that either genuine event has already passed.
+
 Actual fork/Dependabot event coverage remains unavailable under current
 repository settings. Before expanding repository access, execute a real event
 probe and review its secret/cache boundaries. Owner acceptance of the bounded
@@ -156,4 +160,7 @@ Meta's reviewed default branch remains
 `main@4f0339d86f0ebfa073173ad307cb67c8d6042bdd`; accepted local ADR 0001/0002 and
 the existing ownership/CI decisions apply. The full content review was reused
 after revision revalidation. #14 retains release controls, and #22/#23 retain
-candidate disclosure/publication. Johan's #10 acceptance remains pending.
+candidate disclosure/publication. Johan subsequently accepted #10's bounded outcome
+after PR #43 merged as `db8b76f81144e2e1e3f9c36dca59ffc8dfcd0594`;
+[#44](https://github.com/anarchitects/anarchitecture-modeling/issues/44) owns the
+explicitly deferred real-event verification before final #22 readiness acceptance.
