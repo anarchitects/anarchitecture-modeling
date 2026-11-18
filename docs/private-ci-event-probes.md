@@ -15,7 +15,8 @@ administrator authority. No publication or visibility change is authorized here.
 | Repository visibility / forking | Private / disabled                                                                                                                                            |
 | Organization private forking    | `members_can_fork_private_repositories: false`                                                                                                                |
 | Repository fork-PR Actions      | Run disabled; write-token forwarding false; secrets/variables forwarding false; approval requirement false                                                    |
-| Organization Actions policy     | CLI GET returned 403: missing organization policy scope; not yet verified                                                                                     |
+| Organization Actions policy     | Owner screenshot: private/internal fork workflows disabled; other private-fork options hidden. CLI GET returned 403                                           |
+| General contributor approval    | Owner screenshot: approval required for first-time contributors; separate from the private/internal fork controls                                             |
 | Repository token default        | Write; ordinary CI explicitly restricts `actions` and `contents` to read                                                                                      |
 | Main protection                 | PR required; up-to-date `main` check tied to GitHub Actions; resolved conversations; admins enforced; Johan restricted updater; force push/deletion forbidden |
 | Cache write credential          | Only `nx-cloud-main`, with a `main` branch-only deployment policy                                                                                             |
@@ -27,8 +28,10 @@ administrator authority. No publication or visibility change is authorized here.
 The full current organization private-repository listing returned no repository
 with `allow_forking: true`. Recheck it before any organization setting change;
 this snapshot is not permission to broaden other repositories. Browser access
-was unavailable during discovery, so organization UI settings and the minimatch
-security-update error/status were requested from the owner.
+was unavailable during discovery. The owner supplied the organization settings
+screenshot and minimatch security-update error on 18 November. The screenshot
+shows the selected controls, but does not independently prove a saved setting or
+the values of hidden private-fork options; read them back before execution.
 
 ## Prepared workflow changes
 
@@ -103,16 +106,20 @@ No grouped fixes, automerge, alert dismissal or dependency downgrade is introduc
 Package-local changes must still meet the existing lifecycle/scope rules; do not
 weaken commit validation merely to make a bot PR green.
 
-Current candidate: existing alert #1, minimatch, transitive development dependency
-10.2.5; GitHub identifies 11.0.1 as the first patched version. That does not prove
-the current parent constraints allow an automatic update. Alert #2, picomatch,
-currently has no patched version and is not a useful update probe.
+The owner confirmed that existing [minimatch alert #1](https://github.com/anarchitects/anarchitecture-modeling/security/dependabot/1)
+cannot produce a security update: Nx 24.0.6 and its `@nx/js` / `@nx/devkit`
+dependency paths constrain minimatch to 10.2.5, while GitHub identifies 11.0.1 as
+the first patched version. Alert #2, picomatch, currently has no patched version.
+Neither alert currently offers a viable bot PR for this probe. The configuration
+above does not resolve these dependency constraints.
 
-After the preparation PR is merged, use the existing alert's **Create Dependabot
-security update** action, if available. This requests a genuine security PR; no
-bot impersonation, ad-hoc routine update stream or deliberately vulnerable fixture
-is needed. Record updater errors if constraints prevent a PR, and keep this part
-pending. The updater itself is not the required `pull_request` CI evidence.
+Keep the genuine Dependabot event pending until a compatible security update is
+available or an alternative is reviewed under the dependency-maintenance policy.
+Do not force a major transitive override, downgrade dependencies or introduce a
+routine update stream solely to manufacture an event. When the constraint is
+resolved and the preparation PR is merged, use **Create Dependabot security
+update**, if available, and retain the resulting PR or exact updater error. The
+updater itself is not the required `pull_request` CI evidence.
 See [GitHub's alert workflow](https://docs.github.com/en/code-security/how-tos/manage-security-alerts/manage-dependabot-alerts/view-dependabot-alerts).
 
 For the bot PR, inspect the exact dependency change and normal CI event before
