@@ -91,9 +91,12 @@ second routine Dependabot update schedule or enable automerge. Keep Nx and
 and lockfile changes, compatibility, licenses and resolved targets.
 
 Retain upstream copyright and notices, identify copied/generated material and
-confirm authority to contribute it. See the
-[license/provenance review](docs/license-provenance-review.md). Final license
-files and artifact clearance remain separate from this contribution workflow.
+confirm authority to contribute it. Original contributions intentionally submitted
+for inclusion are under [Apache-2.0](LICENSE), subject to its contribution terms
+and any separately agreed terms. This does not assign contributors' copyright or
+relicense third-party material. See [NOTICE](NOTICE), [third-party notices](THIRD_PARTY_NOTICES.md)
+and the [license/provenance review](docs/license-provenance-review.md).
+Exact artifact clearance remains separate from contribution and license adoption.
 
 Before public disclosure or distribution, apply the
 [public-readiness gate](docs/public-readiness.md) to the exact candidate. Keep

@@ -5,6 +5,7 @@ import { join, basename } from 'node:path';
 import { digest, checkManifest } from '../boundaries/policy.mjs';
 import { config } from './prepare.mjs';
 import { authorize } from './authorization.mjs';
+import { verifyLegalFiles } from './legal.mjs';
 
 // Fail before any network request or external mutation while activation is pending.
 assert.equal(config.enabled, true, 'Publication disabled until #23 activation');
@@ -95,6 +96,7 @@ for (const [name, artifact] of Object.entries(report.artifacts)) {
   assert.equal(manifest.version, artifact.artifactVersion);
   assert.equal(manifest.license, config.license.spdx);
   assert.notEqual(manifest.license, 'UNLICENSED');
+  verifyLegalFiles(manifest, read, config.license);
   checkManifest(manifest, name, {
     packed: true,
     coreVersion:

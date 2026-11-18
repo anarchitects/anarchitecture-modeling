@@ -3,7 +3,8 @@ import { execFileSync } from 'node:child_process';
 import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { prepare } from './prepare.mjs';
+import { config, prepare } from './prepare.mjs';
+import { verifyLegalFiles } from './legal.mjs';
 
 // Fresh-state verification, never cache this command. A clean commit binds bytes.
 execFileSync('yarn', ['nx', 'run-many', '-t', 'build'], { stdio: 'inherit' });
@@ -25,10 +26,11 @@ try {
         encoding: 'utf8',
       });
     assert.deepEqual(JSON.parse(read('package.json')), a.manifest);
+    assert.equal(first.licenseStatus, 'pending');
     assert.equal(a.manifest.private, true);
-    assert.equal(a.manifest.license, 'UNLICENSED');
+    assert.equal(a.manifest.license, 'Apache-2.0');
     assert.equal(a.manifestVersion, '0.0.1');
-    assert.match(read('LICENSE'), /NOT CLEARED/);
+    verifyLegalFiles(a.manifest, read, config.license);
     assert.match(read('NOTICE'), /Optimalist BV and Anarchitects contributors/);
     assert.equal(a.manifest.repository.directory, `packages/${name}`);
     assert.equal(a.manifest.type, 'module');

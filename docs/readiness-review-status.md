@@ -23,10 +23,13 @@ Lockfile SHA-256:
 | modeling-core      | 0.0.1   | 18    | 9115 / 32943            | `4cca6c1ca8e7ae3f8e0ce66e492075f2704eca50bdf54f8a42bcee1bd2f2d868` |
 | modeling-metamodel | 0.0.1   | 68    | 53839 / 234251          | `ff1a84a8324aaa2f324d5bccc243e1257d5305207adb606b34a4f65238229605` |
 
-These are **private test archives**, prepared through the existing preview-only
+These are **historical private test archives**, prepared through the existing preview-only
 wrapper. Both retain `private: true`, `license: UNLICENSED` and pending legal
 files. Their hashes must not be used as authorization for a later licensed build.
-No tag or versioned registry artifact was created.
+No tag or versioned registry artifact was created. The subsequent
+[license reconciliation](license-reconciliation.md) replaces their legal
+placeholders in new candidates; it does not change these recorded bytes or clear
+them retroactively.
 
 Both builds and the fresh [independent-consumer proof](independent-consumer.md)
 passed against these exact bytes. The proof verified runtime-only installation,
@@ -75,17 +78,17 @@ cache policy or credential was changed for this review.
 
 ## Outstanding dispositions
 
-| Finding                         | Required next action                                                                                                                                                                                  | Accountable owner                     |
-| ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
-| F01 — Final licensing           | Complete the reviewed Apache-2.0 LICENSE/NOTICE and manifest/preparation reconciliation, preserving third-party grants; original-work authority is already confirmed under #7                         | Johan and maintainer                  |
-| F02 — Disclosure classification | Decide safe treatment of private references, historical material, author metadata and external build links using the restricted finding inventory; current-tree edits alone cannot clear older copies | Relevant source/security owners       |
-| F03 — Fork-window deviation     | Review the exceeded deadline and unavailable transient-fork audit evidence recorded in the [fork report](private-fork-ci-evidence.md)                                                                 | Organization administrator            |
-| F04 — Central registration      | Obtain the required ecosystem placement/ownership acceptance                                                                                                                                          | Ecosystem architecture owner          |
-| F05 — Genuine bot event         | Complete #44's real Dependabot PR verification; its closed GitHub state does not replace the missing evidence recorded in its comments                                                                | Johan and maintainer                  |
-| F06 — Security findings         | Record explicit triage/disposition of the two development-dependency alerts; distinguish those paths from the shipped runtime closure                                                                 | Johan, security maintainer            |
-| F07 — Coverage and access       | Resolve provider-retained/deleted-content, wiki, job-summary/cache-content and external report access/retention gaps                                                                                  | Maintainer and provider/account owner |
-| F08 — Execution controls        | Review the proposed release environment, first-publication authentication and narrow tag-creation transition before activation                                                                        | Johan and organization administrator  |
-| F09 — Final candidate           | Prepare and review new licensed archives and their documentation; repeat affected checks and record exact candidate acceptance                                                                        | Johan                                 |
+| Finding                         | Required next action                                                                                                                                                                                                | Accountable owner                     |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
+| F01 — Final licensing           | LICENSE/NOTICE and root/staged manifest reconciliation implemented in the [follow-up](license-reconciliation.md); owner review and exact final-candidate clearance remain pending, with third-party grants retained | Johan and maintainer                  |
+| F02 — Disclosure classification | Decide safe treatment of private references, historical material, author metadata and external build links using the restricted finding inventory; current-tree edits alone cannot clear older copies               | Relevant source/security owners       |
+| F03 — Fork-window deviation     | Review the exceeded deadline and unavailable transient-fork audit evidence recorded in the [fork report](private-fork-ci-evidence.md)                                                                               | Organization administrator            |
+| F04 — Central registration      | Obtain the required ecosystem placement/ownership acceptance                                                                                                                                                        | Ecosystem architecture owner          |
+| F05 — Genuine bot event         | Complete #44's real Dependabot PR verification; its closed GitHub state does not replace the missing evidence recorded in its comments                                                                              | Johan and maintainer                  |
+| F06 — Security findings         | Record explicit triage/disposition of the two development-dependency alerts; distinguish those paths from the shipped runtime closure                                                                               | Johan, security maintainer            |
+| F07 — Coverage and access       | Resolve provider-retained/deleted-content, wiki, job-summary/cache-content and external report access/retention gaps                                                                                                | Maintainer and provider/account owner |
+| F08 — Execution controls        | Review the proposed release environment, first-publication authentication and narrow tag-creation transition before activation                                                                                      | Johan and organization administrator  |
+| F09 — Final candidate           | Prepare and review new licensed archives and their documentation; repeat affected checks and record exact candidate acceptance                                                                                      | Johan                                 |
 
 F10, the identified copied-tooling notice omission at the baseline, is addressed
 by this review PR. It does not retroactively clear historical copies or select

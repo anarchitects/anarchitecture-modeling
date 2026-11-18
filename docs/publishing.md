@@ -39,14 +39,19 @@ independent, versioned distribution manifests. Each tarball contains:
 - An exact core dependency in the metamodel manifest, using the core candidate
   version or its Nx baseline. `workspace:`, `file:`, `link:` and private-source
   references do not escape into runtime dependencies.
-- Pending license/NOTICE copies, `license: UNLICENSED` and `private: true` until
-  #22 clears the actual license/notice files. These placeholders grant no license.
+- Exact copies of the root Apache-2.0 LICENSE and attribution NOTICE, with
+  `license: Apache-2.0`. `license.status` remains `pending` until #22's final
+  candidate clearance, so preparation still writes `private: true`. The license
+  grant does not establish distribution readiness or publication authorization.
 
 `candidate.json` records source SHA, lockfile SHA-256, toolchain, actual Nx version
 data, package versions/intended tags, each archive's SHA-256/npm integrity, packed
 and unpacked sizes, file inventory and complete manifest. It contains no authority
 to release. `verify-archives.mjs` prepares twice and compares the actual tarballs,
-reads their manifests/entry points/legal placeholders and checks the tar inventory.
+reads their manifests/entry points, compares legal files byte-for-byte with this
+checkout and checks the tar inventory. Installed consumer copies and the disabled
+publisher use the same legal-file comparison, rejecting stale placeholders or
+substituted notices even if an accompanying archive report is also changed.
 This is same-source/toolchain reproducibility; it does not promise cross-version
 compiler or npm equivalence. The [#20 independent consumer proof](independent-consumer.md)
 checks fresh npm installation and public behavior; the preview workflow checks its
@@ -70,9 +75,11 @@ in the issue review. An anonymous 404 establishes neither ownership nor an absen
 of deleted, private or other-channel distributions. Owner review covers those
 channels; an authentication/network error never becomes an empty history.
 
-At preparation time, this verification is pending: the initial local session
-returned 401 and Johan is renewing it. No scope membership or package write access
-is claimed by this document.
+The [18 November readiness review](readiness-review-status.md) verified authenticated
+scope-owner access and recorded Johan's confirmation of no prior distribution
+through the reviewed channels. Both target version queries returned 404. Repeat
+these mutable checks before execution; absent package names do not have existing
+package-specific permission entries to inspect.
 
 [npm trusted publishing](https://docs.npmjs.com/trusted-publishers/) supports
 GitHub-hosted runners and short-lived OIDC authentication. Configure each existing
@@ -184,7 +191,8 @@ Before activation, merge the final cleared license/NOTICE configuration, review
 the deployment controls, and change `enabled` only through an explicitly approved
 #23 PR. The preparation-only assertions/tests must then be deliberately updated
 for the accepted license/activation state. Prepare and review artifacts from that
-final commit; do not approve hashes from an earlier private placeholder candidate.
+final commit; do not approve hashes from an earlier candidate, including one with
+the same license but pending clearance or different private/public metadata.
 
 Dispatch publication from that exact `main` commit with the successful preview run
 ID, the two comment IDs and matching authentication mode. Run a new preview if its
