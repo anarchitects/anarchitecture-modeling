@@ -1,8 +1,9 @@
 # Third-party notices
 
 This file retains notices for the identified copied tooling below. It does not
-select a license for original Foundation work or clear package distribution.
-The candidate license and disclosure review remains tracked in #22.
+replace the [Apache-2.0 license for original Foundation work](LICENSE) or clear
+package distribution. The candidate license and disclosure review remains tracked
+in #22.
 
 ## Nx AI agent configuration
 

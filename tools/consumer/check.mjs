@@ -29,7 +29,8 @@ import {
   filesWithoutLinks,
   inspectLayer,
 } from '../boundaries/policy.mjs';
-import { prepare } from '../publishing/prepare.mjs';
+import { config, prepare } from '../publishing/prepare.mjs';
+import { verifyLegalFiles } from '../publishing/legal.mjs';
 
 const root = fileURLToPath(new URL('../../', import.meta.url));
 const json = (file) => JSON.parse(readFileSync(file, 'utf8'));
@@ -221,6 +222,11 @@ try {
       'NOTICE',
     ])
       assert.ok(readFileSync(join(directory, path)).length);
+    verifyLegalFiles(
+      manifest,
+      (path) => readFileSync(join(directory, path)),
+      config.license,
+    );
     report.runtimeClosure[specifier] = {
       version: manifest.version,
       dependencies: manifest.dependencies,

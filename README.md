@@ -73,10 +73,13 @@ pressures and lifecycle equivalence through built public entries, accepted under
 
 ## Licensing and release status
 
+Original Foundation work is licensed under [Apache-2.0](LICENSE), with attribution
+in [NOTICE](NOTICE). Anarchitects is a working, collaboration and brand name.
+Separately identified third-party material retains its own licenses and notices.
 The [license/provenance review](docs/license-provenance-review.md) and its
-[inventory](docs/license-provenance-inventory.md) record the Apache-2.0 direction,
-rights confirmation and remaining artifact checks. Scaffold MIT metadata is not
-final clearance for extracted assets.
+[inventory](docs/license-provenance-inventory.md) record the rights confirmation
+and remaining artifact checks. See the [license reconciliation](docs/license-reconciliation.md)
+for the distinction between the license grant and candidate clearance.
 
 The [public-readiness gate](docs/public-readiness.md) defines the evidence and
 separate decisions required for repository disclosure and package distribution.
