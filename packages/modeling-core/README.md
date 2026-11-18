@@ -1,52 +1,145 @@
 # @anarchitects/modeling-core
 
-Host-neutral identities, semantic models, structured values, containment, local
-references, revision/change primitives and independent diagram-view data.
-Structural/reference/view checks report diagnostics without mutating caller data.
-Core has no metamodel, framework, host or tooling runtime dependency.
+Create and inspect host-neutral semantic models and independent diagram-view
+data. Use core when you need identities, containment, local references, structured
+values and structural diagnostics without a method engine or editor. Core has no
+metamodel dependency and does not execute document transactions, interpret method
+packs, serialize files or render views.
 
-**Unreleased:** this package remains private at `0.0.0`. No registry availability,
-publication clearance or consumer adoption is claimed. The first official version
-is planned as `0.0.1`, subject to separate owner authorization and artifact review.
+## Availability and installation
 
-## Public contract
+**Unreleased preview.** There is no public npm release yet. The steps below are
+for someone who has received reviewed local candidate archives; they do not
+require a source checkout. A public consumer must wait for the authorized release.
+Do not substitute an unverified registry package or `latest`.
 
-Use named package-root imports. Built ESM resolves to `dist/index.js` and types to
-`dist/index.d.ts`; `package.json` is also exported. Source/implementation deep
-imports are not exported. No custom source conditions or path aliases are needed.
+Use **Node 24 with ESM** and npm. No Nx, TypeScript compiler, framework or service
+is required for this JavaScript example. Installation writes `package.json`, a
+lockfile and `node_modules`, and may fetch the runtime helper `tslib` from npm.
+Run the commands in a new empty directory. Preserve the lockfile and verify the
+archives' supplied integrity values before installation.
 
-Current compatibility evidence: Node 24 ESM and TypeScript 6.0.3 with strict
-`NodeNext` resolution. No CommonJS build, browser/bundler support or older runtime/
-compiler matrix is claimed. Runtime artifacts exclude tests, source, maps and Nx.
-`tslib` is a runtime dependency; metamodel additionally pins the packed core version.
-Core and metamodel versions are independent, so inspect the actual dependency pair.
+Copy the core candidate archive into this directory as `core.tgz`.
 
-On `0.x`, compatible features/fixes increment patch and breaking changes increment
-minor. Stabilization at `1.0.0` requires an explicit decision. Package versions,
-profile/pack pins, model revisions and document-format versions are distinct.
-The portable codec retains `archimatrix-document` envelope 1 / model format 2 and
-never migrates implicitly.
+<!-- quickstart:install -->
 
-## Consumer documentation
+```sh
+npm init -y
+npm install --save-exact ./core.tgz
+```
 
-- [Guide and compatibility](https://github.com/anarchitects/anarchitecture-modeling/blob/main/docs/consumer/README.md)
-- [Complete public API reference](https://github.com/anarchitects/anarchitecture-modeling/blob/main/docs/consumer/api.md)
-- [Executable lifecycle example](https://github.com/anarchitects/anarchitecture-modeling/blob/main/docs/consumer/examples/lifecycle.mts)
-- [Migration and rollback](https://github.com/anarchitects/anarchitecture-modeling/blob/main/docs/consumer/migration.md)
+## Quick start: create and validate a model
 
-These pages require no private governance or application-source knowledge.
-Installation commands remain release templates until actual versions and integrity
-are recorded. The example is compiled/executed against locally packed APIs;
-registry installation is a separate verification step.
+Save the following as `quickstart.mjs`. The `.mjs` extension selects ESM without
+additional package configuration. The profile here is only an identity, not a
+registered method or a claim of semantic validation.
 
-Semantic identity is independent of view occurrences/layout. Exact pins and explicit
-unsupported coverage are preserved. Prepared commands do not commit; the host must
-authorize and atomically recheck revisions. Reopen retains retry receipts but starts
-empty undo/redo stacks. Live history defaults (100 transactions / 10,000 command receipts)
-exceed the codec's 256-per-receipt-collection cap: encode and check limits before
-adopting a durable change. Pruning live history does not delete retry receipts.
+<!-- quickstart:source -->
 
-Synthetic examples are not standards certification. No method taxonomy, renderer,
-universal transformation engine, persistence, authorization or collaboration
-implementation ships here. Report security issues privately to
-**johan@anarchitects.dev**. No support SLA is promised for unreleased contracts.
+```js
+import {
+  createModel,
+  validateModelStructure,
+} from '@anarchitects/modeling-core';
+
+const model = createModel('example', 'Example', {
+  id: 'example-profile',
+  version: '1',
+});
+const result = validateModelStructure(model);
+if (!result.valid) throw new Error('Expected a structurally valid empty model');
+console.log(
+  `format=${model.formatVersion}; elements=${model.elements.length}; valid=${result.valid}`,
+);
+
+const invalid = validateModelStructure({ ...model, formatVersion: 99 });
+if (invalid.valid) throw new Error('Expected an unsupported format to fail');
+console.log(invalid.diagnostics[0].code);
+```
+
+Run `node quickstart.mjs`. Expected output:
+
+<!-- quickstart:output -->
+
+```text
+format=2; elements=0; valid=true
+model.unsupported-format
+```
+
+The example creates in-memory values and prints diagnostics. It does not read or
+write model files, access the network or mutate the validated input.
+
+## Public surface and responsibilities
+
+Use named imports from `@anarchitects/modeling-core`; `package.json` is an exported
+metadata subpath. Implementation `src/*` and `dist/*` paths are not public imports.
+The package provides `createModel`, branded identity constructors, model/value/
+reference validation, `validateViews`, and types for models, changes and views.
+The [API reference](../../docs/consumer/api.md) lists every supported export.
+
+Identity constructors require nonblank caller-chosen strings, preserve their exact
+bytes and throw on blank input. They do not allocate unique IDs or authenticate
+users. `createModel` returns an empty format-2 model with revision `"0"`; callers
+own subsequent revision tokens and values. Pass only `{ id, version }` as its
+profile. Typed APIs are not parsers for arbitrary external data.
+
+Structural validation reports `{ valid, diagnostics }`, with diagnostic codes and
+locations. References are local to the model and must resolve with the correct
+kind and ownership. Validation does not normalize, repair or mutate input. Views
+reference semantic identities but contain their own occurrences/layout; validating
+geometry does not render it or establish accessibility. There is no configuration
+file, global initialization, background worker or cleanup operation.
+
+Consumers own object lifetime, trusted input, persistence, authorization,
+concurrency and UI. Readonly TypeScript contracts do not freeze JavaScript objects.
+Method-aware validation, guarded commands/history and the portable document codec
+belong to the optional companion `@anarchitects/modeling-metamodel`, not core.
+
+## Troubleshooting
+
+| Symptom                         | Diagnosis and action                                                                                                                                                                           |
+| ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ERR_MODULE_NOT_FOUND`          | Install the reviewed archive in this consumer directory and run from it; check `npm ls @anarchitects/modeling-core`.                                                                           |
+| `ERR_PACKAGE_PATH_NOT_EXPORTED` | Replace a deep import with a documented package-root export.                                                                                                                                   |
+| Import syntax/module error      | Use Node 24 and a `.mjs` file; a CommonJS build is not supplied.                                                                                                                               |
+| Constructor rejects an identity | Supply a nonblank ID/name/profile value; do not use constructors as a migration or uniqueness service.                                                                                         |
+| Structural diagnostics          | Inspect each code/location, repair ownership/references or use an explicitly supported format. A structurally valid model still needs method-aware validation if your application requires it. |
+
+## Compatibility and upgrades
+
+Supported evidence: Node 24 ESM; TypeScript 6.0.3 with strict `NodeNext` and
+`Node16` module resolution. `Node16` is a compiler mode, not Node 16 runtime support.
+There is no CommonJS build or verified browser/bundler, older runtime/compiler or
+Windows support matrix. TypeScript consumers can use `.mts`, or `.ts` with
+`"type": "module"` in their project. Import types using `import type` as needed.
+
+Core and metamodel are independently versioned; metamodel declares its exact
+compatible core version. Package versions, pack/profile versions, model revision
+and serialization versions are separate. On `0.x`, compatible features and fixes
+increment patch; breaking changes increment minor. No automatic `1.0` transition,
+implicit data migration, support SLA or indefinite maintenance is promised.
+Review each version's compatibility and migration notes before upgrading.
+
+The guides below describe this source revision; staged archives include their own
+copies and an exact version/source reference. Keep the archive documentation when
+upgrading: repository `main` may describe a later contract. First-release notes
+and public registry links will be finalized with the authorized release.
+
+- [Consumer guide and supported workflows](../../docs/consumer/README.md)
+- [Public API reference](../../docs/consumer/api.md)
+- [Migration, compatibility checks and rollback](../../docs/consumer/migration.md)
+- [Package release notes and maintenance status](../../docs/consumer/release-notes.md)
+
+## Support and licensing
+
+For ordinary questions or reproducible defects, use the
+[issue tracker](https://github.com/anarchitects/anarchitecture-modeling/issues)
+when accessible, or email **johan@anarchitects.dev** while the repository is private.
+Include package versions, runtime and a small sanitized reproduction. Report
+security issues **privately** to that address, never in a public issue.
+
+Licensed under [Apache-2.0](../../LICENSE), with attribution in [NOTICE](../../NOTICE).
+Anarchitects is a working/branding name. Separately identified third-party
+material retains its own terms; `tslib` is separately licensed under 0BSD.
+No licensed method specification or standard taxonomy is supplied, and synthetic
+examples do not certify standards conformance.
