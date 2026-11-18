@@ -2,13 +2,13 @@
 
 Work for [#44](https://github.com/anarchitects/anarchitecture-modeling/issues/44),
 started 18 November 2026 from `b93d0bb26dae38f3063637ed03051df54bc0b7c8`.
-This is a proposed execution plan and settings readback. **Neither genuine event
+This is a verification plan and dated settings record. **Neither genuine event
 has been verified yet.** #44 remains open and blocks final #22 readiness acceptance.
 The accepted bounded [#10 evidence](ci-verification.md) remains valid within its
 documented scope. Owner: Johan; organization-level settings require organization
 administrator authority. No publication or visibility change is authorized here.
 
-## Current readback
+## Initial readback — before PR #48
 
 | Control                         | Observed value                                                                                                                                                |
 | ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -56,36 +56,50 @@ criterion. Existing validation failure/signal propagation and the self-healing
 condition remain unchanged: `!cancelled()` and Cloud enabled. The final evidence
 upload cannot convert a prior failed/cancelled step into a successful job.
 
-## Fork probe proposal — approval required before applying
+## Revised fork probe procedure
 
-1. Obtain current organization Actions fork-policy readback. Identify any
-   enterprise restriction before changing settings. Preserve unrelated policies.
-2. Approve private forking at organization level and for **only**
-   `anarchitects/anarchitecture-modeling`. Snapshot all current private-repository
-   flags first; independently check afterward for unintended expansion. Stop and
-   reconcile any unexpected change before creating a fork.
-3. At organization level, allow private fork PR workflows while keeping write
-   tokens and secrets/variables forwarding off and requiring approval. At this
-   repository use the same exact payload in
+**Do not execute the original organization-enable-first proposal.** After PR #48
+merged as `39cb93e819dd4b56c0127f793b39e42194b7e07e`, its authorized trial exposed
+forking on all 17 private repositories. The organization prohibition was restored;
+all 17 effective flags matched the original baseline. No probe fork was created.
+A subsequent Modeling-only `PATCH` with `allow_forking: false`, while organization
+forking was disabled, returned HTTP 422. Preconfiguring restrictions under that
+prohibition is therefore not a workable route through this API.
+
+The [controlled change-window runbook](ci-probe-change-window.md) supersedes that
+sequence. It records the additional organization-wide decision, direct owner
+operation, isolation checks, deadlines and restoration/abort procedures. Preparing
+or merging it does not authorize its execution.
+
+At the latest 18 November readback, organization private forking remains disabled.
+Modeling's workflow token default is read-only with PR approval permission off.
+Organization and Modeling fork-workflow settings were separately saved as run
+enabled, write-token forwarding off, secrets/variables forwarding off and approval
+required. Those Actions settings remain configured after the forking rollback;
+they are distinct from permission to create private forks.
+
+### Retained probe requirements
+
+1. Obtain current organization Actions fork-policy readback and use the revised
+   runbook to establish isolation. Preserve unrelated policies. At this repository
+   use the exact credential restrictions in
    [private-fork-workflows.json](../.github/governance/private-fork-workflows.json).
-   The organization setting's effect on other repositories must be reviewed by its
-   administrator; no organization-wide policy write is implied by this file.
-4. Set this repository's default workflow token to read using
+2. Retain the repository's read-only workflow token default in
    [read-only-workflow-default.json](../.github/governance/read-only-workflow-default.json).
    CI already explicitly requests read-only access; this also avoids a permissive
    default for a new workflow. Retain the prohibition on PR review approval.
-5. Create one **private** fork in Johan's account, proposed name
+3. Create one **private** fork in Johan's account, proposed name
    `vrxj81/anarchitecture-modeling-ci-probe`, after confirming the name is unused
    and the fork's inherited access is appropriate. Add no collaborators or secrets.
    Do not substitute a new public repository or copied synthetic project.
-6. From the fork, open a normal PR into upstream `main` with a small marker under
+4. From the fork, open a normal PR into upstream `main` with a small marker under
    `tools/ci/probes/` and a valid `ci: ...` commit/title. That shared input selects
    both packages without changing runtime behavior. Link #44. Inspect its exact
    diff before approving a requested run. Record whether approval is needed;
    the policy may not prompt for an actor who already has upstream write access.
-7. Collect the evidence below. Do not merge the probe merely to run it. Close the
-   probe PR after review and restore temporary fork/workflow policy changes to the
-   approved baseline, recording readback. Retain the private fork until its
+5. Collect the evidence below. Do not merge the probe merely to run it. Close the
+   probe PR after review and execute the runbook's approved restoration procedure.
+   Retain the private fork until its
    disposition is explicitly agreed; deletion is not part of this proposal.
 
 This proposal does not ask to make the repository public. GitHub supports
@@ -112,6 +126,11 @@ dependency paths constrain minimatch to 10.2.5, while GitHub identifies 11.0.1 a
 the first patched version. Alert #2, picomatch, currently has no patched version.
 Neither alert currently offers a viable bot PR for this probe. The configuration
 above does not resolve these dependency constraints.
+
+The [18 November dependency investigation](ci-probe-change-window.md#dependency-investigation--18-november-2026)
+confirms the current stable Nx constraint and identifies a partial
+typescript-eslint update. It does not claim compatibility tests or complete
+remediation, and no dependency versions were changed by that investigation.
 
 Keep the genuine Dependabot event pending until a compatible security update is
 available or an alternative is reviewed under the dependency-maintenance policy.
