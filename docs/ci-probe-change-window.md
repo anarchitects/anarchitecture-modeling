@@ -2,10 +2,18 @@
 
 Refs [#44](https://github.com/anarchitects/anarchitecture-modeling/issues/44).
 Prepared on 18 November 2026 against main
-`39cb93e819dd4b56c0127f793b39e42194b7e07e`. **Proposed, not executed or approved as
-an organization-wide window.** This replaces the failed isolation sequence in
-[the event verification plan](private-ci-event-probes.md). Neither genuine event
-has passed; final #22 acceptance remains blocked.
+`39cb93e819dd4b56c0127f793b39e42194b7e07e`. **Approved and executed on 18 November;
+the fork CI passed, but restoration and total-window deadlines were exceeded.**
+See the [execution record](private-fork-ci-evidence.md) for retained evidence,
+restored controls and limitations. This replaces the failed isolation sequence in
+[the event verification plan](private-ci-event-probes.md). Genuine Dependabot
+verification and final #22 acceptance remain blocked.
+
+This is a historical runbook, not standing authorization to reopen the window.
+The owner-operated shutdown did not establish the promised time bound. Before any
+future window, its organization owner must review the deviation and an enforceable
+shutdown arrangement that does not depend on chat response or agent approval
+latency. No repeat window is proposed here.
 
 ## Evidence and decision boundary
 
@@ -203,4 +211,5 @@ Accepted ownership, dependency-maintenance, caching, SDLC/release and reuse
 decisions and local ADR0001/0002 apply. Organization administrators own the window;
 Johan owns Foundation acceptance. No public contract, package version, consumer
 migration, runtime dependency or release authorization changes here. The broader
-window decision and both real events remain outstanding.
+window was explicitly approved before execution. Genuine Dependabot evidence,
+review of the deadline deviation and final #44 acceptance remain outstanding.
