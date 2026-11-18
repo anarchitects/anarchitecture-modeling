@@ -80,8 +80,11 @@ final clearance for extracted assets.
 
 The [public-readiness gate](docs/public-readiness.md) defines the evidence and
 separate decisions required for repository disclosure and package distribution.
-Its [review template](docs/templates/public-readiness-review.md) is unfilled;
-the final candidate review remains #22 and authorized execution remains #23.
+The [candidate review status](docs/readiness-review-status.md) records #22's
+current evidence and blockers; its working record is held outside this repository.
+The [review template](docs/templates/public-readiness-review.md) remains reusable.
+Authorized execution remains #23. [Third-party notices](THIRD_PARTY_NOTICES.md)
+retain the verified copied-tooling grant independently of final package licensing.
 
 This repository remains private. Release configuration, final artifact review,
 visibility approval and publication are separate work. CI success, a merged PR
