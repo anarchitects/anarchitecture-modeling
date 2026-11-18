@@ -1,0 +1,12 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    # Required schema field; zero disables routine version-update PRs.
+    # Renovate remains their sole owner. Security updates are independent.
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 0
+    commit-message:
+      prefix: chore
+      # Do not add deps/deps-dev scopes: scopes must be real Nx project names.
