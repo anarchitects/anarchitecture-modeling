@@ -7,6 +7,10 @@ visibility or release authorization.** This is a sanitized progress summary.
 Johan is the custodian of the restricted working record held outside this
 repository. Raw inventories, findings, logs and provider snapshots stay there.
 
+Follow-up [disclosure classification](disclosure-classification.md) refreshes the
+identified F02 findings after PR #53 and prepares scoped owner decisions. It does
+not replace this initial snapshot or grant final disclosure clearance.
+
 Repository disclosure and package distribution are reviewed separately. Technical
 checks below do not resolve rights, confidential-content decisions or authority.
 The working record uses the [review template](templates/public-readiness-review.md)
@@ -81,7 +85,7 @@ cache policy or credential was changed for this review.
 | Finding                         | Required next action                                                                                                                                                                                                | Accountable owner                     |
 | ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
 | F01 — Final licensing           | LICENSE/NOTICE and root/staged manifest reconciliation implemented in the [follow-up](license-reconciliation.md); owner review and exact final-candidate clearance remain pending, with third-party grants retained | Johan and maintainer                  |
-| F02 — Disclosure classification | Decide safe treatment of private references, historical material, author metadata and external build links using the restricted finding inventory; current-tree edits alone cannot clear older copies               | Relevant source/security owners       |
+| F02 — Disclosure classification | [D1–D6 classification](disclosure-classification.md) and restricted decision packet prepared; scoped source-owner/identity decisions and external report access evidence remain pending                             | Relevant source/security owners       |
 | F03 — Fork-window deviation     | Review the exceeded deadline and unavailable transient-fork audit evidence recorded in the [fork report](private-fork-ci-evidence.md)                                                                               | Organization administrator            |
 | F04 — Central registration      | Obtain the required ecosystem placement/ownership acceptance                                                                                                                                                        | Ecosystem architecture owner          |
 | F05 — Genuine bot event         | Complete #44's real Dependabot PR verification; its closed GitHub state does not replace the missing evidence recorded in its comments                                                                              | Johan and maintainer                  |
