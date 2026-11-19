@@ -48,6 +48,56 @@ but retain pending candidate clearance and private publication settings. They ar
 technical evidence, not publishable-artifact authorization. Later source changes
 need an assessed delta and exact candidate refresh at final acceptance.
 
+## Registration reconciliation and refreshed evidence
+
+PWG [accepted architecture and registration](https://github.com/anarchitects/anarchitecture-meta/pull/57#pullrequestreview-5965870531)
+on 18 November. [Meta PR #57](https://github.com/anarchitects/anarchitecture-meta/pull/57)
+landed the accepted records on 19 November at
+`4e481d2ef8c522d3c1118e6de8bb7052b87100a7`, including
+[`adr/0023-independent-modeling-foundation.md`](https://github.com/anarchitects/anarchitecture-meta/blob/4e481d2ef8c522d3c1118e6de8bb7052b87100a7/adr/0023-independent-modeling-foundation.md).
+**F04's architecture/registration acceptance is established.** The earlier pending
+claim missed the PR review. Local ownership, ADR/index and README now link the
+accepted decision; Meta #56's remaining administrative/source handoffs do not
+negate that approval. Its merged prose saying the PR remains unmerged is historical
+and superseded by the observed merge. D2 disclosure was explicitly excluded from
+PWG's approval and remains under Modeling #22.
+
+Restricted record `MF22-2026-11-19-signoff-r2` refreshes technical evidence at
+Modeling `7f6ea2e87caf528a4bf444127634bb09baa6d812` (merged #63):
+
+- Fresh independent consumer passed, including both README quick starts, legal
+  and documentation bytes, runtime/negative cases, strict NodeNext/Node16 checks
+  and locked reinstall. Build prerequisites used two valid Nx cache hits.
+- Compared with the previous private candidates, only README and manifest bytes
+  changed in each archive, to pin source references. Runtime, declarations,
+  bundled guides/examples, dependencies and legal files are unchanged.
+- The bounded delta contains 17 new Git blobs and 16 changed discussion bodies.
+  Current paginated listings contain 63 issue/PR records, 38 PRs and 154 issue
+  comments. All current review/timeline requests and the seven new run-log / 14
+  artifact downloads succeeded. Redacted credential scans of new blobs, changed
+  bodies and retrieved hosted data returned zero detections.
+- Meta's new tree is complete (81 entries, 26 ADRs). Previously reviewed unchanged
+  sources were reused; the new ADR and changed governance/ownership records were
+  read. This introduces no runtime contract or consumer adoption change.
+
+| Private test archive | Version | SHA-256                                                            |
+| -------------------- | ------- | ------------------------------------------------------------------ |
+| modeling-core        | 0.0.1   | `8362de847273a27eea346b887fe89589fe633ce7feb8d8c50f52bceafe84ff2a` |
+| modeling-metamodel   | 0.0.1   | `1639b59cf02d9861dec185101f4a3589aad46219e299aa6e03194483540453ec` |
+
+These remain **private test archives**, with candidate clearance pending and
+publication disabled. They are not a final public candidate or authorization.
+The new governance-reference inventory stays in the restricted packet for D2;
+raw private material is not copied here. F07's coverage limits remain as stated
+below. A later final source and public metadata need their own candidate review.
+
+GitHub shows #22 closed by Johan on 19 November. That state does not supply the
+missing exact-candidate readiness record; no readiness or operation authorization
+is inferred. F08 preparation is merged through #62/#63; effective controls and
+actual credential approval are #23 execution work. No genuine Dependabot PR was
+found in the refreshed search; current Nx 24.0.6 still pins minimatch 10.2.5, so F05
+remains unresolved independently of accepted F06 tooling risk.
+
 ## Disclosure delta — 19 November 2026
 
 Restricted record `MF22-2026-11-19-delta-r1` refreshes the review at source
@@ -161,7 +211,7 @@ cache policy or credential was changed for this review.
 | F01 — Final licensing           | LICENSE/NOTICE and root/staged manifest reconciliation implemented in the [follow-up](license-reconciliation.md); owner review and exact final-candidate clearance remain pending, with third-party grants retained                | Johan and maintainer                  |
 | F02 — Disclosure classification | [D1–D6 classification](disclosure-classification.md) prepared; Johan approved scoped D1/D3 retention. D2 source-owner review and final disclosure delta remain pending; D4 audience is resolved                                    | Relevant source/security owners       |
 | F03 — Fork-window deviation     | Accepted by Johan with the recorded transient-fork audit limitation; see the [fork report](private-fork-ci-evidence.md)                                                                                                            | Organization administrator            |
-| F04 — Central registration      | Obtain the required ecosystem placement/ownership acceptance                                                                                                                                                                       | Ecosystem architecture owner          |
+| F04 — Central registration      | PWG acceptance verified in Meta PR #57 and accepted ADR-0023; records landed, local source handoff reconciled                                                                                                                      | Ecosystem architecture owner          |
 | F05 — Genuine bot event         | Complete #44's real Dependabot PR verification; its closed GitHub state does not replace the missing evidence recorded in its comments                                                                                             | Johan and maintainer                  |
 | F06 — Security findings         | Minimatch risk accepted as bounded development tooling; retain alert and compatible-fix follow-up. Picomatch advisory withdrawn                                                                                                    | Johan, security maintainer            |
 | F07 — Coverage and access       | Current wiki and Nx report audience resolved; assess remaining deleted/provider-retained, job-summary/cache-byte and later-delta limits at final acceptance                                                                        | Maintainer and provider/account owner |
@@ -179,7 +229,7 @@ findings; publication remains separately authorized through #23.
 
 ## Revalidation and handoff
 
-Meta default `main` remains at `4f0339d86f0ebfa073173ad307cb67c8d6042bdd`; the
+For the earlier baseline, Meta default `main` was `4f0339d86f0ebfa073173ad307cb67c8d6042bdd`; the
 complete previously examined eight-document/25-ADR source set was revalidated.
 Applicable accepted ownership, public-contract, independent-versioning,
 dependency-maintenance, caching, SDLC/release and public-reuse decisions remain
