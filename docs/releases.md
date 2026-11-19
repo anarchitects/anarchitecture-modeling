@@ -108,8 +108,9 @@ would need explicit policy and tests, without changing the first-release rule.
    acceptance. Stabilization is explicit and package-specific.
 2. PRs and the existing required `main` check protect release configuration.
    Ordinary CI has read-only GitHub permissions and no npm publish credential.
-3. Tag creation remains frozen until #18 provides a reviewed execution identity
-   and workflow. Then replace only the required creation restriction with
+3. Tag creation remains frozen. The [first-release tag plan](first-release-tags.md)
+   supplies the proposed executor, exact-name payloads and restoration sequence
+   for #22 review and separately authorized #23 execution. Replace only the required creation restriction with
    narrowly authorized owner/bot access; preserve tag update/deletion protection.
    Do not grant blanket tag bypass merely to test a release.
 4. The owner or controlled automation may create capability tags only within
