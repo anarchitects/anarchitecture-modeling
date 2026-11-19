@@ -3,11 +3,26 @@
 Refs [#22](https://github.com/anarchitects/anarchitecture-modeling/issues/22),
 D4/F07. Review `MF22-2026-11-19-d4-r1`, 19 November 2026, source
 `b22629b26bbcb829683052a07c6cc68b076bec55`.
-**Result: access evidence recorded; audience treatment remains pending.** Johan holds the
-restricted record outside this repository. No access, retention, credential or
-visibility setting was changed.
+**Result: report audience resolved by the follow-up below; final disclosure delta remains pending.** Johan holds the
+restricted record outside this repository. The initial review changed no settings;
+Johan subsequently selected the audience verified below.
 
-## Observed audience
+## Verified follow-up — 19 November 2026
+
+After PR #60 merged, Johan selected **Organization members only**. Reloading the
+Modeling workspace settings confirmed that selection persisted, with Public and
+Repository access unselected. A fresh anonymous private-window visit to the #60
+pipeline redirected to Nx Cloud login. This resolves D4's report-audience
+choice; it does not establish access behavior for every asset route.
+[Recorded verification](https://github.com/anarchitects/anarchitecture-modeling/issues/22#issuecomment-7004575231).
+
+Retain organization-only visibility through any later GitHub visibility change
+and recheck it at that transition. Provider retention remains a conditional
+follow-up under the proportionate rule below. Review any report or sharing link
+actually intended for public disclosure; final candidate/content review remains
+separate. The earlier observations below are historical, not the current selection.
+
+## Initial observed audience
 
 | Surface                 | Observation                                                                                                                                 | Limit                                                                                           |
 | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
@@ -26,16 +41,14 @@ was created to test them. Do not generalize the page probes to every asset route
 ## Repository visibility transition
 
 Nx documents that Repository access follows the connected repository, and public
-repositories using it are treated as public workspaces. The current setting must
+repositories using it are treated as public workspaces. That repository-linked setting must
 therefore be considered in the repository disclosure decision; a private cache
 token policy does not prevent this report-audience transition.
 [Nx release notes, March 2026](https://nx.dev/changelog#ci-metrics-cleaner-access-control-ai-that-respects-your-git-hooks).
 
-Before an authorized repository visibility change, the account owner must select
-and verify the intended report audience. The recommendation is **Organization
-members only** while historical report disclosure remains unresolved, with safe
-local evidence summaries for public readers. That is a proposed treatment, not an
-applied setting or owner decision. Alternatively, public report access requires
+The follow-up above verifies **Organization members only**, with safe local
+evidence summaries for public readers. Preserve and revalidate this selection
+before an authorized repository visibility change. Any later public report access requires
 explicit clearance of its content and audience, including historical reports and
 downloadable assets. Recheck actual behavior after any approved change.
 
@@ -77,10 +90,10 @@ this settings review neither repeats it nor clears later reports/assets. The
 original D4 reference counts also remain historical, not a refreshed inventory.
 Final candidate review must include the new source, hosted text and report delta.
 
-D4's remaining work is to decide and verify the report audience before repository
-visibility expands and review the relevant content delta for any intended
-disclosure. Preserve usable local evidence when external reports stay restricted.
+D4's audience decision is resolved. Its remaining work is to revalidate that
+control at a visibility transition and review the relevant content delta for
+any intended disclosure. Preserve usable local evidence when external reports stay restricted.
 The retention limitation alone does not hold this work open. Other F07 findings
 and final #22 acceptance remain separate; this is not blanket clearance of them.
-No provider enquiry was sent, artifact deleted, access setting changed, or
-release/visibility operation authorized by this review.
+No provider enquiry was sent, artifact deleted, or repository visibility/release
+operation authorized by this review. The agent only verified Johan's audience change.

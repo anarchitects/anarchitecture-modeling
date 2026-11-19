@@ -16,6 +16,77 @@ checks below do not resolve rights, confidential-content decisions or authority.
 The working record uses the [review template](templates/public-readiness-review.md)
 and records gaps rather than treating unavailable evidence as an empty result.
 
+## Current follow-up — 19 November 2026
+
+The baseline below remains historical. These scoped dispositions supersede its
+pending wording; they do not constitute final #22 acceptance:
+
+- **D4:** [Organization-only Nx report visibility verified](https://github.com/anarchitects/anarchitecture-modeling/issues/22#issuecomment-7004575231).
+  Retention unknowns are conditional follow-ups while reports remain restricted.
+- **F03:** [Johan accepted the fork-window deviation and audit limitation](https://github.com/anarchitects/anarchitecture-modeling/issues/22#issuecomment-7005512190).
+  No repeat organization-wide probe is required solely for this finding.
+- **F06:** [Johan accepted the bounded minimatch development-tooling risk](https://github.com/anarchitects/anarchitecture-modeling/issues/22#issuecomment-7004663502).
+  Keep the alert open and adopt a compatible upstream fix when available; Johan
+  owns reassessment if usage, exposure or advisory evidence changes. Reviewed
+  callers did not enable the affected optimization mode; this is not universal
+  nonreachability. The earlier picomatch advisory was withdrawn.
+
+Fresh private candidates from `aac5d20b9e45f2f2c98979f194e20e5cd5733c92`
+passed the [independent-consumer checks](https://github.com/anarchitects/anarchitecture-modeling/issues/22#issuecomment-7004683718),
+including exact files/legal/docs, both README quick starts, runtime and negative
+cases, strict NodeNext/Node16 declarations/lifecycle examples, and locked reinstall.
+Runtime closure remains the two Modeling packages and `tslib@2.9.1` (0BSD).
+
+| Private candidate  | Version | SHA-256                                                            |
+| ------------------ | ------- | ------------------------------------------------------------------ |
+| modeling-core      | 0.0.1   | `e0673ffb42797983d9a8f724d54dba40b8343edfe8f82cd5c3a9c7a58adb677c` |
+| modeling-metamodel | 0.0.1   | `ba9da41b6b3f83956fb69aa3878afa1aa5602f66450774ab3cfa94d24045f134` |
+
+Restricted record `MF22-2026-11-19-candidate-r1` retains the exact archives, graph,
+evidence and consumer lock. These include the merged legal/documentation changes
+but retain pending candidate clearance and private publication settings. They are
+technical evidence, not publishable-artifact authorization. Later source changes
+need an assessed delta and exact candidate refresh at final acceptance.
+
+## Disclosure delta — 19 November 2026
+
+Restricted record `MF22-2026-11-19-delta-r1` refreshes the review at source
+`aac5d20b9e45f2f2c98979f194e20e5cd5733c92`, reusing unchanged baseline evidence.
+
+- The refreshed mirror includes advertised repository and PR-head refs. The 29
+  newly reachable blobs since the disclosure packet are text; their redacted
+  Gitleaks 8.30.1 scan returned zero detections.
+- Complete paginated listings returned 60 issue/PR records, 35 PRs and 141 issue
+  comments, with no inline review comments. Current bodies, PR reviews and issue
+  timelines were retrieved. There are 38 new/changed issue/comment bodies versus
+  the prior packet; no attachment URL was identified in that delta.
+- All 32 additional run-log archives and 62 additional non-expired artifacts were
+  downloaded and decoded successfully. Redacted scans of retrieved hosted data
+  returned zero detections; selected private-repository URL/workstation-path
+  checks found no matches in the new log text. This is bounded detection evidence,
+  not proof of complete disclosure clearance.
+- The authenticated wiki page displays **Create the first page**: no current wiki
+  pages are present. This resolves the current-wiki uncertainty, not deleted or
+  provider-retained content. Pages/discussions remain disabled, with no listed
+  releases or deployments.
+- All five Actions cache IDs match the prior inventory. They are Yarn download
+  caches according to their keys and workflow/log evidence; cache bytes were not
+  independently downloaded. Main protection remains enabled, workflow tokens
+  default to read-only, and private-fork workflows and credential forwarding are off.
+
+New hosted documentation-governance references are retained in a restricted D2
+supplement, including the proposed public-package documentation decision. The
+supplement does not broaden the original approval request to private source
+contents; PWG's scoped review must include this delta. It has been prepared for
+handoff, not sent automatically or treated as approved.
+
+Remaining F07 limits are explicit: unenumerable deleted/provider-retained objects,
+rendered job summaries, independent cache-byte inspection and changes after this
+snapshot. No new credential finding or attachment concern was identified in the
+reviewed delta. Assess those limits against actual disclosure at final acceptance;
+do not infer a leak, require a provider-wide audit, or declare them cleared from
+a zero-detection scan. Restricted Nx reports remain under the resolved D4 audience.
+
 ## Pinned private test artifacts
 
 Node 24.22.3, npm 11.19.1, Yarn 4.18.1 and Nx 24.0.6 were used on macOS arm64.
@@ -77,9 +148,8 @@ All 369 advertised assets (260 logs and 109 cache artifacts) were downloaded and
 decoded successfully. Their credential scan returned zero detections. Selected
 private-source URL/workstation-path checks also found no matches in the decoded
 files; those checks are not exhaustive content classification. The subsequent
-[D4 access review](nx-report-disclosure.md) records current repository-linked
-visibility and two anonymous report-page denials. Audience disposition and relevant
-content review remain pending. Under the subsequent proportionate review direction,
+[D4 access review](nx-report-disclosure.md) records the initial repository-linked visibility and subsequent verified
+organization-only selection. Relevant content review remains pending. Under the subsequent proportionate review direction,
 unknown retention terms alone are a conditional follow-up, not an automatic
 publication blocker while reports stay restricted. Other F07 gaps remain separate. No remote
 cache policy or credential was changed for this review.
@@ -89,12 +159,12 @@ cache policy or credential was changed for this review.
 | Finding                         | Required next action                                                                                                                                                                                                | Accountable owner                     |
 | ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
 | F01 — Final licensing           | LICENSE/NOTICE and root/staged manifest reconciliation implemented in the [follow-up](license-reconciliation.md); owner review and exact final-candidate clearance remain pending, with third-party grants retained | Johan and maintainer                  |
-| F02 — Disclosure classification | [D1–D6 classification](disclosure-classification.md) prepared; Johan approved scoped D1/D3 retention. D2 source-owner review and D4 report access evidence remain pending; coverage gaps are not waived             | Relevant source/security owners       |
-| F03 — Fork-window deviation     | Review the exceeded deadline and unavailable transient-fork audit evidence recorded in the [fork report](private-fork-ci-evidence.md)                                                                               | Organization administrator            |
+| F02 — Disclosure classification | [D1–D6 classification](disclosure-classification.md) prepared; Johan approved scoped D1/D3 retention. D2 source-owner review and final disclosure delta remain pending; D4 audience is resolved                     | Relevant source/security owners       |
+| F03 — Fork-window deviation     | Accepted by Johan with the recorded transient-fork audit limitation; see the [fork report](private-fork-ci-evidence.md)                                                                                             | Organization administrator            |
 | F04 — Central registration      | Obtain the required ecosystem placement/ownership acceptance                                                                                                                                                        | Ecosystem architecture owner          |
 | F05 — Genuine bot event         | Complete #44's real Dependabot PR verification; its closed GitHub state does not replace the missing evidence recorded in its comments                                                                              | Johan and maintainer                  |
-| F06 — Security findings         | Record explicit triage/disposition of the two development-dependency alerts; distinguish those paths from the shipped runtime closure                                                                               | Johan, security maintainer            |
-| F07 — Coverage and access       | Resolve provider-retained/deleted-content, wiki, job-summary/cache-content and external report access/retention gaps                                                                                                | Maintainer and provider/account owner |
+| F06 — Security findings         | Minimatch risk accepted as bounded development tooling; retain alert and compatible-fix follow-up. Picomatch advisory withdrawn                                                                                     | Johan, security maintainer            |
+| F07 — Coverage and access       | Current wiki and Nx report audience resolved; assess remaining deleted/provider-retained, job-summary/cache-byte and later-delta limits at final acceptance                                                         | Maintainer and provider/account owner |
 | F08 — Execution controls        | Review the proposed release environment, first-publication authentication and narrow tag-creation transition before activation                                                                                      | Johan and organization administrator  |
 | F09 — Final candidate           | Prepare and review new licensed archives and their documentation; repeat affected checks and record exact candidate acceptance                                                                                      | Johan                                 |
 
