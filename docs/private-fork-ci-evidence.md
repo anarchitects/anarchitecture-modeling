@@ -3,8 +3,11 @@
 Refs [#44](https://github.com/anarchitects/anarchitecture-modeling/issues/44).
 The genuine private-fork event passed. The approved change window exceeded its
 restoration and total-duration limits; its controls are now restricted again.
-This record does not accept that deviation or close #44. Genuine Dependabot
-verification remains pending under the [event plan](private-ci-event-probes.md).
+On 19 November Johan [accepted the deviation and recorded audit limitation](https://github.com/anarchitects/anarchitecture-modeling/issues/22#issuecomment-7005512190),
+resolving #22 F03's owner disposition. The final inventory found only the approved
+probe fork; transient, subsequently deleted forks cannot be ruled out. No repeat
+organization-wide probe is required solely to close this finding, and no new
+access window is authorized. Genuine Dependabot verification remains pending under the [event plan](private-ci-event-probes.md).
 
 ## Event and workflow provenance
 
@@ -149,8 +152,8 @@ reviewing the deviation and a shutdown mechanism independent of chat/tool latenc
   constraints. The fork result does not replace that event, clear the advisories,
   or authorize #22 acceptance or #23 disclosure.
 
-The organization owner must review the deadline deviation and audit limitation;
-Johan's final #44 acceptance remains separate. This documentation is a partial
+Johan accepted the deadline deviation and audit limitation as recorded above;
+the outstanding genuine Dependabot criterion remains separate. This documentation is a partial
 evidence delivery, not a request to waive outstanding criteria.
 
 ## Governance
