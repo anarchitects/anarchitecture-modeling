@@ -23,6 +23,18 @@ themselves. A title list or unsupported claim of compliance is insufficient. A
 bounded read-only helper may reuse that verified context; applying a suggested fix
 still requires the relevant source review and authorized scope.
 
+## Proportionate execution
+
+Work pragmatically for a two-person team. Scale verification and documentation
+to the concrete risk and the operation being authorized; reuse current evidence
+and prefer the smallest sufficient check. For every blocker, identify the actual
+risk or applicable requirement and the decision it prevents. Do not invent extra
+approval gates, require exhaustive provider audits by default, or turn every
+unknown into a release blocker. Record bounded, lower-risk limitations with an
+owner and a useful follow-up or revisit trigger. Preserve required authority,
+rights, credential protection and confidential-content boundaries; this principle
+does not waive accepted governance or the preflight below.
+
 ## Mandatory governance preflight
 
 ### A. Retrieve current Meta governance

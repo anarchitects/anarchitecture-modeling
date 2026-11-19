@@ -3,7 +3,7 @@
 Refs [#22](https://github.com/anarchitects/anarchitecture-modeling/issues/22),
 D4/F07. Review `MF22-2026-11-19-d4-r1`, 19 November 2026, source
 `b22629b26bbcb829683052a07c6cc68b076bec55`.
-**Result: access evidence advanced; D4 remains incomplete.** Johan holds the
+**Result: access evidence recorded; audience treatment remains pending.** Johan holds the
 restricted record outside this repository. No access, retention, credential or
 visibility setting was changed.
 
@@ -44,7 +44,7 @@ presented as anonymously accessible evidence. Keep the safe local CI summaries
 and exact private evidence mapping. Removing a current link would not erase
 historical discussion links or provider-held reports.
 
-## Retention evidence still required
+## Retention limitation and proportional follow-up
 
 The inspected account is on Hobby. Its workspace, membership and plan pages do
 not specify retention/deletion periods. The discovered Public API exposes CI
@@ -53,22 +53,21 @@ pricing and security pages reviewed did not establish an applicable retention
 schedule either. This does not prove that no provider policy exists.
 
 Johan confirms no existing retention contract or support record is available.
-Usage allowances do not establish retention terms; the provider response must
-confirm applicability to this account.
+On 19 November 2026 he directed a pragmatic, risk-proportionate approach for this
+two-person team. This supersedes the initial review's blanket requirement for
+provider retention and exhaustive sharing evidence before D4 could progress.
 
-Account-owner or provider evidence is still needed for:
+Under the [proportionate readiness rule](public-readiness.md#proportionate-evidence),
+unknown retention and backup-deletion periods are a recorded limitation, not
+an automatic publication blocker while reports remain restricted. Johan owns
+the follow-up. Seek provider clarification if sensitive data, an exposure,
+a deletion obligation or a planned audience expansion makes the unknown
+material. The prepared provider enquiry is optional and remains unsent.
 
-- Pipeline/run/task metadata, terminal logs, cache artifacts, resource reports
-  and self-healing data: retention period, starting event and any access-based
-  renewal or plan/region exceptions.
-- Expiry, deletion, backups and other retained copies: disposal timing and
-  remaining access.
-- Sharing and downloadable links: whether permissions are checked on access,
-  whether a link independently grants access, and expiry/revocation behavior.
-
-A provider enquiry is prepared in the restricted record and remains unsent.
-Current download availability, local Nx cache pruning and GitHub Actions'
-seven-day artifact setting are not evidence of Nx Cloud retention.
+The untested asset/sharing routes remain explicit limits of the two page probes;
+no exhaustive route audit is required without a concrete concern. Review any
+actual sharing link intended for public use. Current download availability,
+local Nx pruning and GitHub's artifact settings do not establish cloud retention.
 
 ## Content review and acceptance boundary
 
@@ -78,7 +77,10 @@ this settings review neither repeats it nor clears later reports/assets. The
 original D4 reference counts also remain historical, not a refreshed inventory.
 Final candidate review must include the new source, hosted text and report delta.
 
-D4 requires the account owner and maintainer to resolve the audience, retention,
-sharing and content findings before accepting the bounded treatment. D4/F07 and
-#22 remain open. No provider enquiry was sent, artifact deleted, access widened,
-or release/visibility operation authorized by this review.
+D4's remaining work is to decide and verify the report audience before repository
+visibility expands and review the relevant content delta for any intended
+disclosure. Preserve usable local evidence when external reports stay restricted.
+The retention limitation alone does not hold this work open. Other F07 findings
+and final #22 acceptance remain separate; this is not blanket clearance of them.
+No provider enquiry was sent, artifact deleted, access setting changed, or
+release/visibility operation authorized by this review.
