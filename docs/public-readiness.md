@@ -106,6 +106,22 @@ two-person approval rule, sprint gate or external audit requirement.
 | Operations executed and verified (#23)        | The named authorized executor performs only the approved visibility/tag/publication operations and records actual results. Execution evidence is not its own authorization.                                                                                                                                                                                                           |
 | Public artifacts / consumer adoption accepted | Johan accepts usable published artifacts; each consumer owner separately accepts adoption. Neither closes the other's outcome automatically.                                                                                                                                                                                                                                          |
 
+## Proportionate evidence
+
+Apply this gate to concrete exposure and distribution risks, proportionately to
+this two-person team. Every blocker must name the affected operation and the
+specific unresolved risk or requirement. Reuse reviewed evidence and assess
+relevant changes; do not require a full provider audit or exhaustive testing of
+every hypothetical access path by default.
+
+For externally hosted CI reports kept access-restricted, unknown provider
+retention or backup-deletion periods alone do not block package publication.
+Record the limitation and owner, preserve sufficient local evidence, and revisit
+when sensitive content, an exposure finding, a contractual deletion obligation
+or a planned audience change makes those details material. This does not clear
+known confidential content, credentials, unknown rights or missing required
+owner decisions. Public GitHub logs and artifacts still need their own review.
+
 ## Readiness result and execution handoff
 
 For #22, require complete evidence for applicable surfaces, closed blockers,
