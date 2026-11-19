@@ -6,6 +6,11 @@ the identities `@anarchitects/modeling-core` and
 Archimatrix is the first consumer. Both packages now build and test independently;
 core and metamodel parity are accepted. Publication remains a separate gate.
 
+Canonical placement and ownership are accepted in
+[Meta ADR-0023](https://github.com/anarchitects/anarchitecture-meta/blob/4e481d2ef8c522d3c1118e6de8bb7052b87100a7/adr/0023-independent-modeling-foundation.md).
+See [ownership](OWNERSHIP.md) and the [readiness review](docs/readiness-review-status.md)
+for the separate disclosure and release decisions.
+
 ## Using the packages
 
 Start with the [consumer guide](docs/consumer/README.md),

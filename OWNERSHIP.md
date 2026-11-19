@@ -14,13 +14,14 @@ The relevant owners resolve cross-capability priorities together.
 
 ## Source of authority and boundaries
 
-The [central ownership register](https://github.com/anarchitects/anarchitecture-meta/blob/main/docs/ownership.md)
-and accepted Meta decisions govern ecosystem assignments. Maintainers review
-current revisions as required by [AGENTS.md](AGENTS.md). The register already
-confirms Johan's Foundation capability role; registration of this dedicated
-repository and technical maintainership remains tracked in
-[Meta #56](https://github.com/anarchitects/anarchitecture-meta/issues/56).
-This local confirmation does not claim central reconciliation is complete.
+The [central ownership register](https://github.com/anarchitects/anarchitecture-meta/blob/4e481d2ef8c522d3c1118e6de8bb7052b87100a7/docs/ownership.md)
+now records both confirmed roles for this dedicated repository. PWG accepted the
+canonical registration in [Meta ADR-0023](https://github.com/anarchitects/anarchitecture-meta/blob/4e481d2ef8c522d3c1118e6de8bb7052b87100a7/adr/0023-independent-modeling-foundation.md)
+on 18 November 2026; [PR #57](https://github.com/anarchitects/anarchitecture-meta/pull/57)
+landed it on 19 November. [Meta #56](https://github.com/anarchitects/anarchitecture-meta/issues/56)
+tracks the remaining source handoffs. Maintainers still review current governance
+revisions as required by [AGENTS.md](AGENTS.md). This architecture/ownership
+acceptance does not grant D2 disclosure clearance or authorize publication.
 
 Foundation owns host-neutral modeling semantics and the two package contracts in
 [ADR 0001](docs/adr/0001-modeling-foundation-boundaries.md). Consumers retain their
