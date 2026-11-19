@@ -184,3 +184,14 @@ actual disclosure review:
 
 #8 is complete only when Johan accepts the gate definition and review format.
 This document contains no completed candidate sign-off.
+
+## Package documentation evidence
+
+Before final candidate acceptance, include the accepted #55
+[package documentation coverage/checks](package-documentation.md), alongside #21's
+accepted baseline. Revalidate the exact README, bundled references, license/notices,
+version metadata and independent quick starts against the final archives. Review
+consumer usability and limitations, not only check success. Public links must work
+for their intended audience before claiming public documentation readiness; local
+link checks do not settle repository disclosure. The separately authorized #23
+execution verifies actual registry README rendering, links and install instructions.

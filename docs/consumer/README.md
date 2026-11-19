@@ -6,7 +6,8 @@ for semantic models, profiles, diagram views and portable documents. Use
 `@anarchitects/modeling-metamodel` for composition, semantic validation, notation
 bindings, guarded commands, default proposals, history and document encoding.
 
-**Release status:** both packages are private development artifacts at `0.0.0`.
+**Release status:** both packages are unreleased previews. Inspect the installed
+manifest and artifact record for the exact candidate version.
 No registry release is established by this guide. Its examples are checked against
 locally packed artifacts. Published versions, installation integrity and supported
 release lines will be recorded with the first authorized publication. The planned
@@ -41,8 +42,7 @@ core + `tslib`; Nx and the compiler are development tools, not consumer runtimes
 | Other runtimes    | No tested CommonJS build, browser/bundler matrix, older Node or compiler support claim                         |
 | Editor navigation | Shipped declarations; source/declaration maps are not shipped                                                  |
 
-The [independent consumer proof](../independent-consumer.md) records fresh npm
-installation, runtime dependency closure and the exact observed platform matrix.
+The supported matrix below applies to the reviewed candidate artifacts.
 `Node16` names a compiler resolution mode, not support for the Node 16 runtime.
 
 For TypeScript consumers, use `.mts`, or `.ts` with a nearest `package.json`
@@ -69,12 +69,12 @@ The example prints a success message or throws on a violated expectation. It use
 only public package imports and the host's console; no Nx installation, custom
 conditions, path aliases or application code are needed to run the emitted file.
 
-Maintainers validate the same file before publication with
-`yarn nx run modeling-metamodel:package-check`. That check packs/extracts both
-packages, compiles the file against extracted declarations and executes it against
-extracted JavaScript. Its compiler and copied locked `tslib` come from the
-development workspace. This is an artifact-resolution proof, not a fresh registry
-or package-manager installation claim.
+For a local preview, first install the reviewed pair of candidate archives using
+the package READMEs. For a public release, use its exact registry versions. The
+lifecycle example requires **both** packages; the core README provides a smaller
+core-only JavaScript quick start. Installing packages and the compiler changes your
+consumer directory and may download dependencies; running this example itself
+only uses in-memory objects and the console.
 
 ## Model, identity and views
 

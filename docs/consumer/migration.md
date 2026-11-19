@@ -2,8 +2,7 @@
 
 This is a consumer-owned migration procedure for the contracts described in the
 [consumer guide](README.md). It does not claim any application has migrated or
-that a registry release exists. Both current development packages remain private
-at `0.0.0`. Start actual artifact adoption only when exact authorized versions,
+that a registry release exists. Both packages remain unreleased previews. Start actual artifact adoption only when exact authorized versions,
 integrity and compatibility evidence are available.
 
 ## Establish a reversible baseline
@@ -62,13 +61,10 @@ it cannot replace application regression evidence.
 | Commit authority  | Permission check plus atomic revision comparison; no adoption after conflict, encode failure or persistence failure                                    |
 | Host distribution | Actual extension/app bundle includes needed packages; lifecycle, native/UI interaction and persistence regressions still pass                          |
 
-Archimatrix's migration, Extension Host/VSIX regression acceptance and retirement
-of obsolete local Foundation copies are separate consumer-owned steps in that
-order. Its maintainers track them in their own repository; private issue/source
-links are not needed to use this guide. Blueprint adoption is a separate decision.
-Retain the old implementation/build references until the owner accepts the new
-application path, then remove them in a separately reviewed cleanup. Avoid shipping
-two competing Foundation implementations during the transition.
+Accept the new application path before retiring its old implementation and build
+references. Check host-specific packaging and lifecycle behavior separately; the
+portable example cannot prove that a native extension, server or browser host
+works. Avoid shipping two competing Foundation implementations during transition.
 
 ## Compatibility and rollback
 

@@ -143,3 +143,14 @@ The #14 PR records installed-Nx scenario results and a real-workspace first
 version preview. No existing version, lockfile or production tag is rewritten.
 This policy follows the session's verified accepted versioning, caching and
 release-authority decisions; no public runtime contract changes.
+
+## Documentation readiness
+
+Apply the [package documentation gate](package-documentation.md) to each affected
+candidate. Missing, stale, wrong-package or materially unusable documentation blocks
+that package's readiness. Verify the actual packed README/resources and executable
+examples; documentation edits alone do not prove usability. Record version-specific
+notes and recheck the exact final candidate after documentation drift. #22 accepts
+pre-publication readiness; #23 separately verifies public distribution pages after
+authorized release. This local requirement does not depend on ecosystem acceptance
+of proposed Meta ADR-0024 and grants no publication or visibility authority.
