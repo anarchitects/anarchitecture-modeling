@@ -81,8 +81,8 @@ contents; PWG's scoped review must include this delta. It has been prepared for
 handoff, not sent automatically or treated as approved.
 
 Remaining F07 limits are explicit: unenumerable deleted/provider-retained objects,
-rendered job summaries, independent cache-byte inspection and changes after this
-snapshot. No new credential finding or attachment concern was identified in the
+edit-history versions added since the initial history review, rendered job summaries,
+independent cache-byte inspection and changes after this snapshot. No new credential finding or attachment concern was identified in the
 reviewed delta. Assess those limits against actual disclosure at final acceptance;
 do not infer a leak, require a provider-wide audit, or declare them cleared from
 a zero-detection scan. Restricted Nx reports remain under the resolved D4 audience.
