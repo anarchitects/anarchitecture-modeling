@@ -60,11 +60,15 @@ function fixture() {
       protection_rules: [
         {
           type: 'required_reviewers',
-          reviewers: [{ reviewer: { id: config.ownerId } }],
+          prevent_self_review: false,
+          reviewers: [{ type: 'User', reviewer: { id: config.ownerId } }],
         },
       ],
       can_admins_bypass: false,
-      deployment_branch_policy: { custom_branch_policies: true },
+      deployment_branch_policy: {
+        custom_branch_policies: true,
+        protected_branches: false,
+      },
     },
     branchPolicies: [{ name: 'main', type: 'branch' }],
     workflow: { path: '.github/workflows/publish.yml' },
@@ -142,6 +146,27 @@ const rejected = {
   },
   'missing reviewer': (x) => {
     x.environment.protection_rules = [];
+  },
+  'team with owner numeric ID': (x) => {
+    x.environment.protection_rules[0].reviewers[0].type = 'Team';
+  },
+  'untyped reviewer': (x) => {
+    delete x.environment.protection_rules[0].reviewers[0].type;
+  },
+  'additional reviewer': (x) => {
+    x.environment.protection_rules[0].reviewers.push({
+      type: 'User',
+      reviewer: { id: 1 },
+    });
+  },
+  'self-review disabled': (x) => {
+    x.environment.protection_rules[0].prevent_self_review = true;
+  },
+  'unverified self-review setting': (x) => {
+    delete x.environment.protection_rules[0].prevent_self_review;
+  },
+  'all protected branches policy': (x) => {
+    x.environment.deployment_branch_policy.protected_branches = true;
   },
   'admin bypass': (x) => {
     x.environment.can_admins_bypass = true;
