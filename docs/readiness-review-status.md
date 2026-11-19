@@ -30,6 +30,13 @@ pending wording; they do not constitute final #22 acceptance:
   owns reassessment if usage, exposure or advisory evidence changes. Reviewed
   callers did not enable the affected optimization mode; this is not universal
   nonreachability. The earlier picomatch advisory was withdrawn.
+- **F07:** [Johan accepted the bounded coverage limits and follow-up](https://github.com/anarchitects/anarchitecture-modeling/issues/22#issuecomment-7007266607)
+  for `MF22-2026-11-19-signoff-r2` and its retained baseline evidence. This covers
+  unavailable deleted/provider-retained content, later edit-history versions,
+  rendered job summaries and independently uninspected cache bytes. Johan owns
+  reassessment if a concrete exposure finding or audience change arises. The
+  limits remain explicit; this is not proof of complete historical coverage and
+  does not clear D2, waive the genuine Dependabot check or authorize publication.
 
 Fresh private candidates from `aac5d20b9e45f2f2c98979f194e20e5cd5733c92`
 passed the [independent-consumer checks](https://github.com/anarchitects/anarchitecture-modeling/issues/22#issuecomment-7004683718),
@@ -133,7 +140,8 @@ handoff, not sent automatically or treated as approved.
 Remaining F07 limits are explicit: unenumerable deleted/provider-retained objects,
 edit-history versions added since the initial history review, rendered job summaries,
 independent cache-byte inspection and changes after this snapshot. No new credential finding or attachment concern was identified in the
-reviewed delta. Assess those limits against actual disclosure at final acceptance;
+reviewed delta. Johan accepted these bounded limits as recorded above; assess
+relevant later changes against actual disclosure at final acceptance;
 do not infer a leak, require a provider-wide audit, or declare them cleared from
 a zero-detection scan. Restricted Nx reports remain under the resolved D4 audience.
 
@@ -201,22 +209,23 @@ files; those checks are not exhaustive content classification. The subsequent
 [D4 access review](nx-report-disclosure.md) records the initial repository-linked visibility and subsequent verified
 organization-only selection. Relevant content review remains pending. Under the subsequent proportionate review direction,
 unknown retention terms alone are a conditional follow-up, not an automatic
-publication blocker while reports stay restricted. Other F07 gaps remain separate. No remote
+publication blocker while reports stay restricted. F07's scoped acceptance above
+retains the coverage limits and follow-up. No remote
 cache policy or credential was changed for this review.
 
 ## Outstanding dispositions
 
-| Finding                         | Required next action                                                                                                                                                                                                               | Accountable owner                     |
-| ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
-| F01 — Final licensing           | LICENSE/NOTICE and root/staged manifest reconciliation implemented in the [follow-up](license-reconciliation.md); owner review and exact final-candidate clearance remain pending, with third-party grants retained                | Johan and maintainer                  |
-| F02 — Disclosure classification | [D1–D6 classification](disclosure-classification.md) prepared; Johan approved scoped D1/D3 retention. D2 source-owner review and final disclosure delta remain pending; D4 audience is resolved                                    | Relevant source/security owners       |
-| F03 — Fork-window deviation     | Accepted by Johan with the recorded transient-fork audit limitation; see the [fork report](private-fork-ci-evidence.md)                                                                                                            | Organization administrator            |
-| F04 — Central registration      | PWG acceptance verified in Meta PR #57 and accepted ADR-0023; records landed, local source handoff reconciled                                                                                                                      | Ecosystem architecture owner          |
-| F05 — Genuine bot event         | Complete #44's real Dependabot PR verification; its closed GitHub state does not replace the missing evidence recorded in its comments                                                                                             | Johan and maintainer                  |
-| F06 — Security findings         | Minimatch risk accepted as bounded development tooling; retain alert and compatible-fix follow-up. Picomatch advisory withdrawn                                                                                                    | Johan, security maintainer            |
-| F07 — Coverage and access       | Current wiki and Nx report audience resolved; assess remaining deleted/provider-retained, job-summary/cache-byte and later-delta limits at final acceptance                                                                        | Maintainer and provider/account owner |
-| F08 — Execution controls        | [Tag-creation](first-release-tags.md) and [environment/authentication](release-authentication.md) plans prepared; verify effective controls and authorize the actual credential scope and live changes under #23 before activation | Johan and organization administrator  |
-| F09 — Final candidate           | Prepare and review new licensed archives and their documentation; repeat affected checks and record exact candidate acceptance                                                                                                     | Johan                                 |
+| Finding                         | Required next action                                                                                                                                                                                                               | Accountable owner                    |
+| ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ |
+| F01 — Final licensing           | LICENSE/NOTICE and root/staged manifest reconciliation implemented in the [follow-up](license-reconciliation.md); owner review and exact final-candidate clearance remain pending, with third-party grants retained                | Johan and maintainer                 |
+| F02 — Disclosure classification | [D1–D6 classification](disclosure-classification.md) prepared; Johan approved scoped D1/D3 retention. D2 source-owner review and final disclosure delta remain pending; D4 audience is resolved                                    | Relevant source/security owners      |
+| F03 — Fork-window deviation     | Accepted by Johan with the recorded transient-fork audit limitation; see the [fork report](private-fork-ci-evidence.md)                                                                                                            | Organization administrator           |
+| F04 — Central registration      | PWG acceptance verified in Meta PR #57 and accepted ADR-0023; records landed, local source handoff reconciled                                                                                                                      | Ecosystem architecture owner         |
+| F05 — Genuine bot event         | Complete #44's real Dependabot PR verification; its closed GitHub state does not replace the missing evidence recorded in its comments                                                                                             | Johan and maintainer                 |
+| F06 — Security findings         | Minimatch risk accepted as bounded development tooling; retain alert and compatible-fix follow-up. Picomatch advisory withdrawn                                                                                                    | Johan, security maintainer           |
+| F07 — Coverage and access       | Bounded coverage limits accepted by Johan for signoff-r2 and retained evidence; reassess concrete exposure findings, audience changes and relevant later deltas                                                                    | Johan                                |
+| F08 — Execution controls        | [Tag-creation](first-release-tags.md) and [environment/authentication](release-authentication.md) plans prepared; verify effective controls and authorize the actual credential scope and live changes under #23 before activation | Johan and organization administrator |
+| F09 — Final candidate           | Prepare and review new licensed archives and their documentation; repeat affected checks and record exact candidate acceptance                                                                                                     | Johan                                |
 
 F10, the identified copied-tooling notice omission at the baseline, is addressed
 by this review PR. It does not retroactively clear historical copies or select
