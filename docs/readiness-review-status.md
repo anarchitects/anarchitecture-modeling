@@ -76,8 +76,10 @@ executions, 53 completed runs and 260 tasks, with no remaining pagination cursor
 All 369 advertised assets (260 logs and 109 cache artifacts) were downloaded and
 decoded successfully. Their credential scan returned zero detections. Selected
 private-source URL/workstation-path checks also found no matches in the decoded
-files; those checks are not exhaustive content classification. Current external
-report access and retention still require account-owner verification. No remote
+files; those checks are not exhaustive content classification. The subsequent
+[D4 access review](nx-report-disclosure.md) records current repository-linked
+visibility and two anonymous report-page denials. Retention, remaining sharing
+and content coverage, and owner disposition remain pending. No remote
 cache policy or credential was changed for this review.
 
 ## Outstanding dispositions
