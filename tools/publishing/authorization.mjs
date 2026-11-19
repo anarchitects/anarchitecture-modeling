@@ -67,13 +67,21 @@ export function authorize(
   assert.equal(context.actor, config.owner);
   assert.equal(context.sha, report.sourceSha);
   assert.equal(workflow.path, `.github/workflows/${config.workflow}`);
-  const reviewers = environment.protection_rules?.find(
+  const reviewerRule = environment.protection_rules?.find(
     (r) => r.type === 'required_reviewers',
-  )?.reviewers;
+  );
   assert.deepEqual(
-    reviewers?.map((r) => r.reviewer.id),
-    [config.ownerId],
+    reviewerRule?.reviewers?.map((r) => ({
+      type: r.type,
+      id: r.reviewer?.id,
+    })),
+    [{ type: 'User', id: config.ownerId }],
     'Exact owner environment reviewer required',
+  );
+  assert.equal(
+    reviewerRule.prevent_self_review,
+    false,
+    'Owner must be able to approve their own release',
   );
   assert.equal(
     environment.can_admins_bypass,
@@ -84,6 +92,7 @@ export function authorize(
     environment.deployment_branch_policy?.custom_branch_policies,
     true,
   );
+  assert.equal(environment.deployment_branch_policy?.protected_branches, false);
   assert.deepEqual(
     branchPolicies.map((p) => ({ name: p.name, type: p.type })),
     [{ name: 'main', type: 'branch' }],

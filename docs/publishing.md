@@ -96,11 +96,13 @@ for a new name creates a public `0.0.0-stage` placeholder, which conflicts with 
 accepted first-official-version rule. Do not create that placeholder or publish a
 probe. The proposed first `0.0.1` route is a separately approved, short-lived,
 minimally scoped bootstrap credential stored only as environment secret
-`NPM_BOOTSTRAP_TOKEN`. Select the supported token/2FA policy after verifying the
-owner's actual npm account; no bootstrap credential is configured here. Delete it
-after the first successful publication, configure trusted publishing for both
-packages, and disallow token fallback for subsequent releases. Mixed first and
-already-released packages require separate reviewed operations.
+`NPM_BOOTSTRAP_TOKEN`. The [authentication plan](release-authentication.md) records
+the verified owner/2FA baseline, token scope and expiry, environment readback,
+January 2027 direct-token cutoff and cleanup after every attempt. No bootstrap
+credential is configured here. Configure trusted publishing near the next real
+release within npm's connection-validity window, and disallow token fallback for
+subsequent releases. Mixed first and already-released packages require separate
+reviewed operations.
 
 [Automatic provenance](https://docs.npmjs.com/generating-provenance-statements/)
 requires the public source repository and matching package metadata. Publication
