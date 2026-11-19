@@ -1,0 +1,20 @@
+{
+  "name": "Foundation pre-release tag freeze",
+  "target": "tag",
+  "enforcement": "active",
+  "bypass_actors": [],
+  "conditions": {
+    "ref_name": {
+      "include": ["~ALL"],
+      "exclude": [
+        "refs/tags/modeling-core@0.0.1",
+        "refs/tags/modeling-metamodel@0.0.1"
+      ]
+    }
+  },
+  "rules": [
+    { "type": "creation" },
+    { "type": "update" },
+    { "type": "deletion" }
+  ]
+}

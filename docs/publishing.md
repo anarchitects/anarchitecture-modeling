@@ -133,10 +133,11 @@ not recalculate versions after the authorized candidate tags have been created.
 
 The live all-tag creation/update/deletion freeze remains active. The selected
 publication design requires owner-authorized tags to exist at the exact source
-commit and cannot create or rewrite them. Before #23, Johan must approve a concrete
-tag-creation identity and narrowly scoped ruleset transition under #18/#14; retain
-update/deletion protection. Do not grant all administrators blanket tag bypass.
-That transition and the environment proposal remain unapplied prerequisites.
+commit and cannot create or rewrite them. The [first-release tag plan](first-release-tags.md) specifies Johan as the sole
+creator of the two exact first-release names, with separate no-bypass immutability
+protection and immediate restoration of the full freeze. Its payloads and execution
+sequence are prepared for #22 review under #18/#14. Applying that transition and
+the environment proposal remains separately authorized #23 work.
 
 ## Exact-candidate authorization
 
