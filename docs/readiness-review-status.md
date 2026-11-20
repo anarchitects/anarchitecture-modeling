@@ -16,6 +16,23 @@ checks below do not resolve rights, confidential-content decisions or authority.
 The working record uses the [review template](templates/public-readiness-review.md)
 and records gaps rather than treating unavailable evidence as an empty result.
 
+## D2 approval — 20 November 2026
+
+PWG's [scoped decision on #22](https://github.com/anarchitects/anarchitecture-modeling/issues/22#issuecomment-7023784292)
+resolves D2 for the exact reviewed selections in `MF22-2026-11-19-D2-r2` and
+`MF22-2026-11-19-D2-supplement-r3` **S001–S042**. The
+[disclosure decision record](disclosure-classification.md#d2-decision--20-november-2026)
+retains the inventory identifiers, digests and restrictions. No D2-specific
+redaction or replacement is required within those selections.
+
+Earlier pending/unsent D2 wording below is historical. The packets and linked
+private contents stay private; retained historical assertions do not change
+operative policy. Later changes require an assessed delta. This is not exhaustive
+coverage or final candidate/licensing clearance, does not waive the genuine
+Dependabot check or other findings, and authorizes no visibility, publication,
+tag, credential/protection change or Blueprint adoption. F02's exact reviewed D2
+decision is complete; the final disclosure delta remains to be assessed.
+
 ## Current follow-up — 19 November 2026
 
 The baseline below remains historical. These scoped dispositions supersede its
@@ -218,7 +235,7 @@ cache policy or credential was changed for this review.
 | Finding                         | Required next action                                                                                                                                                                                                               | Accountable owner                    |
 | ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ |
 | F01 — Final licensing           | LICENSE/NOTICE and root/staged manifest reconciliation implemented in the [follow-up](license-reconciliation.md); owner review and exact final-candidate clearance remain pending, with third-party grants retained                | Johan and maintainer                 |
-| F02 — Disclosure classification | [D1–D6 classification](disclosure-classification.md) prepared; Johan approved scoped D1/D3 retention. D2 source-owner review and final disclosure delta remain pending; D4 audience is resolved                                    | Relevant source/security owners      |
+| F02 — Disclosure classification | [D1–D6 classification](disclosure-classification.md) prepared; Johan approved scoped D1/D3 retention. PWG approved exact r2/r3 D2 selections; final disclosure delta remains; D4 audience is resolved                              | Relevant source/security owners      |
 | F03 — Fork-window deviation     | Accepted by Johan with the recorded transient-fork audit limitation; see the [fork report](private-fork-ci-evidence.md)                                                                                                            | Organization administrator           |
 | F04 — Central registration      | PWG acceptance verified in Meta PR #57 and accepted ADR-0023; records landed, local source handoff reconciled                                                                                                                      | Ecosystem architecture owner         |
 | F05 — Genuine bot event         | Complete #44's real Dependabot PR verification; its closed GitHub state does not replace the missing evidence recorded in its comments                                                                                             | Johan and maintainer                 |
