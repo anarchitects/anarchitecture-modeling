@@ -8,16 +8,33 @@ policy; no method pack, renderer, storage service or authorization engine ships 
 
 ## Availability and installation
 
-**Unreleased preview.** There is no public npm release yet. The steps below are
-for someone who has received reviewed local candidate archives; they do not
-require a source checkout. A public consumer must wait for the authorized release.
-Do not substitute an unverified registry package or `latest`.
+Use the exact versions in the reviewed release record. Run registry commands
+only once those versions are available on npm; documentation or a candidate
+archive alone does not establish publication. Do not substitute an unverified
+registry package or `latest`. Before publication, use the local archives below.
 
 Use **Node 24 with ESM** and npm. No Nx, TypeScript compiler, framework or service
 is required for this JavaScript example. Installation writes `package.json`, a
 lockfile and `node_modules`, and may fetch the runtime helper `tslib` from npm.
 Run the commands in a new empty directory. Preserve the lockfile and verify the
 archives' supplied integrity values before installation.
+
+### Registry installation
+
+Use the exact versions shown in the packaged README or release record. This
+source guide uses placeholders; do not run them unchanged.
+
+<!-- quickstart:registry-install -->
+
+```sh
+npm init -y
+npm install --save-exact @anarchitects/modeling-core@<CORE_VERSION> @anarchitects/modeling-metamodel@<METAMODEL_VERSION>
+```
+
+### Local candidate installation
+
+For pre-publication verification, use the reviewed archives instead of the registry
+command. The quick start below is the same for either installation method.
 
 Copy the reviewed compatible pair into this directory as `core.tgz` and
 `metamodel.tgz`. Inspect metamodel's manifest or supplied candidate record: its
