@@ -4,13 +4,21 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { join, basename } from 'node:path';
 import { digest, checkManifest } from '../boundaries/policy.mjs';
 import { config } from './prepare.mjs';
-import { authorize } from './authorization.mjs';
+import {
+  authorize,
+  requiredReadinessIssues,
+  verifyReadinessGates,
+} from './authorization.mjs';
 import { verifyLegalFiles } from './legal.mjs';
 import { verifyDocumentation } from './documentation.mjs';
 
 // Fail before any network request or external mutation while activation is pending.
 assert.equal(config.enabled, true, 'Publication disabled until #23 activation');
-assert.equal(process.env.GITHUB_ACTIONS, 'true');
+assert.equal(
+  process.env.GITHUB_ACTIONS,
+  'true',
+  'Publication requires GitHub Actions',
+);
 assert.equal(process.env.GITHUB_REPOSITORY, config.repository);
 const [directory, authorizationId, readinessId] = process.argv.slice(2);
 assert.ok(
@@ -69,11 +77,11 @@ const branchPolicies = await pages(
   'branch_policies',
 );
 const workflow = await github(`actions/workflows/${config.workflow}`);
-for (const issue of [20, 21, 22, 44, 55]) {
-  const gate = await github(`issues/${issue}`);
-  assert.equal(gate.state, 'closed', `Readiness gate #${issue} is open`);
-  assert.equal(gate.state_reason, 'completed');
-}
+verifyReadinessGates(
+  await Promise.all(
+    requiredReadinessIssues.map((issue) => github(`issues/${issue}`)),
+  ),
+);
 const tags = Object.fromEntries(
   (await pages('tags')).map((tag) => [tag.name, tag.commit.sha]),
 );

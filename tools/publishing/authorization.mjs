@@ -2,6 +2,26 @@ import assert from 'node:assert/strict';
 import { validateCandidate } from '../release/policy.mjs';
 import { config } from './prepare.mjs';
 
+// #44's genuine Dependabot event remains a nonblocking follow-up after #70.
+// These completed outcomes are still required alongside exact owner records.
+export const requiredReadinessIssues = [20, 21, 22, 55];
+
+export function verifyReadinessGates(issues) {
+  for (const number of requiredReadinessIssues) {
+    const issue = issues.find((entry) => entry.number === number);
+    assert.equal(
+      issue?.state,
+      'closed',
+      `Readiness gate #${number} is open or unavailable`,
+    );
+    assert.equal(
+      issue.state_reason,
+      'completed',
+      `Readiness gate #${number} is not completed`,
+    );
+  }
+}
+
 export function ownerRecord(
   comment,
   issue,

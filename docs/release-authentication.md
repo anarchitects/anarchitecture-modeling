@@ -3,7 +3,8 @@
 This completes the F08 design review under [#22](https://github.com/anarchitects/anarchitecture-modeling/issues/22).
 Execution belongs to separately authorized [#23](https://github.com/anarchitects/anarchitecture-modeling/issues/23),
 alongside the [tag plan](first-release-tags.md) and [exact-candidate publication gate](publishing.md#exact-candidate-authorization).
-Publication remains disabled. These instructions do not create credentials or
+The activation state is recorded in [publishing.md](publishing.md).
+These instructions do not create credentials or
 authorize visibility, environment, tag or registry changes.
 
 ## Verified baseline — 19 November 2026
