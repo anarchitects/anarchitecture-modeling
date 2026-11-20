@@ -116,19 +116,23 @@ reviewed operations.
 [Automatic provenance](https://docs.npmjs.com/generating-provenance-statements/)
 requires the public source repository and matching package metadata. Publication
 uses GitHub-hosted runners, `--provenance`, and OIDC permission only in the gated
-publish job. The repository is currently private; disclosure under #22 and explicit
-visibility authorization remain prerequisites. No private-source attestation is
-attempted. #23 must verify registry provenance and installed bytes after execution.
+publish job. The [approved visibility operation](https://github.com/anarchitects/anarchitecture-modeling/issues/23#issuecomment-7034737872)
+made this repository public on 20 November 2026, following #22's bounded disclosure
+review. #23 must still verify registry provenance and installed bytes after
+separately authorized publication.
 
 ## Deployment controls required before activation
 
-The proposed environment is `npm-release`, with Johan (GitHub user ID `5003361`)
+The environment is `npm-release`, with Johan (GitHub user ID `5003361`)
 as its sole required reviewer, administrator bypass disabled and deployment allowed
 only from branch `main`. Self-review remains allowed so Johan can dispatch and
 approve his own release. Reviewable API payloads live in
 [npm-release-environment.json](../.github/governance/npm-release-environment.json)
 and [npm-release-main-policy.json](../.github/governance/npm-release-main-policy.json).
-These are proposed settings, not evidence that the environment exists.
+The [20 November execution readback](https://github.com/anarchitects/anarchitecture-modeling/issues/23#issuecomment-7034737872)
+verified these exact controls and an empty environment secret inventory. Recheck
+them before adding a credential or publishing; the JSON files alone are not
+evidence of effective controls.
 
 [GitHub environment protection availability](https://docs.github.com/en/actions/reference/workflows-and-actions/deployments-and-environments)
 depends on repository visibility/plan. Verify that these exact restrictions are
@@ -148,7 +152,7 @@ commit and cannot create or rewrite them. The [first-release tag plan](first-rel
 creator of the two exact first-release names, with separate no-bypass immutability
 protection and immediate restoration of the full freeze. Its payloads and execution
 sequence are prepared for #22 review under #18/#14. Applying that transition and
-the environment proposal remains separately authorized #23 work.
+any later environment changes remain separately authorized #23 work.
 
 ## Exact-candidate authorization
 

@@ -7,6 +7,22 @@ The activation state is recorded in [publishing.md](publishing.md).
 These instructions do not create credentials or
 authorize visibility, environment, tag or registry changes.
 
+## Applied environment — 20 November 2026
+
+Johan approved public repository disclosure and the environment setup under #23.
+The [execution record](https://github.com/anarchitects/anarchitecture-modeling/issues/23#issuecomment-7034737872)
+confirms public visibility and the exact `npm-release` controls specified below:
+User `5003361` required, self-review allowed, no administrator bypass and only
+branch `main`. The environment has no secrets. Main protection and the all-tag
+freeze are unchanged; the historical probe fork remains private.
+
+The API applied `can_admins_bypass: false` and independent readback confirmed it;
+no UI fallback was needed. This establishes effective configuration, not a
+completed deployment-approval or npm authentication test. Credential creation,
+tags and package publication still require their separate exact authorization.
+The earlier baseline and setup procedure below remain historical/preparatory
+context; revalidate the live state before executing the remaining steps.
+
 ## Verified baseline — 19 November 2026
 
 Authenticated npm checks identify `vrxj81` as an `@anarchitects` owner, with account
