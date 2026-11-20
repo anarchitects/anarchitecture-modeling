@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { validateCandidate } from '../release/policy.mjs';
 import { config } from './prepare.mjs';
+import { recoverySource, checkPriorRun, checkPreviewRun } from './recovery.mjs';
 
 // #44's genuine Dependabot event remains a nonblocking follow-up after #70.
 // These completed outcomes are still required alongside exact owner records.
@@ -66,6 +67,8 @@ export function authorize(
     histories,
     tags,
     context,
+    previewRun,
+    priorRun,
   },
   policy = config,
 ) {
@@ -85,7 +88,6 @@ export function authorize(
   assert.equal(context.event, 'workflow_dispatch');
   assert.equal(context.ref, 'refs/heads/main');
   assert.equal(context.actor, config.owner);
-  assert.equal(context.sha, report.sourceSha);
   assert.equal(workflow.path, `.github/workflows/${config.workflow}`);
   const reviewerRule = environment.protection_rules?.find(
     (r) => r.type === 'required_reviewers',
@@ -131,6 +133,31 @@ export function authorize(
     Date.now(),
     policy,
   );
+  const recovering = context.operation === 'recover';
+  if (recovering) {
+    assert.equal(recoverySource(approval, context), report.sourceSha);
+    assert.equal(previewRun?.id, approval.recovery.candidateRun);
+    checkPreviewRun(previewRun, {
+      sha: report.sourceSha,
+      runId: context.runId,
+    });
+    checkPriorRun(priorRun, approval);
+    assert.deepEqual(Object.keys(report.artifacts).sort(), [
+      'modeling-core',
+      'modeling-metamodel',
+    ]);
+    for (const name of Object.keys(report.artifacts)) {
+      assert.equal(report.projectsVersionData[name]?.currentVersion, '0.0.0');
+      assert.equal(report.projectsVersionData[name]?.newVersion, '0.0.1');
+      assert.equal(report.artifacts[name].manifestVersion, '0.0.1');
+      assert.equal(report.artifacts[name].artifactVersion, '0.0.1');
+      assert.equal(report.artifacts[name].tag, `${name}@0.0.1`);
+      assert.equal(approval.versions?.[name], '0.0.1');
+    }
+  } else {
+    assert.ok(!approval.recovery, 'Recovery requires the recover operation');
+    assert.equal(context.sha, report.sourceSha);
+  }
   assert.equal(
     approval.readinessCommentId,
     readinessComment.id,
@@ -171,9 +198,14 @@ export function authorize(
     );
     const observed = histories[name];
     assert.ok(Array.isArray(observed), 'Registry history unavailable');
-    assert.ok(
-      !observed.includes(artifact.artifactVersion),
-      'Version already exists; never republish',
+    const alreadyPublished =
+      recovering && approval.recovery.alreadyPublished.includes(name);
+    assert.equal(
+      observed.includes(artifact.artifactVersion),
+      alreadyPublished,
+      alreadyPublished
+        ? 'Previously published version is missing'
+        : 'Version already exists; never republish',
     );
     assert.equal(
       tags[artifact.tag],
@@ -190,6 +222,15 @@ export function authorize(
       'History changed after authorization',
     );
     assert.equal(readiness.otherChannelsReviewed?.[name], true);
+    if (alreadyPublished) {
+      assert.ok(
+        versions.every((version) => ['0.0.0-stage', '0.0.1'].includes(version)),
+        'Unexpected recovery history',
+      );
+      // Its version is not recalculated or validated as a new release. The
+      // executor must verify its registry integrity AND bytes before skipping it.
+      continue;
+    }
     if (!versions.length)
       assert.equal(
         approval.authentication,
@@ -215,7 +256,14 @@ export function authorize(
   }
   validateCandidate({
     sourceSha: report.sourceSha,
-    projectsVersionData: report.projectsVersionData,
+    projectsVersionData: recovering
+      ? Object.fromEntries(
+          approval.recovery.publish.map((name) => [
+            name,
+            report.projectsVersionData[name],
+          ]),
+        )
+      : report.projectsVersionData,
     authorization,
     artifacts,
     history,

@@ -10,6 +10,11 @@ manifests remain private. The publisher cannot create tags, credentials,
 environments or change repository visibility. Johan (@vrxj81) remains the
 accountable release owner.
 
+The first attempt published core `0.0.1` but stopped before metamodel while npm
+was processing core. See the [bounded recovery procedure](publication-recovery.md)
+for the observed registry state, availability waiting, exact-archive recovery and
+separate owner decision. The original attempt's credential has been revoked.
+
 This enabled policy must reach main only through the explicitly approved #23
 activation PR after deployment controls are verified. Merging it does not dispatch publication or supply the
 separate exact-candidate authorization below. Setting `enabled: false` again
@@ -145,6 +150,13 @@ manual `publish.yml` run on the exact same main commit, verifies that run's
 repository/workflow/source identity, and passes its bytes through the current
 prepare job. Owner-approved hashes are checked again before publication. It does
 not recalculate versions after the authorized candidate tags have been created.
+
+The explicitly authorized `recover` operation may reuse the original successful
+preview from a later main executor commit. The owner record binds both commits,
+the preview/prior attempt, current histories and the exact publish/skip sets.
+This is limited to the first-release core-only outcome described in the
+[recovery procedure](publication-recovery.md); ordinary publication retains the
+same-source rule and rejects existing versions.
 
 The live all-tag creation/update/deletion freeze remains active. The selected
 publication design requires owner-authorized tags to exist at the exact source

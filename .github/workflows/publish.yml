@@ -6,7 +6,7 @@ on:
       operation:
         description: Preview is read-only; publication requires separate owner authorization
         type: choice
-        options: [preview, publish]
+        options: [preview, publish, recover]
         default: preview
       version_mode:
         description: First distribution or versions calculated from release history
@@ -19,13 +19,13 @@ on:
         options: [oidc, bootstrap]
         default: oidc
       candidate_run:
-        description: Successful preview run ID for this exact main commit (publish only)
+        description: Reviewed preview run ID (recover reuses its original source)
         type: string
       authorization_comment:
-        description: Owner authorization comment ID on issue 23 (publish only)
+        description: Owner authorization comment ID on issue 23 (publish/recover)
         type: string
       readiness_comment:
-        description: Owner readiness comment ID on issue 22 (publish only)
+        description: Owner readiness comment ID on issue 22 (publish/recover)
         type: string
 
 permissions:
@@ -41,6 +41,7 @@ jobs:
     permissions:
       contents: read
       actions: read
+      issues: read
     env:
       NX_NO_CLOUD: 'true'
       NX_DAEMON: 'false'
@@ -63,7 +64,7 @@ jobs:
         id: policy
         run: node -e 'require("node:fs").appendFileSync(process.env.GITHUB_OUTPUT, `enabled=${require("./tools/publishing/config.json").enabled}\n`)'
       - name: Reject publication while disabled
-        if: inputs.operation == 'publish' && steps.policy.outputs.enabled != 'true'
+        if: inputs.operation != 'preview' && steps.policy.outputs.enabled != 'true'
         run: |
           echo 'Publication is disabled pending issue 23 activation.' >&2
           exit 1
@@ -81,13 +82,15 @@ jobs:
         if: inputs.operation == 'preview'
         run: node tools/consumer/check.mjs tmp/publish-candidate/consumer-evidence tmp/publish-candidate
       - name: Verify reviewed preview run identity
-        if: inputs.operation == 'publish'
+        if: inputs.operation != 'preview'
         env:
           GH_TOKEN: ${{ github.token }}
           CANDIDATE_RUN: ${{ inputs.candidate_run }}
+          OPERATION: ${{ inputs.operation }}
+          AUTHORIZATION_COMMENT: ${{ inputs.authorization_comment }}
         run: node tools/publishing/check-preview-run.mjs
       - uses: actions/download-artifact@v8
-        if: inputs.operation == 'publish'
+        if: inputs.operation != 'preview'
         with:
           name: foundation-candidate
           path: tmp/publish-candidate/
@@ -102,8 +105,9 @@ jobs:
 
   publish:
     needs: prepare
-    if: inputs.operation == 'publish' && needs.prepare.outputs.enabled == 'true' && github.ref == 'refs/heads/main' && github.actor == 'vrxj81'
+    if: inputs.operation != 'preview' && needs.prepare.outputs.enabled == 'true' && github.ref == 'refs/heads/main' && github.actor == 'vrxj81'
     runs-on: ubuntu-latest
+    timeout-minutes: 40
     environment: npm-release
     permissions:
       contents: read
@@ -132,6 +136,8 @@ jobs:
           NODE_AUTH_TOKEN: ${{ inputs.authentication == 'bootstrap' && secrets.NPM_BOOTSTRAP_TOKEN || '' }}
           AUTHORIZATION_COMMENT: ${{ inputs.authorization_comment }}
           READINESS_COMMENT: ${{ inputs.readiness_comment }}
+          OPERATION: ${{ inputs.operation }}
+          CANDIDATE_RUN: ${{ inputs.candidate_run }}
         run: node tools/publishing/publish.mjs tmp/publish-candidate "$AUTHORIZATION_COMMENT" "$READINESS_COMMENT"
       - uses: actions/upload-artifact@v7
         if: always()
