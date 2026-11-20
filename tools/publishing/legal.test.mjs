@@ -6,11 +6,11 @@ import { verifyLegalFiles } from './legal.mjs';
 
 const canonical = (name) =>
   readFileSync(new URL(`../../${name}`, import.meta.url));
-const manifest = { license: 'Apache-2.0', private: true };
+const manifest = { license: 'Apache-2.0', private: false };
 
-test('private candidates carry canonical Apache-2.0 and attribution without clearance', () => {
+test('accepted licensing retains canonical legal files while publication stays disabled', () => {
   assert.equal(config.enabled, false);
-  assert.equal(config.license.status, 'pending');
+  assert.equal(config.license.status, 'accepted');
   assert.equal(config.license.spdx, manifest.license);
   assert.doesNotThrow(() =>
     verifyLegalFiles(manifest, canonical, config.license),

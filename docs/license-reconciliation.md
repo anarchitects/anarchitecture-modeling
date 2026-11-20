@@ -32,8 +32,14 @@ and NOTICE copies into both archives. Development manifests remain private at
 `0.0.0`; release metadata continues to be derived in the staging directory, without
 changing workspace dependencies. The Nx first-version preview remains `0.0.1`.
 
-The configuration's `license.status: pending` records unresolved **final candidate
-clearance**, not missing license text. Prepared archives remain `private: true`.
+[Johan accepted the reviewed licensing and notices on 20 November 2026](https://github.com/anarchitects/anarchitecture-modeling/issues/22#issuecomment-7033601538),
+for source `86739f8dd2fe6a75041670fc2e4424689200fe33` and the exact candidates
+in [review 7033575751](https://github.com/anarchitects/anarchitecture-modeling/issues/22#issuecomment-7033575751).
+The configuration now records `license.status: accepted`, so newly staged archives
+use `private: false` and the accepted Apache-2.0 metadata. Root and development
+manifests remain private. New archives still require exact candidate review;
+this licensing decision is not final readiness or release authorization.
+
 `enabled: false` still rejects publication before network access, and the manual
 workflow's independent disabled guard remains unchanged. No tag, release,
 environment, registry permission or visibility setting is changed.
@@ -42,12 +48,14 @@ Archive verification, installed-consumer verification and the publisher compare
 LICENSE/NOTICE bytes with this checkout and require matching license metadata.
 Tests reject stale SPDX metadata, empty/missing files, old placeholders and
 modified legal text. This verifies file agreement, not legal sufficiency or owner
-acceptance. The current preparation tests deliberately require the pending/private
-state; a later reviewed clearance/activation change must update those assertions.
+acceptance. Preparation tests now require the accepted license and public archive
+metadata while asserting that publication remains disabled. Activation remains a
+separate explicitly authorized #23 change.
 
 The previous [review hashes](readiness-review-status.md) identify placeholder
 archives and remain historical evidence. New exact archives must be reviewed
 after this change, and again after merge or any later source/configuration change.
-Private references and repository links, disclosure coverage, central registration,
-#44 evidence, security dispositions and execution controls remain open under #22.
-Owner readiness acceptance and #23 publication authorization are separate.
+The [readiness record](readiness-review-status.md) retains accepted registration,
+D2 disclosure and bounded security/coverage dispositions. Genuine Dependabot-event
+evidence, changed final archives and execution controls still need their recorded
+handoff. Owner readiness acceptance and #23 publication authorization are separate.

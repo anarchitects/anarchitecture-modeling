@@ -16,6 +16,23 @@ checks below do not resolve rights, confidential-content decisions or authority.
 The working record uses the [review template](templates/public-readiness-review.md)
 and records gaps rather than treating unavailable evidence as an empty result.
 
+## Licensing acceptance — 20 November 2026
+
+[Johan accepted licensing and notices](https://github.com/anarchitects/anarchitecture-modeling/issues/22#issuecomment-7033601538) for the exact candidates in
+[review 7033575751](https://github.com/anarchitects/anarchitecture-modeling/issues/22#issuecomment-7033575751)
+at `86739f8dd2fe6a75041670fc2e4424689200fe33`. The fresh independent consumer passed;
+only source-revision links differed from the prior archives. The bounded disclosure
+delta was assessed against D2's scope, with no new private-source content or
+materially expanded summary identified. Restricted record
+`MF22-2026-11-20-candidate-r1` retains the evidence and existing coverage limits.
+
+The accepted Apache-2.0 LICENSE/NOTICE treatment now permits staging public package
+metadata. Publication remains disabled, and workspace manifests stay private.
+Conditional registry instructions accompany the still-tested local archive path.
+These metadata/documentation changes produce new archives requiring exact review;
+the earlier hashes do not authorize them. F05's genuine Dependabot event, final
+readiness and #23 operation authorization remain separate.
+
 ## D2 approval — 20 November 2026
 
 PWG's [scoped decision on #22](https://github.com/anarchitects/anarchitecture-modeling/issues/22#issuecomment-7023784292)
@@ -234,7 +251,7 @@ cache policy or credential was changed for this review.
 
 | Finding                         | Required next action                                                                                                                                                                                                               | Accountable owner                    |
 | ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ |
-| F01 — Final licensing           | LICENSE/NOTICE and root/staged manifest reconciliation implemented in the [follow-up](license-reconciliation.md); owner review and exact final-candidate clearance remain pending, with third-party grants retained                | Johan and maintainer                 |
+| F01 — Final licensing           | [Licensing/notices accepted](license-reconciliation.md) for the reviewed candidates; public metadata preparation permitted, third-party grants retained, and changed final archives still require exact review                     | Johan and maintainer                 |
 | F02 — Disclosure classification | [D1–D6 classification](disclosure-classification.md) prepared; Johan approved scoped D1/D3 retention. PWG approved exact r2/r3 D2 selections; final disclosure delta remains; D4 audience is resolved                              | Relevant source/security owners      |
 | F03 — Fork-window deviation     | Accepted by Johan with the recorded transient-fork audit limitation; see the [fork report](private-fork-ci-evidence.md)                                                                                                            | Organization administrator           |
 | F04 — Central registration      | PWG acceptance verified in Meta PR #57 and accepted ADR-0023; records landed, local source handoff reconciled                                                                                                                      | Ecosystem architecture owner         |

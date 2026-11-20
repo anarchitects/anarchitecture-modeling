@@ -112,6 +112,7 @@ export function prepare(output, mode = 'first') {
         version,
         sourceSha,
         config.repository,
+        coreVersion,
       );
       for (const [path, content] of Object.entries(documentation.files)) {
         mkdirSync(dirname(join(stage, path)), { recursive: true });

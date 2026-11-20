@@ -4,9 +4,9 @@
 the two local candidate tarballs from the accepted [publishing preparation](publishing.md).
 It extends the earlier [manual extraction checks](package-entry-points.md) with an
 actual npm install outside the workspace and a separately installed compiler.
-The tarballs remain private, internal test artifacts. This does not publish them,
-establish scope control, clear their license/NOTICE placeholders or demonstrate
-registry provenance. Johan accepts this bounded result separately from merge.
+The tarballs remain locally retained test artifacts, with accepted license metadata
+and `private: false` in staged manifests. This does not publish them, establish
+scope control, accept final readiness or demonstrate registry provenance. Johan accepts this bounded result separately from merge.
 
 ## Run and evidence
 
@@ -21,7 +21,7 @@ NX_NO_CLOUD=true node tools/consumer/check.mjs tmp/consumer-evidence tmp/exact-c
 ```
 
 Use a new output directory on each run. The default prepares first-version
-`0.0.1` private candidates through #18's actual Nx dry run. An explicit candidate
+`0.0.1` candidates through #18's actual Nx dry run. An explicit candidate
 directory must contain `candidate.json` and both named archives from the exact
 checked-out commit. The proof currently requires both artifacts; a future
 single-package release must supply and review its compatible companion before
@@ -50,6 +50,9 @@ Output includes:
 - `candidate/` and its manifest/hashes/sizes when preparing a new candidate.
 - `evidence.json`: source, observed toolchain/platform, archive identities,
   inventory, runtime closure, module-resolution matrix and completed checks.
+  README registry commands are checked against the exact candidate versions;
+  `registryInstallExecuted: false` distinguishes this from a real npm-registry
+  installation. The local archive commands and quick starts are executed.
 - `runtime-dependencies.json`: npm's actual runtime dependency tree.
 - `consumer-package-lock.json`: exact installations and registry integrities.
 
