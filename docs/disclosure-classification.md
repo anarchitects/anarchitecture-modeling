@@ -6,6 +6,38 @@ at source `f46be644facc3c3115d66ee909894e25cd323dad`. Johan holds the packet and
 location-level inventories outside this repository. This is a sanitized progress
 record; **repository disclosure remains blocked** pending decisions and coverage.
 
+## D2 decision — 20 November 2026
+
+[PWG's scoped approval on #22](https://github.com/anarchitects/anarchitecture-modeling/issues/22#issuecomment-7023784292)
+is the authoritative D2 decision reference. `pwgconsulting`, acting as ecosystem
+architecture/SDLC owner and Blueprint capability/source owner, approves only the
+reviewed D2 summaries and literal reference metadata in:
+
+- `MF22-2026-11-19-D2-r2`: the exact selections and recorded snapshots enumerated
+  in the decision; inventory SHA-256
+  `e85014bfa754af65c65d6af15f49fff51e7ba5dfb2ebbb71beb7f305592cb434`.
+- `MF22-2026-11-19-D2-supplement-r3`: D2 selections **S001–S042**; retained inventory
+  SHA-256 `c34565688ccece23713a1a336b875d9103e120dcdda07cb6975cc8830a2a1a98`.
+  PWG reviewed the inline selections against their sources without claiming an
+  independent recomputation of this supplement's JSON digest.
+
+No D2-specific redaction or replacement wording is required within that scope.
+The restricted packets, raw evidence and linked private source contents stay
+private. Mixed passages do not waive other owners' decisions or third-party
+rights. Historical wording may remain only as dated evidence; it cannot promote
+a proposal to accepted policy or override a later decision.
+
+Later additions, materially changed wording/reference metadata or newly identified
+confidential content require an assessed delta and the relevant owner's decision.
+The approval does not establish exhaustive coverage; r2 pagination metadata is
+not completeness evidence. The accepted bounded F07 disposition remains separate.
+
+Visibility, publication, release/tag operations, credential/protection changes,
+final candidate/licensing clearance and Blueprint adoption are not authorized.
+Genuine Dependabot-event verification and other readiness findings are not waived.
+Earlier pending/unsent statements in the dated review history are superseded for
+the exact approved D2 scope by this decision, not erased.
+
 Classification distinguishes information actually present in a file or discussion
 from the contents of a linked source. A private URL can reveal names, paths,
 revisions and relationships even if its target requires authentication. Conversely,
@@ -31,14 +63,14 @@ itself evidence of a secret or restricted copied material.
 
 ## Decision register
 
-| ID  | Classification and proposed treatment                                                                                                                                                    | Accountable decision / status                                                                                                                                                                                          |
-| --- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| D1  | Retain the packet’s inventoried extraction references and host-boundary summaries. Approval covers listed text and reference metadata, not linked private source contents.               | Approved by Johan as Archimatrix App PO on 18 November 2026: “Approve D1 as scoped.”                                                                                                                                   |
-| D2  | Obtain approval for minimal ecosystem ownership, governance and consumer-boundary summaries and reference metadata. Keep private source documents and unrelated product details private. | PWG review pending. Johan confirms the restricted packet was sent from the Meta workspace session; no acceptance is inferred.                                                                                          |
-| D3  | Retain the inventoried name and existing Git identity metadata. No history rewrite or persistent Git identity change is required by this disposition.                                    | Approved by Johan on 18 November 2026: “Approve retaining the metadata.” Exact values and the question/answer remain in the restricted record.                                                                         |
-| D4  | Retain useful build links with a deliberate audience and suitable content. Keep safe local summaries for restricted reports; treat retention unknowns proportionately.                   | [19 November access review](nx-report-disclosure.md): organization-only audience verified in the follow-up; relevant disclosure delta remains pending. Retention is a conditional follow-up, not an automatic blocker. |
-| D5  | Retain the selected synthetic-fixture disclaimers, scope exclusions and required rights notices. No new restricted-standard excerpt was identified in those selected findings.           | Existing provenance evidence retained; final rights/disclosure acceptance remains #22. This is not standards conformance or blanket third-party clearance.                                                             |
-| D6  | Keep the historical generated-state review and its limits explicit. Any removal requires an exact-object, history and hosted-surface plan.                                               | Maintainer/security owner; provider-retained/unavailable-content gaps remain F07. No history rewrite or deletion authorized.                                                                                           |
+| ID  | Classification and proposed treatment                                                                                                                                                         | Accountable decision / status                                                                                                                                                                                                           |
+| --- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| D1  | Retain the packet’s inventoried extraction references and host-boundary summaries. Approval covers listed text and reference metadata, not linked private source contents.                    | Approved by Johan as Archimatrix App PO on 18 November 2026: “Approve D1 as scoped.”                                                                                                                                                    |
+| D2  | Retain only the approved minimal ecosystem ownership, governance and consumer-boundary summaries and reference metadata. Keep private source documents and unrelated product details private. | Approved by PWG as scoped in [decision 7023784292](https://github.com/anarchitects/anarchitecture-modeling/issues/22#issuecomment-7023784292); r2 selections and supplement-r3 S001–S042 only. Later changes require an assessed delta. |
+| D3  | Retain the inventoried name and existing Git identity metadata. No history rewrite or persistent Git identity change is required by this disposition.                                         | Approved by Johan on 18 November 2026: “Approve retaining the metadata.” Exact values and the question/answer remain in the restricted record.                                                                                          |
+| D4  | Retain useful build links with a deliberate audience and suitable content. Keep safe local summaries for restricted reports; treat retention unknowns proportionately.                        | [19 November access review](nx-report-disclosure.md): organization-only audience verified in the follow-up; relevant disclosure delta remains pending. Retention is a conditional follow-up, not an automatic blocker.                  |
+| D5  | Retain the selected synthetic-fixture disclaimers, scope exclusions and required rights notices. No new restricted-standard excerpt was identified in those selected findings.                | Existing provenance evidence retained; final rights/disclosure acceptance remains #22. This is not standards conformance or blanket third-party clearance.                                                                              |
+| D6  | Keep the historical generated-state review and its limits explicit. Any removal requires an exact-object, history and hosted-surface plan.                                                    | Maintainer/security owner; provider-retained/unavailable-content gaps remain F07. No history rewrite or deletion authorized.                                                                                                            |
 
 D1/D3 decisions apply only to the packet's exact inventory; they do not clear
 D2/D4, unknown material or future additions. A source-owner decision does not open
