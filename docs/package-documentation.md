@@ -1,11 +1,13 @@
 # Package documentation coverage and verification
 
 Refs [#55](https://github.com/anarchitects/anarchitecture-modeling/issues/55), under
-Epic #4. Johan requested this local rollout on 18 November 2026. Meta ADR-0024
-remains **Proposed** at `2dc5ff0e8f54f8e3ed62d43f5b20bc53163886e7`; PWG's ecosystem
-acceptance is separate. This page records repository implementation, not that
-acceptance or a claim of final package readiness. #21's accepted documentation is
-retained as the starting point.
+Epic #4. Johan requested this local rollout on 18 November 2026, while Meta
+ADR-0024 was proposed. PWG accepted the ecosystem policy on 20 November 2026;
+the accepted record is now on Meta main at
+`734488ba1bd960dcaa2f61fea899ab49d26c1bd3`, path
+`adr/0024-public-package-documentation.md`. The existing local checks implement
+the framework-neutral library profile. Policy acceptance and each artifact's
+verification remain separate; #21's accepted documentation is the starting point.
 
 ## Package profiles and coverage
 
@@ -49,7 +51,7 @@ version in the README. This does not add runtime exports or dependencies. The ra
 Yarn workspace pack remains a development packaging proof; the staged npm candidate
 is the distribution archive inspected here.
 
-Archive verification, installed-consumer checks and the disabled publisher compare
+Archive verification, installed-consumer checks and the guarded publisher compare
 all expected documentation bytes with the reviewed source and check local links
 and supported heading anchors. Regression cases reject missing/wrong-package/stale
 READMEs, altered shipped examples, unpinned homepage, missing/escaping local targets,
@@ -93,12 +95,14 @@ README/references/examples/migration information in the same PR as consumer-visi
 changes, or record why no change is needed. Missing or materially unusable docs
 block the affected candidate's readiness.
 
-The online links are pinned but this repository is still private. Offline resources
-and local-tarball examples are usable by authorized candidate reviewers; public npm
-installation and anonymous online access are not claimed. #22 must review the
-exact final candidate, preview-to-release wording, public link accessibility and
-remaining disclosure decisions. #23 must separately verify actual versioned npm
-README rendering, links, registry installation and quick-start behavior after an
-authorized release. Neither this implementation nor green CI grants publication,
-visibility, tag or consumer adoption authority. Johan accepts #55's bounded outcome
-separately from merge; unresolved final/live gates remain with #22/#23.
+The repository and both `0.0.1` packages are now public. #22 accepted the exact
+candidate; #23's [execution evidence](https://github.com/anarchitects/anarchitecture-modeling/issues/23#issuecomment-7036881404)
+records public npm README rendering, version-pinned links, exact registry installs,
+quick starts, declarations, runtime/lifecycle checks and provenance verification.
+The coverage table above retains the original local-archive preparation evidence;
+registry availability and limitations are recorded in the
+[0.0.1 release notes](consumer/release-notes.md). The immutable archives retain
+some prepublication wording; Johan owns cleanup for the next reviewed candidate.
+The tested commands work, but the wording must be reconciled before another release.
+Neither these checks nor publication establish consumer adoption or Johan's final
+#23 outcome acceptance.

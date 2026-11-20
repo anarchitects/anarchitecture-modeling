@@ -1,7 +1,7 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "name": "modeling-metamodel",
-  "tags": ["scope:foundation", "type:metamodel", "lifecycle:unreleased"],
+  "tags": ["scope:foundation", "type:metamodel", "lifecycle:released"],
   "targets": {
     "test": {
       "dependsOn": [

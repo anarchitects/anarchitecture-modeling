@@ -4,7 +4,18 @@ This procedure addresses the [partial first-publication attempt](https://github.
 Merging the implementation does not authorize a retry or create a credential.
 Johan remains the release owner.
 
-## Observed outcome
+## Completed recovery — 20 November 2026
+
+[Run 44715288456](https://github.com/anarchitects/anarchitecture-modeling/actions/runs/44715288456)
+succeeded under [Johan's exact authorization](https://github.com/anarchitects/anarchitecture-modeling/issues/23#issuecomment-7036544326).
+It verified/skipped core and published only the original metamodel archive. Both
+packages are available at `0.0.1`, with matching bytes and verified provenance;
+the [release record](consumer/release-notes.md) distinguishes build source from
+recovery executor. The recovery token is revoked and the environment secret is
+removed. The procedure below records the completed operation; it is not permission
+to rerun it.
+
+## Initial partial outcome
 
 [Run 44709234090](https://github.com/anarchitects/anarchitecture-modeling/actions/runs/44709234090)
 submitted the approved core archive from source

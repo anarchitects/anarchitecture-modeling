@@ -11,8 +11,8 @@ distribution candidate, and #23 records separately authorized publication.
 Nx Release computes their versions independently from Conventional Commits.
 There are no version plans or fixed release groups. Tags use the exact pattern
 `{projectName}@{version}`. The first official distribution of **each** new package
-is exactly `0.0.1`, with no earlier official prerelease. Source manifests remain
-private `0.0.0` until candidate preparation is authorized and reviewed.
+is exactly `0.0.1`, with no earlier official prerelease. Development manifests remain
+private `0.0.0`; reviewed distribution manifests are staged separately.
 
 Every allowed type has an explicit mapping in `nx.json`:
 
@@ -36,7 +36,11 @@ the resolved graph and changed package paths. PR title/body edits rerun CI.
 Enforcement starts after `db8b76f81144e2e1e3f9c36dca59ffc8dfcd0594`; historical
 messages are preserved. Lifecycle tags plus fetched package tags govern commit
 checks; they are not a substitute for fresh registry/channel checks at release.
-The release workflow must reconcile lifecycle metadata after first publication.
+After the verified 20 November 2026 publication, both projects carry
+`lifecycle:released`. Subsequent changes use ordinary Conventional Commit intent;
+`init` is no longer valid. Release tags supply the version baseline even though
+development manifests remain private `0.0.0`. See the
+[0.0.1 release record](consumer/release-notes.md).
 
 `adjustSemverBumpsForZeroMajorVersion: true` gives fixes and compatible features
 a patch increment on `0.x`; breaking changes increment minor. For `1.x` and
@@ -153,5 +157,6 @@ that package's readiness. Verify the actual packed README/resources and executab
 examples; documentation edits alone do not prove usability. Record version-specific
 notes and recheck the exact final candidate after documentation drift. #22 accepts
 pre-publication readiness; #23 separately verifies public distribution pages after
-authorized release. This local requirement does not depend on ecosystem acceptance
-of proposed Meta ADR-0024 and grants no publication or visibility authority.
+authorized release. The local gate now aligns with accepted Meta ADR-0024 at
+`734488ba1bd960dcaa2f61fea899ab49d26c1bd3`; it grants no publication or visibility
+authority.

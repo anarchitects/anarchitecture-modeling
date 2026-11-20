@@ -1,7 +1,7 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "name": "modeling-core",
-  "tags": ["scope:foundation", "type:core", "lifecycle:unreleased"],
+  "tags": ["scope:foundation", "type:core", "lifecycle:released"],
   "targets": {
     "test": {
       "dependsOn": ["build"]

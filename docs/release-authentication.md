@@ -7,6 +7,20 @@ The activation state is recorded in [publishing.md](publishing.md).
 These instructions do not create credentials or
 authorize visibility, environment, tag or registry changes.
 
+## Completed bootstrap and package protection — 20 November 2026
+
+Both `0.0.1` packages are published and independently verified. The initial and
+recovery tokens are revoked; `npm-release` has no secrets. Johan explicitly
+approved the post-bootstrap policy for both packages. `npm access set mfa=publish`
+succeeded after his authentication; refreshed npm Settings pages independently
+confirmed **Require two-factor authentication and disallow bypass 2fa tokens**
+for both. The [execution record](https://github.com/anarchitects/anarchitecture-modeling/issues/23#issuecomment-7036881404)
+contains publication, consumer proof and cleanup evidence.
+
+Trusted publishing is not configured yet. Set it up near the next real authorized
+release as described below; configuration alone will not establish OIDC execution.
+The environment and bootstrap sections retain their historical/setup context.
+
 ## Applied environment — 20 November 2026
 
 Johan approved public repository disclosure and the environment setup under #23.
