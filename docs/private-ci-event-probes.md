@@ -5,7 +5,10 @@ started 18 November 2026 from `b93d0bb26dae38f3063637ed03051df54bc0b7c8`.
 This is a verification plan and dated settings record. **The genuine private-fork
 event passed; the genuine Dependabot event remains pending.** See the
 [retained fork evidence and window deviation](private-fork-ci-evidence.md).
-#44 remains open and blocks final #22 readiness acceptance.
+The missing bot event remains tracked under #44, regardless of its GitHub closed
+state. The [bounded release disposition](public-readiness.md#bounded-dependabot-follow-up--20-november-2026)
+supersedes the earlier requirement to complete this event before final #22
+readiness; it does not claim the event passed.
 The accepted bounded [#10 evidence](ci-verification.md) remains valid within its
 documented scope. Owner: Johan; organization-level settings require organization
 administrator authority. No publication or visibility change is authorized here.
@@ -174,7 +177,8 @@ approval/rerun behavior, sanitized trust report and job logs. Verify:
 
 Archive final sanitized evidence durably in the verification document; CI artifact
 links expire after seven days. Record actual limitations and obtain Johan's
-explicit #44 acceptance. Then feed the accepted record into #22 and revalidate
+explicit acceptance of the real-event result. Feed that record into #22/#23 as
+follow-up evidence. Until it exists, use the bounded disposition above; revalidate
 settings immediately before any separately authorized #23 access/visibility action.
 
 ## Governance

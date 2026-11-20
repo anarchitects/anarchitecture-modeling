@@ -144,8 +144,10 @@ the environment proposal remains separately authorized #23 work.
 
 ## Exact-candidate authorization
 
-After #20, #21, #22 and #44 are completed, obtain two current owner-authored GitHub
-comments (updated within 24 hours). #22 records readiness in one fenced
+After #20, #21 and #22 are accepted, obtain two current owner-authored GitHub
+comments (updated within 24 hours). #44's genuine Dependabot event remains a
+[bounded nonblocking follow-up](public-readiness.md#bounded-dependabot-follow-up--20-november-2026);
+its absence alone does not prohibit publication. #22 records readiness in one fenced
 `foundation-release-readiness` JSON block with:
 
 ```json

@@ -163,4 +163,7 @@ after revision revalidation. #14 retains release controls, and #22/#23 retain
 candidate disclosure/publication. Johan subsequently accepted #10's bounded outcome
 after PR #43 merged as `db8b76f81144e2e1e3f9c36dca59ffc8dfcd0594`;
 [#44](https://github.com/anarchitects/anarchitecture-modeling/issues/44) owns the
-explicitly deferred real-event verification before final #22 readiness acceptance.
+deferred real-event verification. Its original before-readiness sequencing is
+superseded for the remaining bot event by the
+[20 November bounded disposition](public-readiness.md#bounded-dependabot-follow-up--20-november-2026).
+The real fork result and the unverified bot event remain distinct.
