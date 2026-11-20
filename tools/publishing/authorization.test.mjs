@@ -238,7 +238,12 @@ for (const [label, change] of Object.entries(rejected))
   });
 test('activation alone cannot bypass license clearance', () => {
   assert.throws(
-    () => authorize(fixture(), { ...config, enabled: true }),
+    () =>
+      authorize(fixture(), {
+        ...config,
+        enabled: true,
+        license: { ...config.license, status: 'pending' },
+      }),
     /license\/NOTICE clearance/,
   );
 });

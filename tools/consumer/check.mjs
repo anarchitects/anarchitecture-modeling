@@ -199,6 +199,15 @@ try {
       config.repository,
     );
     const commands = example.install.split('\n');
+    const registryCommands = [
+      'npm init -y',
+      `npm install --save-exact @anarchitects/modeling-core@${candidate.artifacts['modeling-core'].artifactVersion}${name === 'modeling-metamodel' ? ` @anarchitects/modeling-metamodel@${artifact.artifactVersion}` : ''}`,
+    ];
+    assert.deepEqual(
+      example.registryInstall.split('\n'),
+      registryCommands,
+      'Registry instructions must pin the exact candidate pair',
+    );
     // Execute the documented install steps, without a shell or arbitrary code.
     const expected = [
       'npm init -y',
@@ -215,6 +224,8 @@ try {
       assert.deepEqual(inventory(), ['@anarchitects/modeling-core', 'tslib']);
     report.documentation[name] = {
       commands: [...commands, 'node quickstart.mjs'],
+      registryCommands,
+      registryInstallExecuted: false,
       ...runReadme(name),
     };
   }

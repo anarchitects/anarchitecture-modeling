@@ -7,7 +7,7 @@
   "workflow": "publish.yml",
   "registry": "https://registry.npmjs.org",
   "license": {
-    "status": "pending",
+    "status": "accepted",
     "spdx": "Apache-2.0",
     "licenseFile": "LICENSE",
     "noticeFile": "NOTICE"

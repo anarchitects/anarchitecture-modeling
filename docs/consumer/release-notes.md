@@ -1,8 +1,9 @@
 # Release notes and compatibility history
 
-Neither package has an authorized public release yet. Candidate versions in local
-archives are preview metadata, not evidence of npm availability. No deprecation,
-end-of-maintenance date or stable 1.x support commitment is announced.
+This document describes the first-release candidate contracts. Confirm actual
+publication and integrity in the release record and npm registry; an archive's
+version does not establish availability. No deprecation, end-of-maintenance date
+or stable 1.x support commitment is announced.
 
 ## First-release candidate scope
 

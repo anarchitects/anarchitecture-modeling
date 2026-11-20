@@ -14,9 +14,17 @@ const guides = [
 
 // The archive is self-contained. GitHub's source reference is supplementary and
 // pinned; its public accessibility is a separate #22/#23 live check.
-export function documentationFiles(name, version, sourceSha, repository) {
+export function documentationFiles(
+  name,
+  version,
+  sourceSha,
+  repository,
+  coreVersion,
+) {
   assert.ok(['modeling-core', 'modeling-metamodel'].includes(name));
   assert.match(version, /^\d+\.\d+\.\d+$/);
+  const compatibleCore = name === 'modeling-core' ? version : coreVersion;
+  assert.match(compatibleCore, /^\d+\.\d+\.\d+$/);
   assert.match(sourceSha, /^[a-f0-9]{40}$/);
   assert.equal(repository, 'anarchitects/anarchitecture-modeling');
   const homepage = `https://github.com/${repository}/blob/${sourceSha}/packages/${name}/README.md`;
@@ -35,6 +43,8 @@ export function documentationFiles(name, version, sourceSha, repository) {
     NOTICE: readSource('NOTICE'),
   });
   const readme = sourceReadme
+    .replaceAll('<CORE_VERSION>', compatibleCore)
+    .replaceAll('<METAMODEL_VERSION>', version)
     .replaceAll('../../docs/consumer/', `${source}/docs/consumer/`)
     .replaceAll('../../LICENSE', `${source}/LICENSE`)
     .replaceAll('../../NOTICE', `${source}/NOTICE`);
@@ -103,6 +113,7 @@ export function quickStart(readme) {
   };
   return {
     install: block('install', 'sh'),
+    registryInstall: block('registry-install', 'sh'),
     source: block('source', 'js'),
     output: block('output', 'text'),
   };
@@ -121,6 +132,7 @@ export function verifyDocumentation(
     manifest.version,
     sourceSha,
     repository,
+    manifest.dependencies?.['@anarchitects/modeling-core'],
   );
   assert.equal(
     manifest.homepage,

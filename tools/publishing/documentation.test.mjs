@@ -10,12 +10,17 @@ import {
 
 const sha = '1'.repeat(40);
 const repository = 'anarchitects/anarchitecture-modeling';
-function fixture(name = 'modeling-core', version = '0.0.1') {
+function fixture(
+  name = 'modeling-core',
+  version = '0.0.1',
+  coreVersion = '0.0.1',
+) {
   const { homepage, files } = documentationFiles(
     name,
     version,
     sha,
     repository,
+    coreVersion,
   );
   for (const path of ['LICENSE', 'NOTICE'])
     files[path] = readFileSync(
@@ -24,9 +29,50 @@ function fixture(name = 'modeling-core', version = '0.0.1') {
     );
   return {
     files,
-    manifest: { name: `@anarchitects/${name}`, version, homepage },
+    manifest: {
+      name: `@anarchitects/${name}`,
+      version,
+      homepage,
+      ...(name === 'modeling-metamodel'
+        ? { dependencies: { '@anarchitects/modeling-core': coreVersion } }
+        : {}),
+    },
   };
 }
+test('registry instructions pin independently versioned packages without replacing the local proof', () => {
+  const { files, manifest } = fixture('modeling-metamodel', '0.2.3', '0.1.7');
+  const result = verifyDocumentation(
+    'modeling-metamodel',
+    manifest,
+    (p) => files[p],
+    sha,
+    repository,
+  );
+  assert.equal(
+    result.registryInstall,
+    'npm init -y\nnpm install --save-exact @anarchitects/modeling-core@0.1.7 @anarchitects/modeling-metamodel@0.2.3',
+  );
+  assert.equal(
+    result.install,
+    'npm init -y\nnpm install --save-exact ./core.tgz ./metamodel.tgz',
+  );
+  assert.doesNotMatch(files['README.md'], /<(CORE|METAMODEL)_VERSION>/);
+  assert.throws(
+    () =>
+      verifyDocumentation(
+        'modeling-metamodel',
+        {
+          ...manifest,
+          dependencies: { '@anarchitects/modeling-core': '0.1.8' },
+        },
+        (p) => files[p],
+        sha,
+        repository,
+      ),
+    /differs from reviewed package documentation/,
+  );
+  assert.throws(() => fixture('modeling-metamodel', '0.2.3', '^0.1.7'));
+});
 for (const name of ['modeling-core', 'modeling-metamodel']) {
   test(`${name}: pinned offline documentation and exactly one executable quick start`, () => {
     const { files, manifest } = fixture(name);

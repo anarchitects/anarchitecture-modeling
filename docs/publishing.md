@@ -42,9 +42,10 @@ independent, versioned distribution manifests. Each tarball contains:
   version or its Nx baseline. `workspace:`, `file:`, `link:` and private-source
   references do not escape into runtime dependencies.
 - Exact copies of the root Apache-2.0 LICENSE and attribution NOTICE, with
-  `license: Apache-2.0`. `license.status` remains `pending` until #22's final
-  candidate clearance, so preparation still writes `private: true`. The license
-  grant does not establish distribution readiness or publication authorization.
+  `license: Apache-2.0` and `private: false`, following the
+  [owner's licensing acceptance](license-reconciliation.md). Root/development
+  manifests remain private and publication remains disabled. Accepted licensing
+  does not establish final candidate readiness or publication authorization.
 
 `candidate.json` records source SHA, lockfile SHA-256, toolchain, actual Nx version
 data, package versions/intended tags, each archive's SHA-256/npm integrity, packed
@@ -192,11 +193,11 @@ fresh registry/tag history, then invokes #14's compatibility/version guard.
 Future stabilization additionally requires `stabilizations` with the exact `1.0.0`
 decision. Issue closure alone is insufficient authorization.
 
-Before activation, merge the final cleared license/NOTICE configuration, review
-the deployment controls, and change `enabled` only through an explicitly approved
-#23 PR. The preparation-only assertions/tests must then be deliberately updated
-for the accepted license/activation state. Prepare and review artifacts from that
-final commit; do not approve hashes from an earlier candidate, including one with
+The accepted license/NOTICE configuration permits public archive metadata while
+publication stays disabled. Before activation, review the deployment controls
+and change `enabled` only through an explicitly approved #23 PR. Tests that assert
+disabled publication must be deliberately updated for that approved state.
+Prepare and review artifacts from that final commit; do not approve hashes from an earlier candidate, including one with
 the same license but pending clearance or different private/public metadata.
 
 Dispatch publication from that exact `main` commit with the successful preview run
@@ -223,9 +224,12 @@ with the reviewed source; they also check bundled relative links/anchors. These
 checks do not establish remote URL accessibility or registry rendering.
 
 Before #22 sign-off, review each README and its exact candidate version, supported
-matrix, install path and limitations. Before #23 activation, reconcile preview-only
-wording and local-tarball instructions with the intended exact public versions,
-then regenerate/review archives and run their examples. Never silently transform a
+matrix, install path and limitations. The package READMEs include conditional
+registry commands pinned at staging to
+each archive's version and the exact core dependency; the local-tarball commands
+remain executable before publication. The independent consumer checks those
+registry pins but does not execute a registry install or claim public availability.
+Before #23 activation, regenerate/review exact archives and run their examples. Never silently transform a
 preview into a published-availability claim. After authorized publication, inspect
 each actual npm version page and its links, and run the documented registry install
 and quick starts. Record URLs/observations and handle mismatches through the normal

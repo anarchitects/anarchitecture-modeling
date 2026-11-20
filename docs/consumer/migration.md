@@ -2,7 +2,7 @@
 
 This is a consumer-owned migration procedure for the contracts described in the
 [consumer guide](README.md). It does not claim any application has migrated or
-that a registry release exists. Both packages remain unreleased previews. Start actual artifact adoption only when exact authorized versions,
+that a registry release exists. Start actual artifact adoption only when exact authorized versions,
 integrity and compatibility evidence are available.
 
 ## Establish a reversible baseline

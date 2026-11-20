@@ -73,7 +73,7 @@ jobs:
           COMPARISON_HEAD: ${{ steps.shas.outputs.head }}
         run: node tools/ci/validate.mjs
 
-      - name: Verify publishing authorization and deterministic private archives
+      - name: Verify publishing authorization and deterministic candidate archives
         env:
           NX_NO_CLOUD: 'true'
         run: |
