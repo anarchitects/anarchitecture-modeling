@@ -10,10 +10,12 @@ manifests remain private. The publisher cannot create tags, credentials,
 environments or change repository visibility. Johan (@vrxj81) remains the
 accountable release owner.
 
-The first attempt published core `0.0.1` but stopped before metamodel while npm
-was processing core. See the [bounded recovery procedure](publication-recovery.md)
-for the observed registry state, availability waiting, exact-archive recovery and
-separate owner decision. The original attempt's credential has been revoked.
+Both packages are public at `0.0.1`. The first attempt published core and the
+separately authorized recovery published the original metamodel archive. Registry
+consumer checks and provenance verification passed; both temporary tokens are
+revoked and the environment has no secrets. See the
+[release record](consumer/release-notes.md) and
+[bounded recovery procedure](publication-recovery.md).
 
 This enabled policy must reach main only through the explicitly approved #23
 activation PR after deployment controls are verified. Merging it does not dispatch publication or supply the
