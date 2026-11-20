@@ -94,6 +94,7 @@ The [review template](docs/templates/public-readiness-review.md) remains reusabl
 Authorized execution remains #23. [Third-party notices](THIRD_PARTY_NOTICES.md)
 retain the verified copied-tooling grant independently of final package licensing.
 
-This repository remains private. Release configuration, final artifact review,
-visibility approval and publication are separate work. CI success, a merged PR
-or an accepted architecture decision does not authorize those operations.
+This repository is public following the [approved disclosure operation](https://github.com/anarchitects/anarchitecture-modeling/issues/23#issuecomment-7034737872).
+Package publication still requires final artifact acceptance and exact release
+authorization. CI success, a merged PR or an accepted architecture decision does
+not authorize publication.

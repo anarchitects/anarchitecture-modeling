@@ -8,8 +8,7 @@ const canonical = (name) =>
   readFileSync(new URL(`../../${name}`, import.meta.url));
 const manifest = { license: 'Apache-2.0', private: false };
 
-test('accepted licensing retains canonical legal files while publication stays disabled', () => {
-  assert.equal(config.enabled, false);
+test('accepted licensing retains canonical legal files independently of activation', () => {
   assert.equal(config.license.status, 'accepted');
   assert.equal(config.license.spdx, manifest.license);
   assert.doesNotThrow(() =>

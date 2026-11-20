@@ -125,9 +125,9 @@ would need explicit policy and tests, without changing the first-release rule.
 
 Accepting #14 selects this policy baseline; it does not approve a release
 candidate or activate new tag permissions. #18 owns the operational workflow and
-any corresponding authorized control transition. The disabled workflow and staged
+any corresponding authorized control transition. The guarded workflow and staged
 artifact procedure are documented in [publishing.md](publishing.md); their presence
-does not activate publication or change the live tag freeze.
+does not authorize publication or change the live tag freeze.
 
 ## Initial history and evidence
 

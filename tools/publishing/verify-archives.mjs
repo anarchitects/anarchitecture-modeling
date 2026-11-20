@@ -27,7 +27,6 @@ try {
         encoding: 'utf8',
       });
     assert.deepEqual(JSON.parse(read('package.json')), a.manifest);
-    assert.equal(config.enabled, false, 'Publication remains disabled');
     assert.equal(first.licenseStatus, 'accepted');
     assert.equal(a.manifest.private, false);
     assert.equal(a.manifest.license, 'Apache-2.0');

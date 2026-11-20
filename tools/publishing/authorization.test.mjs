@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { authorize } from './authorization.mjs';
+import { authorize, verifyReadinessGates } from './authorization.mjs';
 import { config } from './prepare.mjs';
 import { checkPreviewRun } from './check-preview-run.mjs';
 
@@ -90,13 +90,59 @@ function record(input, key, change) {
   lines[1] = JSON.stringify(value);
   comment.body = lines.join('\n');
 }
-test('current production policy rejects publication before fetching anything', () => {
-  assert.throws(() => authorize(fixture()), /Publication is disabled/);
+test('disabled policy still rejects publication', () => {
+  assert.throws(
+    () => authorize(fixture(), { ...config, enabled: false }),
+    /Publication is disabled/,
+  );
+});
+test('activated publisher rejects local execution before fetching anything', () => {
   const result = spawnSync(process.execPath, ['tools/publishing/publish.mjs'], {
     encoding: 'utf8',
+    env: { ...process.env, GITHUB_ACTIONS: 'false' },
   });
   assert.notEqual(result.status, 0);
-  assert.match(result.stderr, /Publication disabled until #23/);
+  assert.match(result.stderr, /Publication requires GitHub Actions/);
+});
+test('activated production policy still requires exact owner authorization', () => {
+  assert.equal(authorize(fixture()), 'bootstrap');
+  const input = fixture();
+  input.authorizationComment.body = 'PR merged';
+  assert.throws(() => authorize(input), /Expected one exact review record/);
+});
+const completedGates = () =>
+  [20, 21, 22, 55].map((number) => ({
+    number,
+    state: 'closed',
+    state_reason: 'completed',
+  }));
+test('open Dependabot follow-up does not block completed readiness gates', () => {
+  assert.doesNotThrow(() =>
+    verifyReadinessGates([
+      ...completedGates(),
+      { number: 44, state: 'open', state_reason: null },
+    ]),
+  );
+});
+test('open, missing or uncompleted required outcomes still block publication', () => {
+  for (const number of [20, 21, 22, 55]) {
+    for (const change of [{ state: 'open' }, { state_reason: 'not_planned' }]) {
+      const issues = completedGates().map((issue) =>
+        issue.number === number ? { ...issue, ...change } : issue,
+      );
+      assert.throws(
+        () => verifyReadinessGates(issues),
+        new RegExp(`Readiness gate #${number}`),
+      );
+    }
+    assert.throws(
+      () =>
+        verifyReadinessGates(
+          completedGates().filter((issue) => issue.number !== number),
+        ),
+      new RegExp(`Readiness gate #${number}`),
+    );
+  }
 });
 test('accepted exact first distribution passes with a bootstrap decision', () => {
   assert.equal(authorize(fixture(), acceptedPolicy), 'bootstrap');

@@ -1,11 +1,19 @@
-# Controlled npm artifact preparation
+# Controlled npm publication
 
-Issue [#18](https://github.com/anarchitects/anarchitecture-modeling/issues/18)
-prepares publication; it does not authorize it. `tools/publishing/config.json`
-has `enabled: false`. The publisher fails before network access while disabled.
-Root and development package manifests remain private. No production tag,
-registry package, trusted publisher, secret or GitHub environment is created by
-these scripts. Johan (@vrxj81) remains the accountable release owner.
+Issue [#23](https://github.com/anarchitects/anarchitecture-modeling/issues/23)
+activates the guarded publisher prepared under #18. `tools/publishing/config.json`
+has `enabled: true`; this permits the manual publication path, not a release
+without approval. Preview remains the workflow default. Publication still requires
+public source, the protected `npm-release` environment, exact current owner
+records, matching tags and reviewed archives. Root and development package
+manifests remain private. The publisher cannot create tags, credentials,
+environments or change repository visibility. Johan (@vrxj81) remains the
+accountable release owner.
+
+This enabled policy must reach main only through the explicitly approved #23
+activation PR after deployment controls are verified. Merging it does not dispatch publication or supply the
+separate exact-candidate authorization below. Setting `enabled: false` again
+retains the fail-before-network stop switch.
 
 ## Candidate artifacts
 
@@ -44,7 +52,7 @@ independent, versioned distribution manifests. Each tarball contains:
 - Exact copies of the root Apache-2.0 LICENSE and attribution NOTICE, with
   `license: Apache-2.0` and `private: false`, following the
   [owner's licensing acceptance](license-reconciliation.md). Root/development
-  manifests remain private and publication remains disabled. Accepted licensing
+  manifests remain private. Accepted licensing
   does not establish final candidate readiness or publication authorization.
 
 `candidate.json` records source SHA, lockfile SHA-256, toolchain, actual Nx version
@@ -52,7 +60,7 @@ data, package versions/intended tags, each archive's SHA-256/npm integrity, pack
 and unpacked sizes, file inventory and complete manifest. It contains no authority
 to release. `verify-archives.mjs` prepares twice and compares the actual tarballs,
 reads their manifests/entry points, compares legal files byte-for-byte with this
-checkout and checks the tar inventory. Installed consumer copies and the disabled
+checkout and checks the tar inventory. Installed consumer copies and the guarded
 publisher use the same legal-file comparison, rejecting stale placeholders or
 substituted notices even if an accompanying archive report is also changed.
 This is same-source/toolchain reproducibility; it does not promise cross-version
@@ -108,19 +116,23 @@ reviewed operations.
 [Automatic provenance](https://docs.npmjs.com/generating-provenance-statements/)
 requires the public source repository and matching package metadata. Publication
 uses GitHub-hosted runners, `--provenance`, and OIDC permission only in the gated
-publish job. The repository is currently private; disclosure under #22 and explicit
-visibility authorization remain prerequisites. No private-source attestation is
-attempted. #23 must verify registry provenance and installed bytes after execution.
+publish job. The [approved visibility operation](https://github.com/anarchitects/anarchitecture-modeling/issues/23#issuecomment-7034737872)
+made this repository public on 20 November 2026, following #22's bounded disclosure
+review. #23 must still verify registry provenance and installed bytes after
+separately authorized publication.
 
-## Concrete control proposal — not applied
+## Deployment controls required before activation
 
-The proposed environment is `npm-release`, with Johan (GitHub user ID `5003361`)
+The environment is `npm-release`, with Johan (GitHub user ID `5003361`)
 as its sole required reviewer, administrator bypass disabled and deployment allowed
 only from branch `main`. Self-review remains allowed so Johan can dispatch and
 approve his own release. Reviewable API payloads live in
 [npm-release-environment.json](../.github/governance/npm-release-environment.json)
 and [npm-release-main-policy.json](../.github/governance/npm-release-main-policy.json).
-These are proposed settings, not evidence that the environment exists.
+The [20 November execution readback](https://github.com/anarchitects/anarchitecture-modeling/issues/23#issuecomment-7034737872)
+verified these exact controls and an empty environment secret inventory. Recheck
+them before adding a credential or publishing; the JSON files alone are not
+evidence of effective controls.
 
 [GitHub environment protection availability](https://docs.github.com/en/actions/reference/workflows-and-actions/deployments-and-environments)
 depends on repository visibility/plan. Verify that these exact restrictions are
@@ -140,7 +152,7 @@ commit and cannot create or rewrite them. The [first-release tag plan](first-rel
 creator of the two exact first-release names, with separate no-bypass immutability
 protection and immediate restoration of the full freeze. Its payloads and execution
 sequence are prepared for #22 review under #18/#14. Applying that transition and
-the environment proposal remains separately authorized #23 work.
+any later environment changes remain separately authorized #23 work.
 
 ## Exact-candidate authorization
 
@@ -195,10 +207,13 @@ fresh registry/tag history, then invokes #14's compatibility/version guard.
 Future stabilization additionally requires `stabilizations` with the exact `1.0.0`
 decision. Issue closure alone is insufficient authorization.
 
-The accepted license/NOTICE configuration permits public archive metadata while
-publication stays disabled. Before activation, review the deployment controls
-and change `enabled` only through an explicitly approved #23 PR. Tests that assert
-disabled publication must be deliberately updated for that approved state.
+The accepted license/NOTICE configuration permits public archive metadata.
+The #23 activation change sets `enabled: true` and retains disabled-policy,
+local-execution rejection and exact-authorization tests. Approve and merge that
+change only after the deployment controls above have been verified.
+Completed outcomes #20, #21, #22 and #55 remain required; an open #44 does not
+prevent publication under the accepted bounded follow-up. Issue closure is still
+insufficient without the exact owner records.
 Prepare and review artifacts from that final commit; do not approve hashes from an earlier candidate, including one with
 the same license but pending clearance or different private/public metadata.
 
@@ -221,7 +236,7 @@ authorization records; they prove rejection logic, not an executed deployment.
 The [package documentation gate](package-documentation.md) is part of candidate
 review. Staging derives the package-specific README from reviewed source, pins
 online references/homepage to the source SHA and includes offline guides/examples.
-Archive, installed-consumer and disabled-publisher checks compare these exact bytes
+Archive, installed-consumer and publisher checks compare these exact bytes
 with the reviewed source; they also check bundled relative links/anchors. These
 checks do not establish remote URL accessibility or registry rendering.
 
