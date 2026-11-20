@@ -122,6 +122,50 @@ or a planned audience change makes those details material. This does not clear
 known confidential content, credentials, unknown rights or missing required
 owner decisions. Public GitHub logs and artifacts still need their own review.
 
+## Security findings and release scope
+
+A release-blocking vulnerability must have an identified effect on the proposed
+packages, their shipped/runtime dependencies, generated or bundled content, or
+the integrity of the build/publication process. Hold the affected release until
+that risk is resolved or receives an appropriate accountable disposition; do not
+infer safety merely because a vulnerable tool is marked as a dev dependency.
+Conversely, a development-only alert with no identified impact on those surfaces
+is not automatically a package-release blocker. Record its actual exposure,
+owner, mitigation and follow-up independently of package readiness.
+
+### Bounded Dependabot follow-up — 20 November 2026
+
+For the reviewed first Foundation release, the minimatch alert is confined to
+Nx development tooling; it is absent from the exact shipped dependency closure.
+The reviewed callers do not enable the affected mode, and Johan has already
+accepted the bounded tooling risk (F06). The missing genuine Dependabot PR run
+(F05) is a CI event-coverage gap, not evidence of a vulnerability in these packages.
+It remains **unverified and tracked**, but does not by itself block #22 readiness
+or the separately authorized first publication/associated repository disclosure.
+
+This revises the earlier local requirement that both #44 events must precede
+final readiness. It does not mark the bot event passed, dismiss the alert, waive
+an actual artifact/release-process risk or change an accepted Meta policy.
+The genuine private-fork proof, bot-author/actor guard tests, read-only PR
+permissions, absent bot/fork credentials, disabled remote cache/self-healing on
+that path and isolated main-only write credential are the interim evidence and
+controls. Preserve them and revalidate effective controls before access changes.
+
+Johan owns the follow-up under #44. Retry a genuine Dependabot security update
+when a compatible stable Nx fix becomes available, or use the first otherwise
+eligible genuine security PR. Inspect and retain its actual CI trust evidence
+before merging that bot PR. Review progress by **27 November 2026** if no suitable
+update is available; that date prompts reassessment, not an automatic release
+freeze. Do not force a transitive major override, downgrade dependencies or add
+a competing routine update stream just to manufacture an event.
+
+Reassess this disposition if the shipped closure, affected usage, CI trust or
+credential boundaries change, or a concrete artifact/exposure finding appears.
+Known confidential content, unknown rights, compromised artifacts and required
+owner authority remain blockers. Exact-candidate acceptance, repository visibility,
+release/tag/credential/protection authorization and registry verification retain
+their separate requirements.
+
 ## Readiness result and execution handoff
 
 For #22, require complete evidence for applicable surfaces, closed blockers,

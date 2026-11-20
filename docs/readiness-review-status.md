@@ -16,6 +16,22 @@ checks below do not resolve rights, confidential-content decisions or authority.
 The working record uses the [review template](templates/public-readiness-review.md)
 and records gaps rather than treating unavailable evidence as an empty result.
 
+## Release-security scope — 20 November 2026
+
+The [bounded release disposition](public-readiness.md#bounded-dependabot-follow-up--20-november-2026)
+separates actual package/artifact/release-process risks from development-tooling
+alerts and missing CI event coverage. F05 remains unverified but is a nonblocking
+follow-up for this first release; it is not a passed test. Johan owns the genuine
+Dependabot run when a compatible security update becomes possible, with progress
+review by 27 November. Existing CI credential restrictions remain required.
+
+Minimatch is absent from the reviewed runtime closure and archives; the bounded
+Nx tooling risk was already accepted as F06. A finding affecting shipped code,
+runtime dependencies or build/publication integrity still requires a release
+hold and accountable resolution. The earlier dated statements requiring the bot
+event before readiness are superseded only within this explicit scope. Final
+exact-candidate acceptance and #23 operation authorization remain separate.
+
 ## Licensing acceptance — 20 November 2026
 
 [Johan accepted licensing and notices](https://github.com/anarchitects/anarchitecture-modeling/issues/22#issuecomment-7033601538) for the exact candidates in
@@ -255,7 +271,7 @@ cache policy or credential was changed for this review.
 | F02 — Disclosure classification | [D1–D6 classification](disclosure-classification.md) prepared; Johan approved scoped D1/D3 retention. PWG approved exact r2/r3 D2 selections; final disclosure delta remains; D4 audience is resolved                              | Relevant source/security owners      |
 | F03 — Fork-window deviation     | Accepted by Johan with the recorded transient-fork audit limitation; see the [fork report](private-fork-ci-evidence.md)                                                                                                            | Organization administrator           |
 | F04 — Central registration      | PWG acceptance verified in Meta PR #57 and accepted ADR-0023; records landed, local source handoff reconciled                                                                                                                      | Ecosystem architecture owner         |
-| F05 — Genuine bot event         | Complete #44's real Dependabot PR verification; its closed GitHub state does not replace the missing evidence recorded in its comments                                                                                             | Johan and maintainer                 |
+| F05 — Genuine bot event         | Nonblocking first-release follow-up under the bounded disposition above; capture the first eligible genuine security PR, review progress by 27 November, and reassess if artifact or CI-trust exposure changes                     | Johan and maintainer                 |
 | F06 — Security findings         | Minimatch risk accepted as bounded development tooling; retain alert and compatible-fix follow-up. Picomatch advisory withdrawn                                                                                                    | Johan, security maintainer           |
 | F07 — Coverage and access       | Bounded coverage limits accepted by Johan for signoff-r2 and retained evidence; reassess concrete exposure findings, audience changes and relevant later deltas                                                                    | Johan                                |
 | F08 — Execution controls        | [Tag-creation](first-release-tags.md) and [environment/authentication](release-authentication.md) plans prepared; verify effective controls and authorize the actual credential scope and live changes under #23 before activation | Johan and organization administrator |
