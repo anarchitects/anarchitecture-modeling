@@ -8,9 +8,15 @@ import {
   authorize,
   requiredReadinessIssues,
   verifyReadinessGates,
+  ownerRecord,
 } from './authorization.mjs';
 import { verifyLegalFiles } from './legal.mjs';
 import { verifyDocumentation } from './documentation.mjs';
+import { executePublication } from './execute.mjs';
+import {
+  verifyPublishedArtifact,
+  waitForPublishedArtifact,
+} from './registry.mjs';
 
 // Fail before any network request or external mutation while activation is pending.
 assert.equal(config.enabled, true, 'Publication disabled until #23 activation');
@@ -71,6 +77,20 @@ assert.ok(repoResponse.ok);
 const repo = await repoResponse.json();
 const authorizationComment = await github(`issues/comments/${authorizationId}`);
 const readinessComment = await github(`issues/comments/${readinessId}`);
+const approval = ownerRecord(
+  authorizationComment,
+  23,
+  'foundation-release-authorization',
+);
+const operation = process.env.OPERATION ?? 'publish';
+assert.ok(['publish', 'recover'].includes(operation));
+let previewRun, priorRun;
+if (operation === 'recover') {
+  assert.ok(Number.isSafeInteger(approval.recovery?.priorRun));
+  assert.match(process.env.CANDIDATE_RUN ?? '', /^\d+$/);
+  previewRun = await github(`actions/runs/${process.env.CANDIDATE_RUN}`);
+  priorRun = await github(`actions/runs/${approval.recovery.priorRun}`);
+}
 const environment = await github(`environments/${config.environment}`);
 const branchPolicies = await pages(
   `environments/${config.environment}/deployment-branch-policies`,
@@ -132,11 +152,16 @@ const mode = authorize({
   workflow,
   histories,
   tags,
+  previewRun,
+  priorRun,
   context: {
     event: process.env.GITHUB_EVENT_NAME,
     ref: process.env.GITHUB_REF,
     actor: process.env.GITHUB_ACTOR,
     sha: process.env.GITHUB_SHA,
+    operation,
+    candidateRun: process.env.CANDIDATE_RUN,
+    runId: process.env.GITHUB_RUN_ID,
   },
 });
 if (mode === 'bootstrap')
@@ -148,67 +173,69 @@ else {
   );
   assert.ok(process.env.ACTIONS_ID_TOKEN_REQUEST_URL, 'OIDC unavailable');
 }
-const receipts = [];
-async function releasedCore(version, integrity) {
+async function releasedCore(version) {
   const response = await fetch(
     `${config.registry}/@anarchitects%2fmodeling-core/${version}`,
+    { signal: AbortSignal.timeout(30000), redirect: 'error' },
   );
   assert.ok(
     response.ok,
     'Exact core dependency must already be available from npm',
   );
   const manifest = await response.json();
+  assert.equal(manifest.name, '@anarchitects/modeling-core');
   assert.equal(manifest.version, version);
-  if (integrity)
-    assert.equal(
-      manifest.dist?.integrity,
-      integrity,
-      'Published core bytes differ from the reviewed artifact',
-    );
 }
-for (const name of ['modeling-core', 'modeling-metamodel'].filter(
-  (n) => report.artifacts[n],
-)) {
-  // Catch races after approval and stop rather than retrying/replacing a version.
-  assert.deepEqual(
-    await registryVersions(name),
-    histories[name],
-    'Registry changed during release',
-  );
-  const artifact = report.artifacts[name];
-  try {
-    if (name === 'modeling-metamodel')
-      await releasedCore(
-        artifact.manifest.dependencies['@anarchitects/modeling-core'],
-        report.artifacts['modeling-core']?.integrity,
+const request = (url, options) =>
+  fetch(url, { ...options, signal: AbortSignal.timeout(30000) });
+try {
+  await executePublication({
+    report,
+    histories,
+    publishNames:
+      operation === 'recover'
+        ? approval.recovery.publish
+        : ['modeling-core', 'modeling-metamodel'].filter(
+            (name) => report.artifacts[name],
+          ),
+    alreadyPublished:
+      operation === 'recover' ? approval.recovery.alreadyPublished : [],
+    registryVersions,
+    verifyPublished: (name, artifact) =>
+      artifact
+        ? verifyPublishedArtifact(name, artifact, request)
+        : releasedCore(
+            report.artifacts['modeling-metamodel'].manifest.dependencies[
+              '@anarchitects/modeling-core'
+            ],
+          ),
+    waitForPublished: waitForPublishedArtifact,
+    upload: (_name, artifact) => {
+      execFileSync(
+        'npm',
+        [
+          'publish',
+          join(directory, artifact.file),
+          '--access',
+          'public',
+          '--provenance',
+          '--ignore-scripts',
+          '--registry',
+          config.registry,
+        ],
+        { stdio: 'inherit' },
       );
-    execFileSync(
-      'npm',
-      [
-        'publish',
-        join(directory, artifact.file),
-        '--access',
-        'public',
-        '--provenance',
-        '--ignore-scripts',
-        '--registry',
-        config.registry,
-      ],
-      { stdio: 'inherit' },
-    );
-    receipts.push({
-      name,
-      version: artifact.artifactVersion,
-      sha256: artifact.sha256,
-    });
-    writeFileSync(
-      join(directory, 'publication-receipt.json'),
-      JSON.stringify(receipts, null, 2) + '\n',
-    );
-  } catch (error) {
-    console.error(
-      `Publication stopped at ${name}; inspect registry state before any recovery. No rollback attempted.`,
-    );
-    throw error;
-  }
+    },
+    saveReceipt: (receipts) => {
+      writeFileSync(
+        join(directory, 'publication-receipt.json'),
+        JSON.stringify(receipts, null, 2) + '\n',
+      );
+    },
+  });
+} catch (error) {
+  console.error(
+    'Publication stopped; inspect registry state and receipt before any recovery. No rollback or upload retry attempted.',
+  );
+  throw error;
 }

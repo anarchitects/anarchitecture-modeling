@@ -94,6 +94,12 @@ recovery; a partial core publication must not be blindly retried. Cleanup does n
 unpublish a package or rewrite its tags. Keep the existing provenance, archive
 integrity and independent-consumer verification in #23.
 
+The first attempt's bootstrap token is revoked. [Partial-release recovery](publication-recovery.md)
+requires a fresh credential and exact recovery authorization. Prefer only the
+missing metamodel package if selectable; otherwise record and approve the actual
+scope breadth again. Existing package settings for core need not be weakened to
+publish its missing dependent.
+
 ## Subsequent releases
 
 Once the packages exist, configure trusted publishing for each with GitHub owner

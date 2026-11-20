@@ -319,3 +319,166 @@ test('candidate downloads require a successful same-source main workflow run', (
     assert.throws(() => checkPreviewRun({ ...run, ...change }, context));
   }
 });
+
+function recoveryFixture() {
+  const input = fixture(),
+    meta = 'modeling-metamodel';
+  input.report.projectsVersionData[meta] = {
+    currentVersion: '0.0.0',
+    newVersion: '0.0.1',
+  };
+  input.report.artifacts[meta] = {
+    ...input.report.artifacts[name],
+    tag: `${meta}@0.0.1`,
+    sha256: 'c'.repeat(64),
+  };
+  input.histories = { [name]: ['0.0.0-stage', '0.0.1'], [meta]: [] };
+  input.tags[`${meta}@0.0.1`] = sha;
+  input.context = {
+    ...input.context,
+    operation: 'recover',
+    sha: 'd'.repeat(40),
+    candidateRun: '12',
+    runId: '15',
+  };
+  input.previewRun = {
+    id: 12,
+    repository: { full_name: config.repository },
+    head_repository: { full_name: config.repository },
+    path: '.github/workflows/publish.yml',
+    head_sha: sha,
+    head_branch: 'main',
+    event: 'workflow_dispatch',
+    status: 'completed',
+    conclusion: 'success',
+  };
+  input.priorRun = {
+    ...input.previewRun,
+    id: 14,
+    conclusion: 'failure',
+    actor: { id: config.ownerId },
+  };
+  record(input, 'authorizationComment', (r) => {
+    r.versions[meta] = '0.0.1';
+    r.artifactHashes[meta] = 'c'.repeat(64);
+    r.historyBaselines = structuredClone(input.histories);
+    r.recovery = {
+      executionSha: input.context.sha,
+      candidateRun: 12,
+      priorRun: 14,
+      publish: [meta],
+      alreadyPublished: [name],
+    };
+  });
+  record(input, 'readinessComment', (r) => {
+    r.artifactHashes[meta] = 'c'.repeat(64);
+    r.otherChannelsReviewed[meta] = true;
+    r.impacts[meta] = {
+      level: 'none',
+      reference: 'https://example.invalid/review',
+    };
+  });
+  return input;
+}
+test('fresh recovery authorizes only the missing original metamodel candidate', () => {
+  assert.equal(authorize(recoveryFixture(), acceptedPolicy), 'bootstrap');
+  const input = recoveryFixture();
+  input.histories[name] = ['0.0.1'];
+  record(input, 'authorizationComment', (r) => {
+    r.historyBaselines[name] = ['0.0.1'];
+  });
+  assert.equal(authorize(input, acceptedPolicy), 'bootstrap');
+});
+const recoveryRejected = {
+  'missing recovery decision': (x) =>
+    record(x, 'authorizationComment', (r) => {
+      delete r.recovery;
+    }),
+  'ordinary operation using recovery approval': (x) => {
+    x.context.operation = 'publish';
+  },
+  'wrong executor SHA': (x) => {
+    x.context.sha = 'e'.repeat(40);
+  },
+  'wrong candidate input': (x) => {
+    x.context.candidateRun = '13';
+  },
+  'substituted preview run': (x) => {
+    x.previewRun.id = 13;
+  },
+  'wrong preview source': (x) => {
+    x.previewRun.head_sha = 'e'.repeat(40);
+  },
+  'failed preview': (x) => {
+    x.previewRun.conclusion = 'failure';
+  },
+  'wrong prior run': (x) => {
+    x.priorRun.id = 13;
+  },
+  'wrong prior source': (x) => {
+    x.priorRun.head_sha = 'e'.repeat(40);
+  },
+  'prior PR run': (x) => {
+    x.priorRun.event = 'pull_request';
+  },
+  'prior foreign workflow': (x) => {
+    x.priorRun.path = '.github/workflows/other.yml';
+  },
+  'prior fork': (x) => {
+    x.priorRun.head_repository.full_name = 'someone/fork';
+  },
+  'prior non-owner run': (x) => {
+    x.priorRun.actor.id = 1;
+  },
+  'prior incomplete run': (x) => {
+    x.priorRun.status = 'in_progress';
+  },
+  'prior successful run': (x) => {
+    x.priorRun.conclusion = 'success';
+  },
+  'republishing core': (x) =>
+    record(x, 'authorizationComment', (r) => {
+      r.recovery.publish.unshift(name);
+    }),
+  'unverified skip set': (x) =>
+    record(x, 'authorizationComment', (r) => {
+      r.recovery.alreadyPublished = [];
+    }),
+  'missing published core': (x) => {
+    x.histories[name] = ['0.0.0-stage'];
+  },
+  'metamodel already published': (x) => {
+    x.histories['modeling-metamodel'] = ['0.0.1'];
+  },
+  'unreviewed placeholder': (x) =>
+    record(x, 'authorizationComment', (r) => {
+      r.historyBaselines[name] = ['0.0.1'];
+    }),
+  'new published history': (x) => {
+    x.histories[name].push('0.0.2');
+  },
+  'substituted skipped archive': (x) => {
+    x.report.artifacts[name].sha256 = 'e'.repeat(64);
+  },
+  'changed skipped version': (x) => {
+    x.report.artifacts[name].artifactVersion = '0.0.2';
+  },
+  'retagged original': (x) => {
+    x.tags[`${name}@0.0.1`] = x.context.sha;
+  },
+  'stale recovery': (x) => {
+    x.authorizationComment.updated_at = '2000-01-01T00:00:00Z';
+  },
+  'wrong recovery owner': (x) => {
+    x.authorizationComment.user.id = 1;
+  },
+  'broader environment': (x) => {
+    x.branchPolicies.push({ name: '*', type: 'branch' });
+  },
+};
+for (const [label, change] of Object.entries(recoveryRejected))
+  test(`recovery rejects ${label}`, () => {
+    const input = recoveryFixture();
+    change(input);
+    assert.throws(() => authorize(input, acceptedPolicy));
+  });
