@@ -7,6 +7,11 @@ Repository-local ADRs for the generic, intended open-source Modeling Foundation.
 | [0001](0001-modeling-foundation-boundaries.md)                    | Accepted | Modeling Foundation scope, boundaries and responsibilities; delivery gates remain open         |
 | [0002](0002-extensible-meta-metamodel-and-governance-metadata.md) | Accepted | Extensible meta-metamodel, metadata and governance semantics; implementation gates remain open |
 
+## Proposed additions and principles
+
+- [Architecture Principles Register](../architecture-principles.md): AP-07 semantic comparison and AP-08 stable identity, with accepted coverage separated from proposals.
+- [0003 — Bounded semantic model comparison](0003-semantic-change-comparison.md): Proposed; adds comparison/coverage semantics without changing coordinated revisions or duplicating accepted identity rules.
+
 ## Authority and evidence
 
 - Accepted ecosystem-wide decisions and cross-repository ownership remain with [Anarchitecture Meta](https://github.com/anarchitects/anarchitecture-meta), especially ADR-0004 and the accepted reuse, release and ownership policies. These local records do not supersede them. [Meta ADR-0023](https://github.com/anarchitects/anarchitecture-meta/blob/4e481d2ef8c522d3c1118e6de8bb7052b87100a7/adr/0023-independent-modeling-foundation.md), accepted by PWG on 18 November and landed through PR #57 on 19 November, now records the dedicated Foundation home and ownership. [Meta #56](https://github.com/anarchitects/anarchitecture-meta/issues/56) tracks source handoffs; disclosure and publication remain separate.
