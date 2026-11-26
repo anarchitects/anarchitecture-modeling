@@ -5,7 +5,11 @@ under [#75](https://github.com/anarchitects/anarchitecture-modeling/issues/75).
 [Johan accepted ADR 0003 on 24 November 2026](https://github.com/anarchitects/anarchitecture-modeling/pull/74#issuecomment-7124370246)
 at `b48e837e20117bb5771d9970ab8528514fe3aa2d`; PR #74 landed as
 `5b6e164f469c0b0a7be886623680581a36a8bcfa`. Proposal wording predates that decision.
-Implementation evidence and the concrete API remain pending Johan's review.
+Implementation landed through PR #82 and was published in 0.0.2. Johan requested
+closure of #77 after the verified release; the [acceptance record](https://github.com/anarchitects/anarchitecture-modeling/issues/77#issuecomment-7205059020)
+binds that decision to the bounded evidence. Earlier pending-review text below
+describes the initial local review. The separate [#78 proof](https://github.com/anarchitects/anarchitecture-modeling/issues/78)
+remains in progress.
 
 ## Contract selected before implementation
 
@@ -23,17 +27,17 @@ supported differences; a caller must inspect status and coverage, not just an em
 differences array. Cross-model comparisons are incompatible: reconciliation and
 automatic identity matching are outside this version.
 
-| Data | Comparison semantics |
-| --- | --- |
-| Model name, element/member names and types, containment/ownership, relationship types/endpoints | Semantic; entities matched by kind and stable ID within the same model |
-| Declared properties, including provenance/governance intent | Semantic; exact scalar/reference values, unordered record keys, ordered lists; no case or string normalization |
-| Entity collections, profile selections, definition collections and rule registrations | Enumeration order is non-semantic; preserve duplicates and reject invalid/ambiguous definitions |
-| Constraint bindings | Group by subject and exact constraint definition; compare a multiset of bindings because the existing contract supplies no binding ID |
-| Constraint roles/member groups | Role enumeration is non-semantic; member order is semantic exactly when the pinned role says `ordered: true`; multiplicity is always preserved |
-| Selected definitions | Require identical normalized definitions as well as exact pins; changed definitions under the same version are incompatible, never silently trusted |
-| Extension payloads, unsupported rules/parameters, unknown fields/properties and missing definitions | Incomplete coverage, even for identical payloads; extensions are never inspected |
-| Revision | Excluded from semantic equivalence, retained in evidence; ordinary nonblank structural admission still applies |
-| Views, notation bindings, applied-plan receipts and generated baselines | Explicitly excluded; neither validated nor authenticated by comparison |
+| Data                                                                                                | Comparison semantics                                                                                                                                |
+| --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Model name, element/member names and types, containment/ownership, relationship types/endpoints     | Semantic; entities matched by kind and stable ID within the same model                                                                              |
+| Declared properties, including provenance/governance intent                                         | Semantic; exact scalar/reference values, unordered record keys, ordered lists; no case or string normalization                                      |
+| Entity collections, profile selections, definition collections and rule registrations               | Enumeration order is non-semantic; preserve duplicates and reject invalid/ambiguous definitions                                                     |
+| Constraint bindings                                                                                 | Group by subject and exact constraint definition; compare a multiset of bindings because the existing contract supplies no binding ID               |
+| Constraint roles/member groups                                                                      | Role enumeration is non-semantic; member order is semantic exactly when the pinned role says `ordered: true`; multiplicity is always preserved      |
+| Selected definitions                                                                                | Require identical normalized definitions as well as exact pins; changed definitions under the same version are incompatible, never silently trusted |
+| Extension payloads, unsupported rules/parameters, unknown fields/properties and missing definitions | Incomplete coverage, even for identical payloads; extensions are never inspected                                                                    |
+| Revision                                                                                            | Excluded from semantic equivalence, retained in evidence; ordinary nonblank structural admission still applies                                      |
+| Views, notation bindings, applied-plan receipts and generated baselines                             | Explicitly excluded; neither validated nor authenticated by comparison                                                                              |
 
 Model format remains **2**, metamodel contract **1**, document envelope **1**.
 There is no schema, persistence, dependency or existing-export change. Property
@@ -101,9 +105,9 @@ Retained local development archives are based on
 Both carry private development version `0.0.0`; these are not publishable release
 candidates or evidence of installed-registry adoption. SHA-256:
 
-| Archive | SHA-256 |
-| --- | --- |
-| `modeling-core.tgz` | `cf6beef71b53f281f7c0fc5d7bbe764702ab47824ad66c5588fc7fd41a14e712` |
+| Archive                  | SHA-256                                                            |
+| ------------------------ | ------------------------------------------------------------------ |
+| `modeling-core.tgz`      | `cf6beef71b53f281f7c0fc5d7bbe764702ab47824ad66c5588fc7fd41a14e712` |
 | `modeling-metamodel.tgz` | `0a13ef471c528c4b6245bbe465bb29a94b0986d0ad0022bddfe6009d8152c2cb` |
 
 Johan's implementation evidence acceptance remains pending. #78 must bind its

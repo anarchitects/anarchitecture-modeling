@@ -6,11 +6,9 @@ for semantic models, profiles, diagram views and portable documents. Use
 `@anarchitects/modeling-metamodel` for composition, semantic validation, notation
 bindings, guarded commands, default proposals, history and document encoding.
 
-**Availability:** use the exact versions and integrity values in the reviewed
-release record. Examples are verified against local candidate archives before
-publication; a version in this guide does not establish npm availability. The
-first-release candidate pair is `0.0.1` for both packages. Confirm registry
-availability before using registry installation commands.
+**Availability:** both packages are published as `0.0.2`. Use exact versions and
+integrity values from the [release record](release-notes.md). Registry installation,
+runtime and declaration checks have passed for that pair.
 
 This guide, the [API reference](api.md), [migration guide](migration.md) and
 [executable example](examples/lifecycle.mts) are self-contained. Reading private

@@ -1,12 +1,31 @@
 # Release notes and compatibility history
 
-This source prepares both packages at `0.0.2`; `0.0.1` is the preceding verified
-public release. Verify availability and exact archive identity through the
-[publication record](https://github.com/anarchitects/anarchitecture-modeling/issues/23)
-before installing a new version. No deprecation, end-of-maintenance date or
+Both packages are published as `0.0.2`; `0.0.1` is the preceding verified
+public release. The [publication record](https://github.com/anarchitects/anarchitecture-modeling/issues/23#issuecomment-7204975899)
+records availability and exact archive identity. No deprecation, end-of-maintenance date or
 stable 1.x support commitment is announced.
 
-## 0.0.2 — bounded semantic comparison (#77)
+## 0.0.2 — 26 November 2026 — bounded semantic comparison (#77)
+
+Install [core 0.0.2](https://www.npmjs.com/package/@anarchitects/modeling-core/v/0.0.2)
+and [metamodel 0.0.2](https://www.npmjs.com/package/@anarchitects/modeling-metamodel/v/0.0.2):
+
+```sh
+npm install --save-exact @anarchitects/modeling-core@0.0.2 @anarchitects/modeling-metamodel@0.0.2
+```
+
+Both release tags and archives use source `fa82048545613c7f3dcc8b367af9bfc30ef6e448`.
+Publication [run 45905753413](https://github.com/anarchitects/anarchitecture-modeling/actions/runs/45905753413)
+succeeded through npm trusted publishing. SHA-256:
+
+- Core: `34a09c2efb87a7338f53caccc53264885ec9f8707d58203396fe656b8c5c7c88`.
+- Metamodel: `62955b7dc05cba8426543715896334c55fbc55ce7aff58bd628d01907cb5a0f5`.
+
+Registry bytes match the approved preview. Fresh registry installation, public
+runtime/type/lifecycle/comparator examples, lockfile reinstall, npm signatures
+and both attestations passed. The immutable 0.0.2 README still labels comparison
+“Unreleased” and retains prepublication wording; this source corrects that wording
+without replacing published bytes or selecting another release.
 
 Metamodel adds `compareDocumentSnapshots` and comparison contract 1 for trusted
 snapshots. See the [contract, compatibility assessment and evidence](../proofs/semantic-comparison.md).
@@ -21,10 +40,10 @@ remain separate.
 
 ## Development release-tooling alignment
 
-Checked-in package versions are reconciled to the existing `0.0.1` releases.
+Checked-in package versions were reconciled to the existing `0.0.1` releases.
 Future release preparation applies Nx-calculated versions and changelogs to source
 before review; distribution archives use those same versions. This does not
-republish `0.0.1`, alter its artifacts/tags or release the unreleased comparison API.
+republish `0.0.1` or alter its artifacts/tags.
 The private root workspace remains a development-only package. The subsequent
 `0.0.2` release preparation applies this workflow to both packages.
 
@@ -93,7 +112,7 @@ Both public npm pages show the approved README and provenance. See the
 ### Recorded limitations and follow-up
 
 npm automatically created `0.0.0-stage` placeholders during ordinary publication
-scanning. They remain in both registry histories; `latest` points to `0.0.1`.
+scanning. They remain in both registry histories; at this release `latest` pointed to `0.0.1`.
 They are provider placeholders, not official Foundation runtime releases. Install
 the exact `0.0.1` versions, not the placeholders.
 
