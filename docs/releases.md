@@ -11,8 +11,12 @@ distribution candidate, and #23 records separately authorized publication.
 Nx Release computes their versions independently from Conventional Commits.
 There are no version plans or fixed release groups. Tags use the exact pattern
 `{projectName}@{version}`. The first official distribution of **each** new package
-is exactly `0.0.1`, with no earlier official prerelease. Development manifests remain
-private `0.0.0`; reviewed distribution manifests are staged separately.
+is exactly `0.0.1`, with no earlier official prerelease. Package source manifests
+track release versions. They are reconciled to the
+already-published `0.0.1` baseline; Nx writes subsequent versions into source
+before the release commit is reviewed. The root workspace stays private `0.0.0`.
+Package `private: true` and `workspace:*` links are retained in development;
+archive preparation changes distribution metadata, never the package version.
 
 Every allowed type has an explicit mapping in `nx.json`:
 
@@ -38,8 +42,9 @@ messages are preserved. Lifecycle tags plus fetched package tags govern commit
 checks; they are not a substitute for fresh registry/channel checks at release.
 After the verified 20 November 2026 publication, both projects carry
 `lifecycle:released`. Subsequent changes use ordinary Conventional Commit intent;
-`init` is no longer valid. Release tags supply the version baseline even though
-development manifests remain private `0.0.0`. See the
+`init` is no longer valid. Release tags supply the published baseline; checked-in
+package manifests now
+reflect that baseline or a reviewed next release version. See the
 [0.0.1 release record](consumer/release-notes.md).
 
 `adjustSemverBumpsForZeroMajorVersion: true` gives fixes and compatible features
@@ -54,6 +59,49 @@ versions need not match. A dependent patch is only Nx's proposed version: if the
 core change breaks the metamodel's public behavior, its compatibility review
 must reject that patch and supply correct Conventional Commit intent. Do not
 hide a required dependent release by narrowing a project filter.
+
+## Source versioning and release sequence
+
+This replaces the former permanent-`0.0.0` package-manifest convention under
+#14 at Johan's request. It does not change published history, existing tags,
+Conventional Commit authority, compatibility gates or publication authorization.
+The reconciliation to `0.0.1` is metadata alignment, not another release.
+
+1. Fetch release tags and start from a clean feature branch. Preview with the
+   wrapper below. `next` derives versions from Conventional Commits and existing
+   tags; `first` is reserved for an actually unreleased `0.0.0` package.
+2. Apply the same Nx calculation to source:
+
+   ```sh
+   NX_NO_CLOUD=true node tools/release/version.mjs next
+   ```
+
+   This runs Nx `releaseVersion` and `releaseChangelog`, including automatically
+   selected dependents. Review package manifests, any Yarn lockfile changes and
+   package `CHANGELOG.md` files. Workspace dependency protocols are preserved;
+   Yarn's `0.0.0-use.local` lock entries are link descriptors, not release versions.
+   The command does not stage, commit, tag, push, create GitHub releases or publish.
+   If a later step fails, inspect the working diff before retrying; the helper does
+   not discard source edits. A rerun requires a clean, unreleased baseline.
+3. Commit the generated changes with non-bumping intent (for example
+   `chore: prepare package release`) and merge the reviewed release commit.
+   Source manifests, generated changelogs and the archive versions must agree.
+4. Run `publish.yml` in **preview / next** mode on that exact main commit, before
+   creating the new tags. Preparation recalculates the expected versions using
+   Nx's dry run and rejects mismatching committed source; it never invents an
+   alternate version in a temporary manifest. If main or the intended release
+   scope changes, regenerate/review the release files and obtain a new preview.
+5. Review the exact archives, record current owner readiness/authorization,
+   create only the approved package tags at the preview source SHA through the
+   existing tag-control procedure, and publish the retained preview bytes. Never
+   recalculate versions after those new tags exist. No permission is granted by
+   applying versions, committing source or obtaining passing CI.
+
+CI separately checks **non-publishable packaging snapshots** at the current source
+versions, so ordinary feature PRs do not need release-version commits. The
+publisher explicitly refuses snapshot reports. Unchanged companion archives can
+be included in `supportArtifacts` solely for installed-consumer verification;
+only Nx's changed `artifacts` set is authorized and published.
 
 ## Preview and verification
 

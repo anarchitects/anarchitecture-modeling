@@ -20,12 +20,12 @@ NX_NO_CLOUD=true node tools/consumer/check.mjs tmp/independent-consumer
 NX_NO_CLOUD=true node tools/consumer/check.mjs tmp/consumer-evidence tmp/exact-candidate
 ```
 
-Use a new output directory on each run. The default prepares first-version
-`0.0.1` candidates through #18's actual Nx dry run. An explicit candidate
-directory must contain `candidate.json` and both named archives from the exact
-checked-out commit. The proof currently requires both artifacts; a future
-single-package release must supply and review its compatible companion before
-this gate can pass. A registry/network error is a failure, never a skipped proof.
+Use a new output directory on each run. The default prepares a non-publishable
+snapshot at the checked-in package versions. An explicit candidate directory
+must contain `candidate.json` and the release/support archives from the exact
+checked-out commit. A single-package release supplies its unchanged companion in
+`supportArtifacts`; that companion is tested but not republished. A registry/network
+error is a failure, never a skipped proof.
 
 The checker creates a disposable directory outside the repository, with no
 sibling checkout, workspace configuration, custom conditions, source aliases or
@@ -131,3 +131,13 @@ acceptance comments were refreshed. Local accepted ADR 0001/0002 and the applica
 accepted ownership, public-contract, versioning, dependency, cache, release and
 reuse decisions remain operative; proposals are not promoted to new contracts.
 No runtime/public API, architecture exception, source transfer or adoption changes.
+
+## Versioned sources and independent release sets
+
+CI's default invocation prepares a non-publishable snapshot at the committed
+source versions. Supplying a preview directory checks those exact candidate
+archives instead. For an independent release, `candidate.artifacts` contains only
+packages Nx intends to release; `supportArtifacts` contains unchanged companions
+needed for the installed pair. Their sets must be disjoint. Both are verified,
+while the publisher uploads only the release set. No registry version is
+republished merely to exercise its dependency in a local consumer.

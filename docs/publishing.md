@@ -24,12 +24,14 @@ retains the fail-before-network stop switch.
 
 ## Candidate artifacts
 
-Use Node 24, Yarn 4.18.1, installed Nx 24.0.6 and npm 11.19.1. From a clean
-commit, build through Nx and prepare into a new ignored or external directory:
+Use Node 24, Yarn 4.18.1, installed Nx 24.0.6 and npm 11.19.1. First apply and
+commit the [Nx source-version changes](releases.md#source-versioning-and-release-sequence).
+From that clean release commit, build through Nx and prepare into a new ignored
+or external directory:
 
 ```sh
 NX_NO_CLOUD=true yarn nx run-many -t build
-NX_NO_CLOUD=true node tools/publishing/prepare.mjs tmp/candidate-first first
+NX_NO_CLOUD=true node tools/publishing/prepare.mjs tmp/candidate-next next
 node --test tools/publishing/*.test.mjs
 NX_NO_CLOUD=true node tools/publishing/verify-archives.mjs
 ```
@@ -40,9 +42,11 @@ publication, `next` derives versions from fetched release tags and commit histor
 A first-version preview does not prove an empty registry history. The publication
 gate separately checks history and rejects an existing version or wrong baseline.
 
-Metadata is staged with built outputs, rather than rewriting development
-manifests. This preserves the private workspace and Yarn links while producing
-independent, versioned distribution manifests. Each tarball contains:
+Nx applies package versions and changelogs to the source tree before review and
+commit. Preparation checks that committed source versions match Nx's calculated
+versions. Only publish metadata and exact dependency resolution are staged with
+built outputs; the archive retains the source package version. Development
+privacy and Yarn workspace links remain intact. Each tarball contains:
 
 - Existing ESM entry points and declarations under `dist/`, Node `^24.0.0`
   engine support and the same exports. There is no CommonJS build.
@@ -62,6 +66,10 @@ independent, versioned distribution manifests. Each tarball contains:
   manifests remain private. Accepted licensing
   does not establish final candidate readiness or publication authorization.
 
+Unchanged packages needed to test the compatible pair are placed in
+`supportArtifacts`, separate from the release `artifacts`. They are validated by
+the independent consumer but never republished. An empty Nx release set is refused.
+
 `candidate.json` records source SHA, lockfile SHA-256, toolchain, actual Nx version
 data, package versions/intended tags, each archive's SHA-256/npm integrity, packed
 and unpacked sizes, file inventory and complete manifest. It contains no authority
@@ -76,11 +84,17 @@ checks fresh npm installation and public behavior; the preview workflow checks i
 exact archives and retains the evidence alongside them. #22 must also review
 package README wording for the exact release.
 
-The manual `publish.yml` workflow defaults to **preview**. Its prepare job has
+The manual `publish.yml` workflow defaults to **preview / next**. Source version
+changes must already be committed; it does not version source in the publishing
+job. Its prepare job has
 read-only repository access, no publishing token or OIDC permission, runs Nx
 validation, and uploads a seven-day candidate artifact. It uses local Nx caching;
 it needs no Nx Cloud credential. Normal CI runs the authorization tests and fresh
-archive proof after package validation. Builds remain cacheable; archive checking,
+archive proof after package validation. Its `snapshot` preparation uses existing
+source versions, is explicitly non-publishable, and does not require a pending
+release bump. `verify-archives.mjs` and the consumer check without an explicit
+candidate use this mode; the manual release preview does not. Builds remain
+cacheable; archive checking,
 authorization and publication are not cached Nx targets.
 
 ## npm identity and first-publication constraint
@@ -238,8 +252,9 @@ history, publishes core first, and requires its exact registry version/integrity
 before the metamodel. It stops on registry lag or partial failure; it does not
 retry, roll back, overwrite a version, rewrite a tag or invent a new version. A
 receipt records successful commands. Investigate actual registry state and obtain
-Johan's recovery decision before another operation. After first publication,
-reconcile lifecycle metadata, source versions and lockfile through reviewed PRs.
+Johan's recovery decision before another operation. Release source versions are
+committed before publication; afterward record the
+observed registry results and preserve that versioned commit and its tags.
 
 Live environment approval, scope control, bootstrap authentication, OIDC
 exchange and npm provenance are external gates. Local tests use synthetic

@@ -24,6 +24,7 @@ function dryRun({
   first = false,
   projects = names,
   dependency = false,
+  apply = false,
 }) {
   const dir = realpathSync(mkdtempSync(join(tmpdir(), 'foundation-release-')));
   const env = {
@@ -125,7 +126,11 @@ function dryRun({
     };
     // Fixture-only disk fallback permits proving non-bumping init without an existing tag.
     const override = { version: { fallbackCurrentVersionResolver: 'disk' } };
-    const script = `const {ReleaseClient}=require(${JSON.stringify(resolve(root, 'node_modules/nx/dist/release/index.js'))});
+    const script = apply
+      ? `import(${JSON.stringify(new URL('./version.mjs', import.meta.url).href)}).then(({versionSource})=>versionSource(${JSON.stringify(first ? 'first' : 'next')},${JSON.stringify(projects)}))
+      .then(r=>require('node:fs').writeFileSync('result.json',JSON.stringify(r.projectsVersionData)))
+      .catch(e=>{console.error(e);process.exitCode=1});`
+      : `const {ReleaseClient}=require(${JSON.stringify(resolve(root, 'node_modules/nx/dist/release/index.js'))});
       new ReleaseClient(${JSON.stringify(override)}).releaseVersion(${JSON.stringify(args)})
       .then(r=>require('node:fs').writeFileSync('result.json',JSON.stringify(r.projectsVersionData)))
       .catch(e=>{console.error(e);process.exitCode=1});`;
@@ -134,6 +139,55 @@ function dryRun({
       if (process.env.RELEASE_TEST_DEBUG) console.log(output);
     } catch (e) {
       throw new Error(`Nx dry run failed:\n${e.stdout}\n${e.stderr}`);
+    }
+    if (apply) {
+      const result = JSON.parse(readFileSync(join(dir, 'result.json'), 'utf8'));
+      assert.equal(
+        git('rev-parse', 'HEAD'),
+        before.head,
+        'No automatic release commit',
+      );
+      assert.equal(git('tag'), before.tags, 'No automatic tags');
+      assert.equal(
+        git('diff', '--cached', '--name-only'),
+        '',
+        'Changes remain unstaged for review',
+      );
+      for (const [name, data] of Object.entries(result)) {
+        const manifest = JSON.parse(
+          readFileSync(join(dir, 'packages', name, 'package.json'), 'utf8'),
+        );
+        assert.equal(manifest.version, data.newVersion ?? data.currentVersion);
+        if (data.newVersion)
+          assert.ok(
+            readFileSync(
+              join(dir, 'packages', name, 'CHANGELOG.md'),
+              'utf8',
+            ).includes(data.newVersion),
+          );
+        if (dependency && name === names[1])
+          assert.equal(
+            manifest.dependencies['@anarchitects/modeling-core'],
+            'workspace:*',
+          );
+      }
+      if (first) {
+        git('add', '.');
+        git('commit', '--quiet', '-m', 'chore: prepare first release');
+        run(process.execPath, [
+          '-e',
+          `const {releaseVersion}=require(${JSON.stringify(resolve(root, 'node_modules/nx/dist/release/index.js'))});
+          releaseVersion(${JSON.stringify(args)}).then(r=>require('node:fs').writeFileSync('result.json',JSON.stringify(r.projectsVersionData)));`,
+        ]);
+        const candidate = JSON.parse(
+          readFileSync(join(dir, 'result.json'), 'utf8'),
+        );
+        for (const data of Object.values(candidate)) {
+          assert.equal(data.currentVersion, '0.0.1');
+          assert.equal(data.newVersion, '0.0.1');
+        }
+      }
+      return result;
     }
     assert.deepEqual(
       {
@@ -149,6 +203,16 @@ function dryRun({
     rmSync(dir, { recursive: true, force: true });
   }
 }
+
+test('first release writes source versions and remains reproducible before tagging', () => {
+  dryRun({
+    versions: {},
+    commits: [],
+    first: true,
+    apply: true,
+    dependency: true,
+  });
+});
 
 test('installed Nx calculates lifecycle, zero-major and stable versions without mutation', () => {
   const core = names[0],
@@ -213,4 +277,17 @@ test('installed Nx calculates lifecycle, zero-major and stable versions without 
     '0.1.8',
     'filtered release still includes dependent patch',
   );
+});
+
+test('source versioning uses installed Nx to update manifests and changelogs without commits or tags', () => {
+  const [core, meta] = names;
+  const result = dryRun({
+    apply: true,
+    dependency: true,
+    projects: [core],
+    versions: { [core]: '0.0.1', [meta]: '0.0.1' },
+    commits: [{ project: core, message: `fix(${core}): repair` }],
+  });
+  assert.equal(result[core].newVersion, '0.0.2');
+  assert.equal(result[meta].newVersion, '0.0.2');
 });

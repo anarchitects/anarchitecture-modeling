@@ -19,6 +19,7 @@ import {
   inspectLayer,
 } from '../boundaries/policy.mjs';
 import { documentationFiles } from './documentation.mjs';
+import { assertSourceVersions } from '../release/versioning.mjs';
 
 const root = fileURLToPath(new URL('../../', import.meta.url));
 export const config = JSON.parse(
@@ -35,24 +36,53 @@ const run = (command, args, cwd = root) =>
     stdio: 'pipe',
   });
 
-export function prepare(output, mode = 'first') {
+export function prepare(output, mode = 'next') {
   output = resolve(output);
   assert.ok(
     !existsSync(output),
     'Use a new output directory; never overwrite reviewed artifacts',
   );
-  assert.ok(['first', 'next'].includes(mode), 'Expected first or next preview');
+  assert.ok(
+    ['first', 'next', 'snapshot'].includes(mode),
+    'Expected first, next or non-publishable snapshot',
+  );
+  assert.equal(
+    run('git', ['status', '--porcelain']).trim(),
+    '',
+    'Preparation requires a clean tracked tree',
+  );
   mkdirSync(output, { recursive: true });
   const temporary = mkdtempSync(join(tmpdir(), 'foundation-publish-prepare-'));
   try {
     const planFile = join(temporary, 'nx-versions.json');
-    run(process.execPath, [
-      'tools/release/preview.mjs',
-      planFile,
-      mode,
-      ...Object.keys(config.packages),
-    ]);
-    const projectsVersionData = json(planFile);
+    const manifests = Object.fromEntries(
+      Object.keys(config.packages).map((name) => [
+        name,
+        json(join(root, 'packages', name, 'package.json')),
+      ]),
+    );
+    if (mode !== 'snapshot')
+      run(process.execPath, [
+        'tools/release/preview.mjs',
+        planFile,
+        mode,
+        ...Object.keys(config.packages),
+      ]);
+    // CI packaging checks inspect source versions without proposing a release.
+    // The publisher rejects snapshots even if someone supplies owner records.
+    const projectsVersionData =
+      mode === 'snapshot'
+        ? Object.fromEntries(
+            Object.entries(manifests).map(([name, manifest]) => [
+              name,
+              {
+                currentVersion: manifest.version,
+                newVersion: manifest.version,
+              },
+            ]),
+          )
+        : json(planFile);
+    assertSourceVersions(projectsVersionData, manifests, 'after');
     const sourceSha = run('git', ['rev-parse', 'HEAD']).trim();
     assert.equal(
       run('git', ['status', '--porcelain']).trim(),
@@ -75,14 +105,15 @@ export function prepare(output, mode = 'first') {
       licenseStatus: config.license.status,
       projectsVersionData,
       artifacts: {},
+      supportArtifacts: {},
     };
     for (const [name, description] of Object.entries(config.packages)) {
-      const version = projectsVersionData[name].newVersion;
-      if (version === null) continue;
+      const data = projectsVersionData[name];
+      const version = data.newVersion ?? data.currentVersion;
       const source = join(root, 'packages', name);
       const stage = join(temporary, name);
       mkdirSync(stage);
-      const manifest = json(join(source, 'package.json'));
+      const manifest = manifests[name];
       checkManifest(manifest, name);
       // Copy only the exact accepted runtime inventory; fail on extra outputs.
       for (const [layer, suffix] of [
@@ -122,7 +153,6 @@ export function prepare(output, mode = 'first') {
       cpSync(join(root, config.license.noticeFile), join(stage, 'NOTICE'));
       const prepared = {
         ...manifest,
-        version,
         private: config.license.status !== 'accepted',
         description,
         license: config.license.spdx,
@@ -183,7 +213,11 @@ export function prepare(output, mode = 'first') {
           `Forbidden packed file: ${file.path}`,
         );
       const archive = join(output, packed.filename);
-      report.artifacts[name] = {
+      // Unchanged companions are exercised by the independent consumer, but are
+      // never included in the publisher's release set or republished.
+      const artifacts =
+        data.newVersion === null ? report.supportArtifacts : report.artifacts;
+      artifacts[name] = {
         file: packed.filename,
         manifestVersion: version,
         artifactVersion: version,

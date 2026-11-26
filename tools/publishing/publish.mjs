@@ -34,6 +34,11 @@ assert.ok(
 const report = JSON.parse(
   readFileSync(join(directory, 'candidate.json'), 'utf8'),
 );
+assert.notEqual(
+  report.mode,
+  'snapshot',
+  'Packaging snapshots cannot be published',
+);
 async function github(path) {
   const response = await fetch(
     `https://api.github.com/repos/${config.repository}/${path}`,
@@ -123,6 +128,12 @@ for (const [name, artifact] of Object.entries(report.artifacts)) {
   assert.equal(manifest.name, `@anarchitects/${name}`);
   assert.equal(manifest.version, artifact.manifestVersion);
   assert.equal(manifest.version, artifact.artifactVersion);
+  if (operation !== 'recover')
+    assert.equal(
+      JSON.parse(readFileSync(`packages/${name}/package.json`, 'utf8')).version,
+      manifest.version,
+      'Release archive version must match committed source',
+    );
   assert.equal(manifest.license, config.license.spdx);
   assert.notEqual(manifest.license, 'UNLICENSED');
   verifyLegalFiles(manifest, read, config.license);

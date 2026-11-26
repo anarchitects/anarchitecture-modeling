@@ -124,6 +124,15 @@ test('candidate guard rejects insufficient bumps, unapproved stabilization and f
   validateCandidate(stable);
 });
 
+test('first release accepts committed source versions only with empty reviewed history', () => {
+  const first = candidate('0.0.1', '0.0.1');
+  assert.throws(() => validateCandidate(first), /version must advance/);
+  first.history[core].versions = [];
+  assert.deepEqual(validateCandidate(first), [core]);
+  first.projectsVersionData[core].currentVersion = '0.0.2';
+  assert.throws(() => validateCandidate(first), /empty history conflicts/);
+});
+
 test('candidate evidence binds history, owner, compatibility, source and archive identity', () => {
   for (const mutate of [
     (c) => {

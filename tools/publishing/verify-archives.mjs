@@ -11,8 +11,8 @@ import { verifyDocumentation } from './documentation.mjs';
 execFileSync('yarn', ['nx', 'run-many', '-t', 'build'], { stdio: 'inherit' });
 const directory = mkdtempSync(join(tmpdir(), 'foundation-archive-proof-'));
 try {
-  const first = prepare(join(directory, 'one')),
-    second = prepare(join(directory, 'two'));
+  const first = prepare(join(directory, 'one'), 'snapshot'),
+    second = prepare(join(directory, 'two'), 'snapshot');
   for (const name of ['modeling-core', 'modeling-metamodel']) {
     const a = first.artifacts[name],
       b = second.artifacts[name];
@@ -30,7 +30,10 @@ try {
     assert.equal(first.licenseStatus, 'accepted');
     assert.equal(a.manifest.private, false);
     assert.equal(a.manifest.license, 'Apache-2.0');
-    assert.equal(a.manifestVersion, '0.0.1');
+    assert.equal(
+      a.manifestVersion,
+      JSON.parse(readFileSync(`packages/${name}/package.json`, 'utf8')).version,
+    );
     verifyLegalFiles(a.manifest, read, config.license);
     verifyDocumentation(
       name,
@@ -50,7 +53,7 @@ try {
     if (name === 'modeling-metamodel')
       assert.equal(
         a.manifest.dependencies['@anarchitects/modeling-core'],
-        '0.0.1',
+        first.artifacts['modeling-core'].manifestVersion,
       );
     const packedPaths = execFileSync('tar', ['-tf', archive], {
       encoding: 'utf8',

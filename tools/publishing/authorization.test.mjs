@@ -96,6 +96,14 @@ test('disabled policy still rejects publication', () => {
     /Publication is disabled/,
   );
 });
+test('CI packaging snapshots cannot become release candidates through approval', () => {
+  const input = fixture();
+  input.report.mode = 'snapshot';
+  assert.throws(
+    () => authorize(input, acceptedPolicy),
+    /snapshots cannot be published/,
+  );
+});
 test('activated publisher rejects local execution before fetching anything', () => {
   const result = spawnSync(process.execPath, ['tools/publishing/publish.mjs'], {
     encoding: 'utf8',

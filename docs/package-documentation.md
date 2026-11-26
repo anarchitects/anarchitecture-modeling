@@ -46,8 +46,9 @@ is advertised.
 
 `tools/publishing/documentation.mjs` constructs a bounded documentation inventory
 from reviewed source. Staging copies the guides/example into `docs/`, pins README
-online links and manifest homepage to the source commit, and records the package
-version in the README. This does not add runtime exports or dependencies. The raw
+online links and manifest homepage to the source commit, and records the committed package
+version in the README. It also ships the semantic-comparison proof and executable
+example with links rewritten for the offline layout. This does not add runtime exports or dependencies. The raw
 Yarn workspace pack remains a development packaging proof; the staged npm candidate
 is the distribution archive inspected here.
 
@@ -78,7 +79,9 @@ NX_NO_CLOUD=true node tools/publishing/verify-archives.mjs
 NX_NO_CLOUD=true node tools/consumer/check.mjs tmp/docs-consumer-evidence
 ```
 
-Archive preparation requires a clean commit and a new output directory. These are
+Archive preparation requires a clean commit and a new output directory. CI
+checks current-version snapshots that the publisher refuses; release previews
+require committed source versions matching Nx's calculation. These are
 verification commands, not publication instructions. Existing CI already runs the
 publishing tests/archive proof and the fresh consumer proof. Tooling changes are
 covered by shared Nx inputs; package READMEs are project inputs and consumer docs
