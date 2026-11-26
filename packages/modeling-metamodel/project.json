@@ -3,6 +3,14 @@
   "name": "modeling-metamodel",
   "tags": ["scope:foundation", "type:metamodel", "lifecycle:released"],
   "targets": {
+    "registry-contract-check": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/consumer/registry-contract-check.mjs"
+      },
+      "cache": false,
+      "outputs": []
+    },
     "test": {
       "dependsOn": [
         "build",
