@@ -3,6 +3,18 @@
 Both packages are publicly available as `0.0.1`. No deprecation,
 end-of-maintenance date or stable 1.x support commitment is announced.
 
+## Unreleased — bounded semantic comparison (#77)
+
+Metamodel adds `compareDocumentSnapshots` and comparison contract 1 for trusted
+snapshots. See the [contract, compatibility assessment and evidence](../proofs/semantic-comparison.md).
+This is compatible feature intent (a patch increment under the zero-major policy),
+not a selected release version. Core, model format 2, metamodel contract 1 and
+document envelope 1 remain unchanged. No existing data needs migration.
+Published 0.0.1 readers cannot call this API; comparison reports are not persisted
+in envelopes. A consumer must require a reviewed release containing the new export.
+Implementation acceptance, #78 installed-consumer handoff, publication and adoption
+remain separate.
+
 ## 0.0.1 — 20 November 2026
 
 | Package            | Public version                                                                         | Compatible core |

@@ -7,6 +7,10 @@ the precise signatures and discriminated result shapes. No internal module path
 is a public entry. See the [consumer guide](README.md) for compatibility, limits
 and release status, and the [compiled example](examples/lifecycle.mts) for usage.
 
+The semantic comparison exports are an **unreleased addition** under #77; published
+0.0.1 does not contain them. See the [comparison contract](../proofs/semantic-comparison.md)
+and [packed TypeScript example](examples/semantic-comparison.mts).
+
 ## Choose an operation
 
 | Need                          | Public entry points / types                                                                                             | Contract boundary                                                                      |
@@ -19,6 +23,7 @@ and release status, and the [compiled example](examples/lifecycle.mts) for usage
 | Compose exact profiles        | `composeModelingProfile`, `resolveTypeDefinition`, `packReference`                                                      | Exact registry/pins, explicit collisions/dependencies; no dynamic loader               |
 | Inspect extensions            | `inspectExtensionSupport`, `ExtensionEnvelope`                                                                          | Preserve opaque payload; support availability is not semantic validation               |
 | Validate semantics            | `validateModel`, `ModelValidationResult`, `MEMBER_GROUP_OPERATOR`                                                       | Inspect invalid/unsupported and coverage/provenance, not just diagnostics length       |
+| Compare semantic snapshots | `compareDocumentSnapshots`, `SemanticComparisonRequest`, `SemanticComparisonResult` | Contract 1 / semantic-model scope; explicit incomplete/incompatible evidence; no write authority |
 | Assess notation               | `validateOccurrenceNotation`, `resolveOccurrenceNotation`                                                               | Contract/theme resolution; accessibility remains host-verified                         |
 | Propose/apply defaults        | `proposeDefaultPlan`, `generatedMemberIdentity`, `applyChangePlan`, `DEFAULTS_OPERATOR`                                 | Bounded explicit rule batch, baseline comparisons, exact retry; no rule cascade        |
 | Assess document               | `assessDocument`, `DocumentCheckpoint`, `DocumentContext`                                                               | Trusted registries plus semantic/view/notation/lifecycle assessment                    |
@@ -110,7 +115,7 @@ ViewPoint
 ViewReference
 ```
 
-### Metamodel runtime (31)
+### Metamodel runtime (33)
 
 <!-- exports:modeling-metamodel:runtime -->
 
@@ -123,8 +128,10 @@ DOCUMENT_ENVELOPE_VERSION
 MEMBER_GROUP_OPERATOR
 METAMODEL_CONTRACT_VERSION
 PROFILE_DIMENSIONS
+SEMANTIC_COMPARISON_CONTRACT_VERSION
 applyChangePlan
 assessDocument
+compareDocumentSnapshots
 composeModelingProfile
 decodeDocument
 encodeDocument
@@ -148,7 +155,7 @@ validateModel
 validateOccurrenceNotation
 ```
 
-### Metamodel types (85)
+### Metamodel types (92)
 
 <!-- exports:modeling-metamodel:types -->
 
@@ -230,6 +237,13 @@ PropertyDefinition
 ProposalResult
 ReferenceTarget
 RuleReference
+SemanticComparisonDiagnostic
+SemanticComparisonEvidence
+SemanticComparisonInput
+SemanticComparisonRequest
+SemanticComparisonResult
+SemanticComparisonValue
+SemanticDifference
 TypeDefinition
 TypeKind
 TypeReference

@@ -19,14 +19,19 @@ const root = realpathSync(fileURLToPath(new URL('../../', import.meta.url)));
 const manifest = JSON.parse(
   readFileSync(new URL('./portable-proofs.json', import.meta.url), 'utf8'),
 );
+const sourceRoot = process.env.FOUNDATION_PARITY_SOURCE_ROOT;
 const baseline = JSON.parse(
   readFileSync(
-    new URL('../boundaries/runtime-baseline.json', import.meta.url),
+    new URL(
+      sourceRoot
+        ? './source-runtime-baseline.json'
+        : '../boundaries/runtime-baseline.json',
+      import.meta.url,
+    ),
     'utf8',
   ),
 );
 assert.equal(manifest.sourceRevision, baseline.originalSourceCommit);
-const sourceRoot = process.env.FOUNDATION_PARITY_SOURCE_ROOT;
 const label = sourceRoot
   ? `pinned source ${manifest.sourceRevision}`
   : 'extracted Foundation';

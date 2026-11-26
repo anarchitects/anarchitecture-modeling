@@ -17,3 +17,5 @@ export * from './lib/document-history.js';
 export * from './lib/session-commands.js';
 export * from './lib/document-codec-contracts.js';
 export * from './lib/document-codec.js';
+export * from './lib/semantic-comparison-contracts.js';
+export * from './lib/semantic-comparison.js';

@@ -260,13 +260,20 @@ try {
   );
   // The exact consumer example linked by the guide is compiled and executed
   // against extracted archives. No source aliases or workspace package links.
-  const example = join(temporary, 'lifecycle.mts');
-  cpSync(join(root, 'docs/consumer/examples/lifecycle.mts'), example);
-  const exampleProgram = ts.createProgram([example], {
-    ...options,
-    noEmit: false,
-    outDir: join(temporary, 'example-output'),
-  });
+  const examples = ['lifecycle', 'semantic-comparison'];
+  for (const name of examples)
+    cpSync(
+      join(root, 'docs/consumer/examples', `${name}.mts`),
+      join(temporary, `${name}.mts`),
+    );
+  const exampleProgram = ts.createProgram(
+    examples.map((name) => join(temporary, `${name}.mts`)),
+    {
+      ...options,
+      noEmit: false,
+      outDir: join(temporary, 'example-output'),
+    },
+  );
   const exampleDiagnostics = ts.getPreEmitDiagnostics(exampleProgram);
   assert.equal(
     exampleDiagnostics.length,
@@ -324,12 +331,13 @@ try {
     }
   }
   console.log(
-    'Consumer API reference matches all 54 core and 116 metamodel root exports (runtime/type split).',
+    'Consumer API reference matches every core and metamodel root export (runtime/type split).',
   );
   assert.equal(exampleProgram.emit().emitSkipped, false);
-  process.stdout.write(
-    run(process.execPath, ['example-output/lifecycle.mjs'], temporary),
-  );
+  for (const name of examples)
+    process.stdout.write(
+      run(process.execPath, [`example-output/${name}.mjs`], temporary),
+    );
 } finally {
   rmSync(temporary, { recursive: true, force: true });
 }
