@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import {
   cpSync,
+  existsSync,
   mkdirSync,
   mkdtempSync,
   readFileSync,
@@ -74,9 +75,11 @@ try {
     // Exact allowlist: compiled runtime only; neither broad dist globs nor stale
     // compiler outputs may smuggle tests, maps, source or tooling into a package.
     const sources = runtimeSources(join(packageRoot, 'src'));
+    const changelog = join(packageRoot, 'CHANGELOG.md');
     const expected = [
       'package/README.md',
       'package/package.json',
+      ...(existsSync(changelog) ? ['package/CHANGELOG.md'] : []),
       ...sources.flatMap((file) => [
         `package/dist/${file.replace(/\.ts$/, '.js')}`,
         `package/dist/${file.replace(/\.ts$/, '.d.ts')}`,
@@ -86,6 +89,12 @@ try {
     const destination = join(temporary, 'node_modules', '@anarchitects', name);
     mkdirSync(destination, { recursive: true });
     run('tar', ['-xzf', archive, '--strip-components=1', '-C', destination]);
+    if (existsSync(changelog))
+      assert.deepEqual(
+        readFileSync(join(destination, 'CHANGELOG.md')),
+        readFileSync(changelog),
+        `${name}: packed changelog must match source`,
+      );
     const manifest = readJson(join(destination, 'package.json'));
     checkManifest(manifest, name, {
       packed: true,
