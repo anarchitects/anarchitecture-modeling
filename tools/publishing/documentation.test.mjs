@@ -87,6 +87,21 @@ for (const name of ['modeling-core', 'modeling-metamodel']) {
     assert.ok(result.output.length);
     assert.doesNotMatch(files['README.md'], /\/blob\/main\/|\/tree\/main\//);
     assert.match(files['README.md'], new RegExp(`${name}@0\\.0\\.1`));
+    assert.match(files['docs/api.md'], /\]\(proofs\/semantic-comparison\.md\)/);
+    assert.match(
+      files['docs/proofs/semantic-comparison.md'],
+      /\]\(\.\.\/examples\/semantic-comparison\.mts\)/,
+    );
+    assert.match(
+      files['docs/examples/semantic-comparison.mts'],
+      /compareDocumentSnapshots/,
+    );
+    if (name === 'modeling-metamodel')
+      assert.ok(
+        files['README.md'].includes(
+          `https://github.com/${repository}/blob/${sha}/docs/proofs/semantic-comparison.md`,
+        ),
+      );
   });
 }
 test('rejects missing/wrong-package/stale README and changed shipped example even with matching candidate metadata', () => {
@@ -110,18 +125,23 @@ test('rejects missing/wrong-package/stale README and changed shipped example eve
       /differs from reviewed package documentation/,
     );
   }
-  assert.throws(
-    () =>
-      verifyDocumentation(
-        'modeling-core',
-        manifest,
-        (p) =>
-          p.endsWith('lifecycle.mts') ? 'console.log("stale")' : files[p],
-        sha,
-        repository,
-      ),
-    /differs from reviewed package documentation/,
-  );
+  for (const path of [
+    'docs/examples/lifecycle.mts',
+    'docs/examples/semantic-comparison.mts',
+    'docs/proofs/semantic-comparison.md',
+  ])
+    for (const replacement of [undefined, 'stale documentation'])
+      assert.throws(
+        () =>
+          verifyDocumentation(
+            'modeling-core',
+            manifest,
+            (p) => (p === path ? replacement : files[p]),
+            sha,
+            repository,
+          ),
+        /differs from reviewed package documentation/,
+      );
   assert.throws(
     () =>
       verifyDocumentation(

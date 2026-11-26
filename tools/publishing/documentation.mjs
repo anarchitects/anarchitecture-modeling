@@ -10,7 +10,9 @@ const guides = [
   'migration.md',
   'release-notes.md',
   'examples/lifecycle.mts',
+  'examples/semantic-comparison.mts',
 ];
+const comparisonProof = 'docs/proofs/semantic-comparison.md';
 
 // The archive is self-contained. GitHub's source reference is supplementary and
 // pinned; its public accessibility is a separate #22/#23 live check.
@@ -39,6 +41,7 @@ export function documentationFiles(
   verifyDocumentationLinks({
     [`packages/${name}/README.md`]: sourceReadme,
     ...sourceGuides,
+    [comparisonProof]: readSource(comparisonProof),
     LICENSE: readSource('LICENSE'),
     NOTICE: readSource('NOTICE'),
   });
@@ -46,6 +49,7 @@ export function documentationFiles(
     .replaceAll('<CORE_VERSION>', compatibleCore)
     .replaceAll('<METAMODEL_VERSION>', version)
     .replaceAll('../../docs/consumer/', `${source}/docs/consumer/`)
+    .replaceAll('../../docs/proofs/', `${source}/docs/proofs/`)
     .replaceAll('../../LICENSE', `${source}/LICENSE`)
     .replaceAll('../../NOTICE', `${source}/NOTICE`);
   return {
@@ -55,8 +59,16 @@ export function documentationFiles(
       ...Object.fromEntries(
         guides.map((file) => [
           `docs/${file}`,
-          sourceGuides[`docs/consumer/${file}`],
+          // Consumer guides move from docs/consumer/ to docs/ in the archive.
+          sourceGuides[`docs/consumer/${file}`].replaceAll(
+            '(../proofs/',
+            '(proofs/',
+          ),
         ]),
+      ),
+      [comparisonProof]: readSource(comparisonProof).replaceAll(
+        '(../consumer/',
+        '(../',
       ),
     },
   };

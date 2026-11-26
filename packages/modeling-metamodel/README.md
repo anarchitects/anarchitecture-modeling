@@ -108,6 +108,20 @@ model. Inspect semantic coverage as well as status for real inputs; preserved
 unsupported data is not successfully validated. The example only allocates
 in-memory data and prints results; it performs no file I/O or network requests.
 
+## Unreleased: semantic snapshot comparison
+
+`compareDocumentSnapshots` compares trusted snapshots by stable identity with
+explicit scope, exact pack/profile/rule pins, deterministic differences and
+coverage. Its statuses are `equivalent`, `different`, `incomplete` and
+`incompatible`; an empty difference list alone never proves equality.
+Views and operational state are excluded; opaque extensions remain unsupported.
+Semantic equality never bypasses an expected-revision guard.
+
+This additive API is **not in published 0.0.1**. Use a reviewed build that contains
+it. See the [contract and limits](../../docs/proofs/semantic-comparison.md) and
+[packed TypeScript example](../../docs/consumer/examples/semantic-comparison.mts).
+No format migration, implicit pack upgrade or new runtime dependency is introduced.
+
 ## Workflows, contracts and host responsibilities
 
 Use named imports from `@anarchitects/modeling-metamodel` and core where needed.

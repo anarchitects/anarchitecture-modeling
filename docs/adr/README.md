@@ -6,11 +6,12 @@ Repository-local ADRs for the generic, intended open-source Modeling Foundation.
 | ----------------------------------------------------------------- | -------- | ---------------------------------------------------------------------------------------------- |
 | [0001](0001-modeling-foundation-boundaries.md)                    | Accepted | Modeling Foundation scope, boundaries and responsibilities; delivery gates remain open         |
 | [0002](0002-extensible-meta-metamodel-and-governance-metadata.md) | Accepted | Extensible meta-metamodel, metadata and governance semantics; implementation gates remain open |
+| [0003](0003-semantic-change-comparison.md) | Accepted | Bounded semantic comparison; concrete API and implementation evidence pending review |
 
-## Proposed additions and principles
+## Principles
 
 - [Architecture Principles Register](../architecture-principles.md): AP-07 semantic comparison and AP-08 stable identity, with accepted coverage separated from proposals.
-- [0003 — Bounded semantic model comparison](0003-semantic-change-comparison.md): Proposed; adds comparison/coverage semantics without changing coordinated revisions or duplicating accepted identity rules.
+
 
 ## Authority and evidence
 

@@ -36,11 +36,19 @@ or inspect development-only root Nx tooling as a runtime dependency.
 ## Reviewed runtime provenance
 
 [`runtime-baseline.json`](../tools/boundaries/runtime-baseline.json) records the
-exact accepted #16 runtime: **39 source modules, 39 JavaScript modules and 39
-declarations**. SHA-256 values were captured from the verified accepted source and
-builds; the original Archimatrix revision is
-`b83c78e7a70e1434a6bf9101d7bbf43467becf7f`. All original source modules retain that
-source’s bytes; #16’s declarations intentionally omit source-map footers.
+current candidate runtime: **42 source modules, 42 JavaScript modules and 42
+declarations**. Its `acceptedModelingCommit` identifies the original accepted #16
+extraction, not approval of later additions. Issue #77 adds three independently
+authored semantic-comparison modules and metamodel root exports; all other
+original runtime bytes remain unchanged. These candidate hashes require owner
+review with the implementation evidence.
+
+The original Archimatrix revision is `b83c78e7a70e1434a6bf9101d7bbf43467becf7f`.
+Its immutable source/JavaScript hashes are retained separately in
+[`source-runtime-baseline.json`](../tools/parity/source-runtime-baseline.json) for
+the optional historical source proof. The existing historical fixtures run against
+the current candidate without changing their expected original bytes. #16's
+declarations intentionally omit source-map footers.
 
 The verifier rejects an extra vendored module and modifications inside an existing
 approved module, including copied product code with no obvious forbidden import.

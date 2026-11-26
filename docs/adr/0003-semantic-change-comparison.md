@@ -1,7 +1,7 @@
 # ADR 0003 — Bounded semantic model comparison
 
-- Status: Proposed; no implementation or API acceptance.
-- Date: 2026-11-23.
+- Status: Accepted architecture; concrete API and implementation evidence require separate review.
+- Proposed: 2026-11-23. Accepted by Johan: 2026-11-24, [PR #74 owner decision](https://github.com/anarchitects/anarchitecture-modeling/pull/74#issuecomment-7124370246), reviewed head `b48e837e20117bb5771d9970ab8528514fe3aa2d`.
 - Decision authority: Johan, Modeling Foundation capability owner; PWG requested as architecture reviewer.
 - Principles: [AP-07 and AP-08](../architecture-principles.md).
 - Refines: [ADR 0001](0001-modeling-foundation-boundaries.md); preserves [ADR 0002](0002-extensible-meta-metamodel-and-governance-metadata.md). Supersedes none.
@@ -12,7 +12,7 @@ ADR 0001 already accepts stable identities, guarded changes, semantic/view separ
 
 Neither accepted record defines a general, coverage-aware comparison of two model snapshots. The [public API inventory](../consumer/api.md) at `721620c172e3fbb2fd1edc0699e483a310c296f6` lists no general snapshot comparator. A textual export diff or unequal revision tokens cannot fill that semantic contract gap. AP-08 needs no replacement identity decision.
 
-## Proposed addition
+## Decision
 
 1. Compare two explicitly supplied, trusted model snapshots using exact definition/profile/rule versions and an explicit comparison scope. The operation is deterministic, read-only and free of file, Git, network, clock and product-policy dependencies.
 2. Match supported entities by existing stable, scoped identities. A supported rename is a change to the same entity; deletion and creation are not silently treated as a rename based on a display name. Different model identities require an explicit, caller-supplied reconciliation contract before claiming equivalence; automatic matching is outside this ADR.
@@ -24,7 +24,7 @@ Neither accepted record defines a general, coverage-aware comparison of two mode
 
 ## Alternatives and consequences
 
-Textual diffs are useful diagnostics but confuse formatting with meaning. Revision equality is a concurrency fact, not a complete semantic definition. A universal comparator that claims to understand opaque or future methods would overstate coverage. A bounded, explicitly incomplete result is the proposed approach.
+Textual diffs are useful diagnostics but confuse formatting with meaning. Revision equality is a concurrency fact, not a complete semantic definition. A universal comparator that claims to understand opaque or future methods would overstate coverage. A bounded, explicitly incomplete result is the accepted approach.
 
 The cost is maintaining semantic field classification and version compatibility. No new exported type, hashing algorithm, wire format, database, Git workflow or XML codec is selected. Existing package behavior, identity constructors and document formats remain unchanged.
 
@@ -37,4 +37,4 @@ The cost is maintaining semantic field classification and version compatibility.
 - Inputs remain unchanged; equivalent pinned inputs produce deterministic ordered diagnostics.
 - Review concrete API/version compatibility against the then-current published packages before adopting new exports.
 
-Use synthetic public fixtures. These are future proof obligations, not tests executed by this documentation PR. Human acceptance, implementation, package publication and consumer adoption remain separate.
+Use synthetic public fixtures. The [issue #77 implementation record](../proofs/semantic-comparison.md) tracks concrete contract and proof evidence. Architecture acceptance does not accept that implementation. Human acceptance, implementation, package publication and consumer adoption remain separate.
