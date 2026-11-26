@@ -108,7 +108,9 @@ export function validateCandidate(candidate) {
     )
       throw new Error(`${name}: reviewed compatibility impact required`);
     if (!h.versions.length) {
-      if (currentVersion !== '0.0.0')
+      // First-release previews resolve from disk: before applying versions it
+      // is 0.0.0; on the committed candidate it is already 0.0.1.
+      if (!['0.0.0', '0.0.1'].includes(currentVersion))
         throw new Error(
           `${name}: empty history conflicts with the Nx baseline`,
         );

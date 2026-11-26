@@ -52,7 +52,7 @@ const candidateDirectory = process.argv[3]
   : join(output, 'candidate');
 const candidate = process.argv[3]
   ? json(join(candidateDirectory, 'candidate.json'))
-  : prepare(candidateDirectory);
+  : prepare(candidateDirectory, 'snapshot');
 assert.equal(
   candidate.sourceSha,
   execFileSync('git', ['rev-parse', 'HEAD'], {
@@ -60,7 +60,17 @@ assert.equal(
     encoding: 'utf8',
   }).trim(),
 );
-assert.deepEqual(Object.keys(candidate.artifacts).sort(), [
+assert.ok(
+  Object.keys(candidate.supportArtifacts ?? {}).every(
+    (name) => !Object.hasOwn(candidate.artifacts, name),
+  ),
+  'Release and support artifact sets must not overlap',
+);
+const consumerArtifacts = {
+  ...candidate.supportArtifacts,
+  ...candidate.artifacts,
+};
+assert.deepEqual(Object.keys(consumerArtifacts).sort(), [
   'modeling-core',
   'modeling-metamodel',
 ]);
@@ -136,7 +146,7 @@ const report = {
 };
 try {
   for (const name of names) {
-    const artifact = candidate.artifacts[name];
+    const artifact = consumerArtifacts[name];
     assert.equal(basename(artifact.file), artifact.file);
     const archive = join(candidateDirectory, artifact.file);
     assert.equal(
@@ -184,7 +194,7 @@ try {
       'quickstart.mjs',
     ])
       rmSync(join(consumer, path), { recursive: true, force: true });
-    const artifact = candidate.artifacts[name];
+    const artifact = consumerArtifacts[name];
     const read = (path) =>
       execFileSync(
         'tar',
@@ -201,7 +211,7 @@ try {
     const commands = example.install.split('\n');
     const registryCommands = [
       'npm init -y',
-      `npm install --save-exact @anarchitects/modeling-core@${candidate.artifacts['modeling-core'].artifactVersion}${name === 'modeling-metamodel' ? ` @anarchitects/modeling-metamodel@${artifact.artifactVersion}` : ''}`,
+      `npm install --save-exact @anarchitects/modeling-core@${consumerArtifacts['modeling-core'].artifactVersion}${name === 'modeling-metamodel' ? ` @anarchitects/modeling-metamodel@${artifact.artifactVersion}` : ''}`,
     ];
     assert.deepEqual(
       example.registryInstall.split('\n'),
@@ -238,7 +248,7 @@ try {
   for (const name of names) {
     const specifier = `@anarchitects/${name}`,
       directory = join(consumer, 'node_modules', specifier);
-    const artifact = candidate.artifacts[name],
+    const artifact = consumerArtifacts[name],
       manifest = json(join(directory, 'package.json'));
     manifests[name] = manifest;
     assert.deepEqual(manifest, artifact.manifest);
@@ -249,7 +259,7 @@ try {
     );
     checkManifest(manifest, name, {
       packed: true,
-      coreVersion: candidate.artifacts['modeling-core'].artifactVersion,
+      coreVersion: consumerArtifacts['modeling-core'].artifactVersion,
     });
     const files = filesWithoutLinks(directory);
     assert.deepEqual(

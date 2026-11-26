@@ -44,8 +44,9 @@ method conformance, external data truth or provenance authenticity.
 
 ## Compatibility and handoff
 
-Published compatibility baseline: both packages **0.0.1**; development manifests
-remain private **0.0.0**. This additive API is compatible feature intent
+Published compatibility baseline: both packages **0.0.1**. At the initial local
+review, development manifests were private **0.0.0**; release-tooling alignment
+subsequently reconciled source versions to **0.0.1**. This additive API is compatible feature intent
 (`feat(modeling-metamodel)` after review), a patch increment under the accepted
 zero-major Nx policy. No version is selected or manifest changed here. Existing
 readers retain identical envelope/model data and unknown-extension handling;

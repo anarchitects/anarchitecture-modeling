@@ -39,7 +39,10 @@
       "push": false,
       "stageChanges": false
     },
-    "changelog": { "workspaceChangelog": false, "projectChangelogs": false }
+    "changelog": {
+      "workspaceChangelog": false,
+      "projectChangelogs": { "createRelease": false }
+    }
   },
   "namedInputs": {
     "default": [

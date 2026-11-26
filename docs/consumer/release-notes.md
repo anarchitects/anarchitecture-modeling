@@ -15,6 +15,14 @@ in envelopes. A consumer must require a reviewed release containing the new expo
 Implementation acceptance, #78 installed-consumer handoff, publication and adoption
 remain separate.
 
+## Development release-tooling alignment
+
+Checked-in package versions are reconciled to the existing `0.0.1` releases.
+Future release preparation applies Nx-calculated versions and changelogs to source
+before review; distribution archives use those same versions. This does not
+republish `0.0.1`, alter its artifacts/tags or release the unreleased comparison API.
+The private root workspace remains a development-only package.
+
 ## 0.0.1 — 20 November 2026
 
 | Package            | Public version                                                                         | Compatible core |

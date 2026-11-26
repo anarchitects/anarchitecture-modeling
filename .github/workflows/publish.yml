@@ -9,10 +9,10 @@ on:
         options: [preview, publish, recover]
         default: preview
       version_mode:
-        description: First distribution or versions calculated from release history
+        description: Verify committed source versions against Nx release history (apply versions before preview)
         type: choice
         options: [first, next]
-        default: first
+        default: next
       authentication:
         description: Bootstrap only for new packages; OIDC for established packages
         type: choice

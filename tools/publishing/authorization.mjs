@@ -83,6 +83,11 @@ export function authorize(
     'Final license/NOTICE clearance required',
   );
   assert.equal(report.licenseStatus, 'accepted');
+  assert.notEqual(
+    report.mode,
+    'snapshot',
+    'Packaging snapshots cannot be published',
+  );
   assert.equal(repo.full_name, config.repository);
   assert.equal(repo.private, false, 'Public provenance requires public source');
   assert.equal(context.event, 'workflow_dispatch');
