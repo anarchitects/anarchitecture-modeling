@@ -8,10 +8,9 @@ packs, serialize files or render views.
 
 ## Availability and installation
 
-Use the exact versions in the reviewed release record. Run registry commands
-only once those versions are available on npm; documentation or a candidate
-archive alone does not establish publication. Do not substitute an unverified
-registry package or `latest`. Before publication, use the local archives below.
+Both packages are published as `0.0.2`. Use the exact compatible versions in the
+[release record](../../docs/consumer/release-notes.md) and preserve their lockfile
+integrity. The local archive path below supports verification of future candidates.
 
 Use **Node 24 with ESM** and npm. No Nx, TypeScript compiler, framework or service
 is required for this JavaScript example. Installation writes `package.json`, a
@@ -151,7 +150,7 @@ and public registry links will be finalized with the authorized release.
 
 For ordinary questions or reproducible defects, use the
 [issue tracker](https://github.com/anarchitects/anarchitecture-modeling/issues)
-when accessible, or email **johan@anarchitects.dev** while the repository is private.
+or email **johan@anarchitects.dev**.
 Include package versions, runtime and a small sanitized reproduction. Report
 security issues **privately** to that address, never in a public issue.
 

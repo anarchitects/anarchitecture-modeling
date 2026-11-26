@@ -4,7 +4,7 @@ An independent, host-neutral TypeScript modeling capability. The packages retain
 the identities `@anarchitects/modeling-core` and
 `@anarchitects/modeling-metamodel`; metamodel may depend on core, never the reverse.
 Archimatrix is the first consumer. Both packages now build and test independently;
-core and metamodel parity are accepted. Both are published as `0.0.1`;
+core and metamodel parity are accepted. Both are published as `0.0.2`;
 consumer adoption remains a separate outcome.
 
 Canonical placement and ownership are accepted in
@@ -21,12 +21,12 @@ Start with the [consumer guide](docs/consumer/README.md),
 and run against packed APIs. Install the verified public pair from npm:
 
 ```sh
-npm install --save-exact @anarchitects/modeling-core@0.0.1 @anarchitects/modeling-metamodel@0.0.1
+npm install --save-exact @anarchitects/modeling-core@0.0.2 @anarchitects/modeling-metamodel@0.0.2
 ```
 
-See the [0.0.1 release record](docs/consumer/release-notes.md) for registry links,
-compatibility, archive hashes and provenance. Development manifests remain private
-at `0.0.0`; they are not the published distribution manifests.
+See the [release record](docs/consumer/release-notes.md) for registry links,
+compatibility, archive hashes and provenance. Nx Release updates source package
+versions before review; approved distribution archives use those same versions.
 
 ## Contributing and ownership
 

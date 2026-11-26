@@ -1,4 +1,4 @@
-// Unreleased contract-1 example. Published 0.0.1 does not export the comparator.
+// Contract-1 example, published in 0.0.2. Version 0.0.1 has no comparator.
 // The package-check target compiles and executes this against local archives.
 import {
   createElementId,

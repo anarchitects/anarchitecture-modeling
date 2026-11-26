@@ -8,10 +8,9 @@ policy; no method pack, renderer, storage service or authorization engine ships 
 
 ## Availability and installation
 
-Use the exact versions in the reviewed release record. Run registry commands
-only once those versions are available on npm; documentation or a candidate
-archive alone does not establish publication. Do not substitute an unverified
-registry package or `latest`. Before publication, use the local archives below.
+Both packages are published as `0.0.2`. Use the exact compatible versions in the
+[release record](../../docs/consumer/release-notes.md) and preserve their lockfile
+integrity. The local archive path below supports verification of future candidates.
 
 Use **Node 24 with ESM** and npm. No Nx, TypeScript compiler, framework or service
 is required for this JavaScript example. Installation writes `package.json`, a
@@ -108,7 +107,7 @@ model. Inspect semantic coverage as well as status for real inputs; preserved
 unsupported data is not successfully validated. The example only allocates
 in-memory data and prints results; it performs no file I/O or network requests.
 
-## Unreleased: semantic snapshot comparison
+## Semantic snapshot comparison (since 0.0.2)
 
 `compareDocumentSnapshots` compares trusted snapshots by stable identity with
 explicit scope, exact pack/profile/rule pins, deterministic differences and
@@ -117,8 +116,8 @@ coverage. Its statuses are `equivalent`, `different`, `incomplete` and
 Views and operational state are excluded; opaque extensions remain unsupported.
 Semantic equality never bypasses an expected-revision guard.
 
-This additive API is **not in published 0.0.1**. Use a reviewed build that contains
-it. See the [contract and limits](../../docs/proofs/semantic-comparison.md) and
+This additive API is available in **published 0.0.2**; 0.0.1 does not export it.
+See the [contract and limits](../../docs/proofs/semantic-comparison.md) and
 [packed TypeScript example](../../docs/consumer/examples/semantic-comparison.mts).
 No format migration, implicit pack upgrade or new runtime dependency is introduced.
 
@@ -199,7 +198,7 @@ and public registry links will be finalized with the authorized release.
 
 For ordinary questions or reproducible defects, use the
 [issue tracker](https://github.com/anarchitects/anarchitecture-modeling/issues)
-when accessible, or email **johan@anarchitects.dev** while the repository is private.
+or email **johan@anarchitects.dev**.
 Include package versions, runtime and a small sanitized reproduction. Report
 security issues **privately** to that address, never in a public issue.
 
