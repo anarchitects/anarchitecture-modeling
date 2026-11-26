@@ -1,15 +1,19 @@
 # Release notes and compatibility history
 
-Both packages are publicly available as `0.0.1`. No deprecation,
-end-of-maintenance date or stable 1.x support commitment is announced.
+This source prepares both packages at `0.0.2`; `0.0.1` is the preceding verified
+public release. Verify availability and exact archive identity through the
+[publication record](https://github.com/anarchitects/anarchitecture-modeling/issues/23)
+before installing a new version. No deprecation, end-of-maintenance date or
+stable 1.x support commitment is announced.
 
-## Unreleased — bounded semantic comparison (#77)
+## 0.0.2 — bounded semantic comparison (#77)
 
 Metamodel adds `compareDocumentSnapshots` and comparison contract 1 for trusted
 snapshots. See the [contract, compatibility assessment and evidence](../proofs/semantic-comparison.md).
-This is compatible feature intent (a patch increment under the zero-major policy),
-not a selected release version. Core, model format 2, metamodel contract 1 and
-document envelope 1 remain unchanged. No existing data needs migration.
+Nx selected `0.0.2` for both packages. The metamodel feature is compatible (a
+patch increment under the zero-major policy); its core dependency is exactly
+`0.0.2`. Core's runtime API, model format 2, metamodel contract 1 and document
+envelope 1 remain unchanged. No existing data needs migration.
 Published 0.0.1 readers cannot call this API; comparison reports are not persisted
 in envelopes. A consumer must require a reviewed release containing the new export.
 Implementation acceptance, #78 installed-consumer handoff, publication and adoption
@@ -21,7 +25,8 @@ Checked-in package versions are reconciled to the existing `0.0.1` releases.
 Future release preparation applies Nx-calculated versions and changelogs to source
 before review; distribution archives use those same versions. This does not
 republish `0.0.1`, alter its artifacts/tags or release the unreleased comparison API.
-The private root workspace remains a development-only package.
+The private root workspace remains a development-only package. The subsequent
+`0.0.2` release preparation applies this workflow to both packages.
 
 ## 0.0.1 — 20 November 2026
 
