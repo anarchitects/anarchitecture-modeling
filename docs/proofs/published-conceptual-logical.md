@@ -1,9 +1,11 @@
 # Published conceptual/logical contract proof — issue #78
 
-Work in progress under [#78](https://github.com/anarchitects/anarchitecture-modeling/issues/78).
+Johan [accepted the bounded Foundation proof on 27 November 2026](https://github.com/anarchitects/anarchitecture-modeling/issues/78#issuecomment-7227469972);
+[#78](https://github.com/anarchitects/anarchitecture-modeling/issues/78) is completed.
 This is an original synthetic public fixture and an executable installed-package
 proof. It is not a production method pack, conversion implementation or consumer
-adoption decision. Johan owns Foundation evidence acceptance.
+adoption decision. Johan's acceptance covers the documented exact-0.0.2 evidence
+and limitations below; it does not claim a 0.0.3 rerun or actual consumer host integration.
 
 ## Baseline and reproducible execution
 
@@ -50,8 +52,12 @@ signatures and two Foundation attestations**.
 The existing package-check target and its three prerequisites passed, including
 public exports, strict declarations, packed lifecycle/comparison examples and
 boundary checks. All six publishing-documentation tests passed. These are local
-results for the initial fixture; no hosted CI result or #78 acceptance is
-claimed here. The implementation PR records the source commit. The runner's
+results for the initial fixture; no hosted CI result is claimed here.
+[PR #87](https://github.com/anarchitects/anarchitecture-modeling/pull/87) records
+source `43fbbf8eb866703ddc2e1a238946378c2880809f`, merged on 26 November 2026 at
+23:09:51Z as `29cb23c8710d79510bf06c26f90c276507b2b7a0`. Acceptance was pending
+at that merge; Johan explicitly accepted the bounded evidence on 27 November 2026.
+This later decision does not backdate approval or rerun the proof. The runner's
 evidence binds its result to the fixture SHA-256 and exact
 installed artifacts.
 
@@ -99,7 +105,7 @@ archive/build provenance, and neither authenticates the synthetic actor.
 | Public package boundary     | Registry hashes, exact core dependency, root exports, negative imports, declarations and lockfile reinstall                                  | Local proof, not browser/Windows/production certification                                   |
 | Mandatory completion        | Removing required descriptive information makes the model invalid                                                                            | Incomplete draft authoring is the separate #83/#84 path, not masked by an all-optional pack |
 
-## Host obligations and remaining acceptance
+## Host obligations and separate consumer acceptance
 
 `DocumentCommitPort` is an interface, not an installed transaction adapter. A host
 must recheck the expected current state atomically with committing the prepared
@@ -128,9 +134,16 @@ The historical consumer evaluation in Blueprint #52 remains closed with its
 evaluation. Reuse its requirements and preserve proprietary/standalone boundaries;
 no private fixture or source is copied into this public proof. A consumer-specific
 matrix comparison, host integration evidence and separate acceptance remain to be
-completed in their owning scope. #78 stays open for review and Johan's Foundation
-acceptance; PWG's consumer decision does not follow from a passing test.
+completed in their owning scope. Johan's bounded Foundation acceptance completes
+#78; PWG's consumer decision does not follow from that acceptance or a passing test.
+
+This decision is separate from PWG's architecture-only post-merge acceptance of
+#88, #77's comparator acceptance and exact-candidate release/publication authority.
+No new release, publication or Archimatrix/Blueprint adoption is authorized.
+Blueprint Foundation DEFER, stopped integration/proof gates, all existing exception
+conditions and the 30 November 2026 23:59:59 AEDT / 12:59:59Z expiry remain unchanged,
+without renewal.
 
 The immutable 0.0.1 and 0.0.2 README limitations remain recorded in the release
-notes. This branch corrects current source wording without changing published
-artifacts, package versions or runtime APIs.
+notes. Current source wording has been corrected without changing those published
+artifacts. This acceptance record changes no package version or runtime API.

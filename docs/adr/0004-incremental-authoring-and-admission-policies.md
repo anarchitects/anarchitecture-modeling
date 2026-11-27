@@ -1,8 +1,10 @@
 # ADR 0004 — Incremental authoring and explicit admission policies
 
-- **Status:** Accepted by the Foundation capability owner; PWG ecosystem architecture review pending.
-- **Date:** 2026-11-27.
-- **Decision authority:** Johan, Foundation capability owner. PWG retains ecosystem architecture review; that review is pending.
+- **Status:** Accepted by the Foundation capability owner and by PWG for architecture direction only; PWG acceptance was recorded after merge.
+- **Capability-owner decision date:** 2026-11-27.
+- **PWG decision date:** 2026-11-28 (Australia/Sydney); comment posted at `2026-11-27T20:05:47Z`.
+- **Decision authority:** Johan, Foundation capability owner; PWG (`pwgconsulting`), ecosystem architecture and SDLC owner.
+- **PWG acceptance evidence:** [Post-merge architecture acceptance](https://github.com/anarchitects/anarchitecture-modeling/pull/88#issuecomment-7227170092), reviewed head `b5f69a91d152b60126896b9dcb1962d3f643b30f`.
 - **Owning work:** [#83](https://github.com/anarchitects/anarchitecture-modeling/issues/83); dependent implementation/proof [#84](https://github.com/anarchitects/anarchitecture-modeling/issues/84).
 - **Relationship:** Refines the admission boundary in accepted [ADR 0001](0001-modeling-foundation-boundaries.md), preserving [ADR 0002](0002-extensible-meta-metamodel-and-governance-metadata.md) and [ADR 0003](0003-semantic-change-comparison.md). No accepted decision is superseded by this decision.
 
@@ -296,9 +298,53 @@ I accept ADR-0004.” This accepts the bounded direction, exclusions and proof
 requirements above, including strict behavior by default and additive opt-in
 admission of specifically allowed missing information.
 
-PWG's ecosystem architecture review remains pending; capability-owner acceptance
-does not claim that review has happened. #83 retains the architecture review and
-merge record. #84 must bind its concrete API/result, policy and serialization
-contracts to this direction before changing behavior, and reconcile any review
-findings. Neither this acceptance nor the baseline reproduction is implementation
-acceptance, release authorization or consumer adoption.
+At the time of Johan's decision, PWG's ecosystem architecture review was pending.
+That historical status is superseded by the later acceptance below, not backdated.
+Neither Johan's architecture acceptance nor the nine baseline observations is
+implementation acceptance, release authorization or consumer adoption.
+
+## PWG architecture acceptance — 28 November 2026 (Australia/Sydney)
+
+PWG (`pwgconsulting`) accepted **architecture direction only** in the
+[post-merge comment on #88](https://github.com/anarchitects/anarchitecture-modeling/pull/88#issuecomment-7227170092).
+The sequence is:
+
+| Event                               | Recorded time / evidence                                                                                                           |
+| ----------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| Johan's capability-owner acceptance | 27 November 2026; [#83 decision record](https://github.com/anarchitects/anarchitecture-modeling/issues/83#issuecomment-7211500965) |
+| Johan merged #88                    | `2026-11-27T16:03:40Z` / 28 November, 03:03:40 AEDT; merge `d1a2a50fc74b073538c2c88e5bdd52c590e1c1b7`                              |
+| PWG posted architecture acceptance  | `2026-11-27T20:05:47Z` / 28 November, 07:05:47 AEDT; reviewed head `b5f69a91d152b60126896b9dcb1962d3f643b30f`                      |
+
+Reviewed head and merge have the same Git tree,
+`da8ad4a253e932dfd75edf666923bc92db84d0dd`. This is a post-merge acceptance
+comment, not a pre-merge APPROVED review. PWG performed no merge. #83 retains
+the architecture decision and chronology; earlier pending-review comments remain
+historical evidence.
+
+Strict editing remains the default. Draft admission permits only explicitly
+selected absent required top-level scalar properties. Structural, reference and
+lifecycle integrity, complete supported coverage, present-value rules and violated
+constraints remain blocking. Admission does not establish semantic validity,
+authentication or lifecycle approval. Foundation, method and host responsibilities
+and comparison contract 1 / #77/#78 remain unchanged.
+
+All #84 gates above remain requirements: settle concrete API/result, exact policy
+and versioned-envelope/compatibility/resource-limit contracts before coding; then
+prove strict regressions, negative classifier and type cases, legacy commit-port
+separation, old/new readers, replay/reopen/undo, and atomic host revision/context
+checks, persistence, failure and recovery. The nine baseline observations prove
+only the earlier behavior. A simulated host proof does not establish actual
+product persistence. If additive compatibility cannot be maintained, stop for an
+explicit breaking API/migration decision.
+
+The separate [#84 outcome acceptance](https://github.com/anarchitects/anarchitecture-modeling/issues/84#issuecomment-7225638664)
+and [0.0.3 publication record](https://github.com/anarchitects/anarchitecture-modeling/issues/23#issuecomment-7224973673)
+retain their own authority, dates, candidate and evidence limits. They are not
+accepted or authorized by PWG's architecture comment. Implementation acceptance,
+exact-candidate release/publication authorization, actual distribution verification
+and consumer adoption remain separate outcomes.
+
+This acceptance authorizes no publication, release or Archimatrix/Blueprint
+adoption. Blueprint Foundation **DEFER**, stopped integration/proof gates, all
+existing exception conditions and the **30 November 2026 23:59:59 AEDT /
+12:59:59Z** expiry remain unchanged, without renewal.
