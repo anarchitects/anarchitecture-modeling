@@ -269,7 +269,11 @@ try {
   );
   // The exact consumer example linked by the guide is compiled and executed
   // against extracted archives. No source aliases or workspace package links.
-  const examples = ['lifecycle', 'semantic-comparison'];
+  const examples = [
+    'lifecycle',
+    'semantic-comparison',
+    'incremental-authoring',
+  ];
   for (const name of examples)
     cpSync(
       join(root, 'docs/consumer/examples', `${name}.mts`),
@@ -329,7 +333,13 @@ try {
         .trim()
         .split('\n');
       const actual = exports
-        .filter((symbol) => symbol.flags & flag)
+        .filter(
+          (symbol) =>
+            (symbol.flags & ts.SymbolFlags.Alias
+              ? checker.getAliasedSymbol(symbol)
+              : symbol
+            ).flags & flag,
+        )
         .map((symbol) => symbol.name)
         .sort();
       assert.deepEqual(

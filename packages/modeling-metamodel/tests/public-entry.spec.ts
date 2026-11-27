@@ -94,6 +94,14 @@ describe('built metamodel public contract', () => {
     ).toMatch(/\/modeling-metamodel\/dist\/index\.js$/);
     expect(Object.keys(metamodel).sort()).toEqual(
       [
+        'AUTHORING_ENVELOPE_FORMAT',
+        'AUTHORING_ENVELOPE_VERSION',
+        'AUTHORING_POLICY_CONTRACT_VERSION',
+        'assessAuthoringCheckpoint',
+        'prepareAuthoringImport',
+        'prepareAuthoringCommand',
+        'encodeAuthoringDocument',
+        'decodeAuthoringDocument',
         'DEFAULTS_OPERATOR',
         'DEFAULT_DOCUMENT_HISTORY_POLICY',
         'DOCUMENT_CODEC_LIMITS',

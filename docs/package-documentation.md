@@ -19,19 +19,19 @@ vendor assets. Nx is build tooling, not a consumer interface. Angular, Nest, CLI
 HTTP-client, renderer and host-loaded adapter profiles do not apply to these
 artifacts; no empty profile sections or new runtime dependencies are required.
 
-| Topic                                   | Core evidence                                                     | Metamodel evidence                                                        |
-| --------------------------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------- |
-| Purpose and limits                      | Own README: structural model/view data, no method engine          | Own README: composition/validation/lifecycle, host responsibilities       |
-| Availability and install                | Preview label, `core.tgz`, exact local install                    | Preview label, reviewed pair, exact core dependency                       |
-| Prerequisites                           | Node 24 ESM; JS quick start without compiler/Nx                   | Same; both direct imports explained                                       |
-| Quick start                             | Create/validate an empty model; unsupported-format diagnostic     | Compose exact synthetic pack/profile and validate; missing-pack rejection |
-| Workflows and public surface            | Named exports, IDs/revisions, structure/references/views          | Exact pins, diagnostics/coverage, defaults/commands/history/codec         |
-| Inputs, side effects and responsibility | Trusted typed input, no mutation/I/O; caller lifetime/host policy | In-memory candidates, host authorization/atomic commit/recovery           |
-| Examples                                | README JavaScript with expected output, API reference             | README JavaScript plus full TypeScript lifecycle example                  |
-| Troubleshooting/support                 | Import/deep-path/runtime/identity/structure remedies, contact     | Peer/pin/coverage/stale-command/codec remedies, contact                   |
-| Lifecycle/versioning                    | Independent 0.x policy, support limits, migration/release notes   | Exact companion version and distinct pack/format axes                     |
-| License and notices                     | Apache-2.0, NOTICE and separate helper terms                      | Same; synthetic examples carry no standards certification                 |
-| Packaging/version references            | README and offline resources; source-SHA online links             | Same, per-package artifact/version footer                                 |
+| Topic                                   | Core evidence                                                         | Metamodel evidence                                                  |
+| --------------------------------------- | --------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| Purpose and limits                      | Own README: structural model/view data, no method engine              | Own README: composition/validation/lifecycle, host responsibilities |
+| Availability and install                | Copyable npm install; archive substitution stays in engineering proof | Copyable npm install; declared core dependency                      |
+| Prerequisites                           | Node 24 ESM; JS quick start without compiler/Nx                       | Same; both direct imports explained                                 |
+| Quick start                             | Create Customer; reject duplicate identity                            | Require Customer definition; show invalid then valid                |
+| Workflows and public surface            | Named exports, IDs/revisions, structure/references/views              | Exact pins, diagnostics/coverage, defaults/commands/history/codec   |
+| Inputs, side effects and responsibility | Trusted typed input, no mutation/I/O; caller lifetime/host policy     | In-memory candidates, host authorization/atomic commit/recovery     |
+| Examples                                | README JavaScript with expected output, API reference                 | README JavaScript plus full TypeScript lifecycle example            |
+| Troubleshooting/support                 | Import/deep-path/runtime/identity/structure remedies, contact         | Peer/pin/coverage/stale-command/codec remedies, contact             |
+| Lifecycle/versioning                    | Independent 0.x policy, support limits, migration/release notes       | Exact companion version and distinct pack/format axes               |
+| License and notices                     | Apache-2.0, NOTICE and separate helper terms                          | Same; synthetic examples carry no standards certification           |
+| Packaging/version references            | README and offline resources; source-SHA online links                 | Same, per-package artifact/version footer                           |
 
 Source entry points are [core](../packages/modeling-core/README.md) and
 [metamodel](../packages/modeling-metamodel/README.md). Detailed references are the
@@ -47,8 +47,7 @@ is advertised.
 `tools/publishing/documentation.mjs` constructs a bounded documentation inventory
 from reviewed source. Staging copies the guides/example into `docs/`, pins README
 online links and manifest homepage to the source commit, and records the committed package
-version in the README. It also ships the semantic-comparison proof and executable
-example with links rewritten for the offline layout. This does not add runtime exports or dependencies. The raw
+version in the README. It ships consumer comparison/authoring guides and executable examples; engineering proof and publication execution records remain outside consumer documentation. This does not add runtime exports or dependencies. The raw
 Yarn workspace pack remains a development packaging proof; the staged npm candidate
 is the distribution archive inspected here.
 
@@ -59,7 +58,7 @@ READMEs, altered shipped examples, unpinned homepage, missing/escaping local tar
 missing anchors and absent/duplicate executable markers. Link parsing is bounded to
 these inline Markdown pages, not a general website crawler or HTTP-access check.
 
-The independent consumer runs the README's actual `npm init`/installation steps
+The independent consumer uses the README's `npm init`/installation flow, substituting exact candidate archives for registry package names
 with the existing credential-free disposable environment. It first installs core
 alone, verifies that only core and tslib are present, extracts the installed
 README's JavaScript and compares its output with the README expectation. It then removes the consumer installation/configuration, installs the exact
@@ -109,3 +108,15 @@ some prepublication wording; Johan owns cleanup for the next reviewed candidate.
 The tested commands work, but the wording must be reconciled before another release.
 Neither these checks nor publication establish consumer adoption or Johan's final
 #23 outcome acceptance.
+
+## Documentation revision during #84
+
+Both READMEs now prioritize npm installation and a useful Customer example.
+Hardcoded package versions and contributor archive-setup instructions were removed
+from usage pages; runtime prerequisites and serialized contract identifiers remain.
+Release-specific version numbers remain in release notes. The publication execution
+record is retained in [engineering history](proofs/publication-history.md), not
+shipped as consumer guidance. The uncached `authoring-contract-check` also renders
+the real staged documentation, installs the private local archives, verifies
+offline resources and executes both installed README examples. Working-tree
+archive evidence does not certify publication or live links for uncommitted files.

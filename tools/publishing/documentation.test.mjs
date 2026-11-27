@@ -39,7 +39,7 @@ function fixture(
     },
   };
 }
-test('registry instructions pin independently versioned packages without replacing the local proof', () => {
+test('public installation has no hardcoded package versions; engineering proof installs exact archives', () => {
   const { files, manifest } = fixture('modeling-metamodel', '0.2.3', '0.1.7');
   const result = verifyDocumentation(
     'modeling-metamodel',
@@ -50,27 +50,13 @@ test('registry instructions pin independently versioned packages without replaci
   );
   assert.equal(
     result.registryInstall,
-    'npm init -y\nnpm install --save-exact @anarchitects/modeling-core@0.1.7 @anarchitects/modeling-metamodel@0.2.3',
+    'npm init -y\nnpm install --save-exact @anarchitects/modeling-core @anarchitects/modeling-metamodel',
   );
   assert.equal(
     result.install,
     'npm init -y\nnpm install --save-exact ./core.tgz ./metamodel.tgz',
   );
   assert.doesNotMatch(files['README.md'], /<(CORE|METAMODEL)_VERSION>/);
-  assert.throws(
-    () =>
-      verifyDocumentation(
-        'modeling-metamodel',
-        {
-          ...manifest,
-          dependencies: { '@anarchitects/modeling-core': '0.1.8' },
-        },
-        (p) => files[p],
-        sha,
-        repository,
-      ),
-    /differs from reviewed package documentation/,
-  );
   assert.throws(() => fixture('modeling-metamodel', '0.2.3', '^0.1.7'));
 });
 for (const name of ['modeling-core', 'modeling-metamodel']) {
@@ -87,10 +73,10 @@ for (const name of ['modeling-core', 'modeling-metamodel']) {
     assert.ok(result.output.length);
     assert.doesNotMatch(files['README.md'], /\/blob\/main\/|\/tree\/main\//);
     assert.match(files['README.md'], new RegExp(`${name}@0\\.0\\.1`));
-    assert.match(files['docs/api.md'], /\]\(proofs\/semantic-comparison\.md\)/);
+    assert.match(files['docs/api.md'], /\]\(comparison\.md\)/);
     assert.match(
-      files['docs/proofs/semantic-comparison.md'],
-      /\]\(\.\.\/examples\/semantic-comparison\.mts\)/,
+      files['docs/comparison.md'],
+      /\]\(examples\/semantic-comparison\.mts\)/,
     );
     assert.match(
       files['docs/examples/semantic-comparison.mts'],
@@ -99,7 +85,7 @@ for (const name of ['modeling-core', 'modeling-metamodel']) {
     if (name === 'modeling-metamodel')
       assert.ok(
         files['README.md'].includes(
-          `https://github.com/${repository}/blob/${sha}/docs/proofs/semantic-comparison.md`,
+          `https://github.com/${repository}/blob/${sha}/docs/consumer/examples/semantic-comparison.mts`,
         ),
       );
   });
@@ -128,7 +114,7 @@ test('rejects missing/wrong-package/stale README and changed shipped example eve
   for (const path of [
     'docs/examples/lifecycle.mts',
     'docs/examples/semantic-comparison.mts',
-    'docs/proofs/semantic-comparison.md',
+    'docs/comparison.md',
   ])
     for (const replacement of [undefined, 'stale documentation'])
       assert.throws(
@@ -197,6 +183,6 @@ test('rejects missing or duplicated executable markers', () => {
   );
   assert.throws(
     () => quickStart(files['README.md'] + files['README.md']),
-    /quickstart:install/,
+    /quickstart:registry-install/,
   );
 });

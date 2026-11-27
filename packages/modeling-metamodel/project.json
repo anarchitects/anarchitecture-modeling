@@ -85,6 +85,15 @@
         }
       ],
       "outputs": []
+    },
+    "authoring-contract-check": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/consumer/authoring-contract-check.mjs"
+      },
+      "dependsOn": ["package-check"],
+      "cache": false,
+      "outputs": []
     }
   }
 }
