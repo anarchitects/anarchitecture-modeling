@@ -211,14 +211,14 @@ try {
     const commands = example.install.split('\n');
     const registryCommands = [
       'npm init -y',
-      `npm install --save-exact @anarchitects/modeling-core@${consumerArtifacts['modeling-core'].artifactVersion}${name === 'modeling-metamodel' ? ` @anarchitects/modeling-metamodel@${artifact.artifactVersion}` : ''}`,
+      `npm install --save-exact @anarchitects/modeling-core${name === 'modeling-metamodel' ? ' @anarchitects/modeling-metamodel' : ''}`,
     ];
     assert.deepEqual(
       example.registryInstall.split('\n'),
       registryCommands,
-      'Registry instructions must pin the exact candidate pair',
+      'Registry instructions must name the packages used by the example',
     );
-    // Execute the documented install steps, without a shell or arbitrary code.
+    // Execute the documented installation with exact candidate archives substituted for registry package names; no shell or arbitrary code.
     const expected = [
       'npm init -y',
       `npm install --save-exact ./core.tgz${name === 'modeling-metamodel' ? ' ./metamodel.tgz' : ''}`,

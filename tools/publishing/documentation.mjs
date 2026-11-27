@@ -8,11 +8,13 @@ const guides = [
   'README.md',
   'api.md',
   'migration.md',
+  'authoring.md',
+  'comparison.md',
   'release-notes.md',
   'examples/lifecycle.mts',
   'examples/semantic-comparison.mts',
+  'examples/incremental-authoring.mts',
 ];
-const comparisonProof = 'docs/proofs/semantic-comparison.md';
 
 // The archive is self-contained. GitHub's source reference is supplementary and
 // pinned; its public accessibility is a separate #22/#23 live check.
@@ -41,13 +43,10 @@ export function documentationFiles(
   verifyDocumentationLinks({
     [`packages/${name}/README.md`]: sourceReadme,
     ...sourceGuides,
-    [comparisonProof]: readSource(comparisonProof),
     LICENSE: readSource('LICENSE'),
     NOTICE: readSource('NOTICE'),
   });
   const readme = sourceReadme
-    .replaceAll('<CORE_VERSION>', compatibleCore)
-    .replaceAll('<METAMODEL_VERSION>', version)
     .replaceAll('../../docs/consumer/', `${source}/docs/consumer/`)
     .replaceAll('../../docs/proofs/', `${source}/docs/proofs/`)
     .replaceAll('../../LICENSE', `${source}/LICENSE`)
@@ -55,7 +54,7 @@ export function documentationFiles(
   return {
     homepage,
     files: {
-      'README.md': `${readme}\n## Artifact reference\n\nThis documentation accompanies \`@anarchitects/${name}@${version}\`.\nThe bundled guides describe this candidate; retain them with your lockfile.\nOffline, open \`docs/README.md\`, \`docs/api.md\`, \`docs/migration.md\` and\n\`docs/examples/lifecycle.mts\` inside this package; \`LICENSE\` and \`NOTICE\`\nare included alongside this README. Online links use this exact source revision\nand require repository access until public disclosure is authorized.\n[Source snapshot](${homepage}).\n`,
+      'README.md': `${readme}\n## Documentation for this package\n\nThis documentation accompanies \`@anarchitects/${name}@${version}\`.\nThe bundled guides describe the installed package.\nOffline, open \`docs/README.md\`, \`docs/api.md\`, \`docs/migration.md\` and\n\`docs/examples/lifecycle.mts\` inside this package; \`LICENSE\` and \`NOTICE\`\nare included alongside this README. Online links refer to this package's source revision.\n[Source snapshot](${homepage}).\n`,
       ...Object.fromEntries(
         guides.map((file) => [
           `docs/${file}`,
@@ -65,10 +64,6 @@ export function documentationFiles(
             '(proofs/',
           ),
         ]),
-      ),
-      [comparisonProof]: readSource(comparisonProof).replaceAll(
-        '(../consumer/',
-        '(../',
       ),
     },
   };
@@ -123,9 +118,22 @@ export function quickStart(readme) {
     assert.equal(matches.length, 1, `Expected one README quickstart:${part}`);
     return matches[0][1];
   };
+  const registryInstall = block('registry-install', 'sh');
+  const paired = readme.startsWith('# @anarchitects/modeling-metamodel\n');
+  assert.ok(
+    paired || readme.startsWith('# @anarchitects/modeling-core\n'),
+    'Identify the documented package',
+  );
+  assert.equal(
+    registryInstall,
+    `npm init -y\nnpm install --save-exact @anarchitects/modeling-core${paired ? ' @anarchitects/modeling-metamodel' : ''}`,
+    'Keep public installation copyable and free of release-tool placeholders',
+  );
   return {
-    install: block('install', 'sh'),
-    registryInstall: block('registry-install', 'sh'),
+    // Engineering proof substitutes exact supplied archives for these package
+    // names; archive preparation is not part of the public user workflow.
+    install: `npm init -y\nnpm install --save-exact ./core.tgz${paired ? ' ./metamodel.tgz' : ''}`,
+    registryInstall,
     source: block('source', 'js'),
     output: block('output', 'text'),
   };

@@ -1,9 +1,8 @@
 # Migrating a workspace consumer
 
-This is a consumer-owned migration procedure for the contracts described in the
-[consumer guide](README.md). It does not claim any application has migrated or
-that a registry release exists. Start actual artifact adoption only when exact authorized versions,
-integrity and compatibility evidence are available.
+Use this guide when replacing workspace/source imports with published packages
+or upgrading an application that stores Foundation documents. See the
+[consumer guide](README.md) for supported runtime and document contracts.
 
 ## Establish a reversible baseline
 
@@ -84,3 +83,11 @@ outside the mutable decode result and coordinate backups/restore with the host.
 Accept package compatibility, application behavior and local-source cleanup
 separately. Successful Foundation tests or a merged migration PR are not evidence
 of a deployed application release or permission to publish one.
+
+## Opt-in incremental authoring (unreleased)
+
+No migration is required for strict consumers. Adopt the distinct authoring API
+and envelope explicitly; old readers reject its format and preserve original
+bytes. Even completed authoring documents do not downgrade automatically.
+See [the authoring guide](authoring.md) for the import revision, policy binding,
+replay semantics and host-owned authorization/atomic commit requirements.

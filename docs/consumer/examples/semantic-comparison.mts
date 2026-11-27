@@ -1,5 +1,4 @@
-// Contract-1 example, published in 0.0.2. Version 0.0.1 has no comparator.
-// The package-check target compiles and executes this against local archives.
+// Compare semantic snapshots through the public package API.
 import {
   createElementId,
   createModel,

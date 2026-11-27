@@ -6,40 +6,33 @@ for semantic models, profiles, diagram views and portable documents. Use
 `@anarchitects/modeling-metamodel` for composition, semantic validation, notation
 bindings, guarded commands, default proposals, history and document encoding.
 
-**Availability:** both packages are published as `0.0.2`. Use exact versions and
-integrity values from the [release record](release-notes.md). Registry installation,
-runtime and declaration checks have passed for that pair.
-
 This guide, the [API reference](api.md), [migration guide](migration.md) and
 [executable example](examples/lifecycle.mts) are self-contained. Reading private
 governance or a consumer application's repository is not required.
 
 ## Installation and compatibility
 
-After an authorized release is available, install the **exact reviewed pair**
-reported by that release. Replace both placeholders below with actual published
-versions; this is a template, not a currently runnable registry quickstart:
+Install the packages your application uses:
 
 ```sh
-npm install --save-exact @anarchitects/modeling-core@<CORE_VERSION> @anarchitects/modeling-metamodel@<METAMODEL_VERSION>
+npm install --save-exact @anarchitects/modeling-core @anarchitects/modeling-metamodel
 ```
 
-Check metamodel's packed dependency on core before choosing the pair. A core-only
-consumer needs only core. Commit the consumer's lockfile and verify integrity.
-Do not substitute `latest`, workspace references or a sibling source checkout for
-the reviewed artifacts. Runtime dependencies are core → `tslib`, and metamodel →
-core + `tslib`; Nx and the compiler are development tools, not consumer runtimes.
+A core-only application needs only `@anarchitects/modeling-core`. Metamodel declares
+its compatible core dependency; match that dependency when adding core to an
+existing application. Keep your lockfile for reproducible installations.
+The packages use `tslib` at runtime; Nx and a TypeScript compiler are not required
+to run their JavaScript APIs.
 
-| Surface           | Current evidence / contract                                                                                    |
-| ----------------- | -------------------------------------------------------------------------------------------------------------- |
-| JavaScript        | Node 24, ESM; package root resolves to `dist/index.js`                                                         |
-| TypeScript        | 6.0.3, strict `NodeNext` and `Node16` ESM resolution, declarations at `dist/index.d.ts`, `skipLibCheck: false` |
-| Imports           | Named root imports and the exported `package.json` metadata subpath                                            |
-| Private paths     | `src/*`, `dist/*` and implementation helpers are not exported                                                  |
-| Other runtimes    | No tested CommonJS build, browser/bundler matrix, older Node or compiler support claim                         |
-| Editor navigation | Shipped declarations; source/declaration maps are not shipped                                                  |
+| Surface           | Current evidence / contract                                                                             |
+| ----------------- | ------------------------------------------------------------------------------------------------------- |
+| JavaScript        | Node 24, ESM; package root resolves to `dist/index.js`                                                  |
+| TypeScript        | Strict `NodeNext` and `Node16` ESM resolution, declarations at `dist/index.d.ts`, `skipLibCheck: false` |
+| Imports           | Named root imports and the exported `package.json` metadata subpath                                     |
+| Private paths     | `src/*`, `dist/*` and implementation helpers are not exported                                           |
+| Other runtimes    | No tested CommonJS build, browser/bundler matrix, older Node or compiler support claim                  |
+| Editor navigation | Shipped declarations; source/declaration maps are not shipped                                           |
 
-The supported matrix below applies to the reviewed candidate artifacts.
 `Node16` names a compiler resolution mode, not support for the Node 16 runtime.
 
 For TypeScript consumers, use `.mts`, or `.ts` with a nearest `package.json`
@@ -59,19 +52,16 @@ containing `"type": "module"`. A minimal verification configuration is:
 }
 ```
 
-After installing reviewed packages and the tested compiler, copy
+For TypeScript, install a compiler with `npm install --save-dev typescript`, then copy
 [lifecycle.mts](examples/lifecycle.mts) alongside that configuration, compile with
 the consumer's local `tsc -p tsconfig.json`, then run `node out/lifecycle.mjs`.
 The example prints a success message or throws on a violated expectation. It uses
 only public package imports and the host's console; no Nx installation, custom
 conditions, path aliases or application code are needed to run the emitted file.
 
-For a local preview, first install the reviewed pair of candidate archives using
-the package READMEs. For a public release, use its exact registry versions. The
-lifecycle example requires **both** packages; the core README provides a smaller
-core-only JavaScript quick start. Installing packages and the compiler changes your
-consumer directory and may download dependencies; running this example itself
-only uses in-memory objects and the console.
+The lifecycle example requires both packages; the core README provides a smaller
+core-only JavaScript quick start. Installation writes dependencies and a lockfile;
+the example itself only creates in-memory objects and prints results.
 
 ## Model, identity and views
 
@@ -206,13 +196,10 @@ or storage adapter ships with the codec. `DocumentCommitPort` is only an interfa
 
 Core and metamodel have independent package versions. Metamodel declares the exact
 core version it was prepared and verified with; matching numerical versions are
-not a general requirement. Inspect actual release manifests rather than assuming
-one synchronized version. `workspace:*` is development metadata and is rewritten
-to an exact core version by the verified packing path.
+not a general requirement. Check the installed metamodel manifest rather than assuming matching package versions.
 
 On `0.x`, compatible features and fixes increment **patch**; breaking changes
-increment **minor**. `1.0.0` requires an explicit stabilization decision. This
-policy is not evidence that release automation or the first release has happened.
+increment **minor**. These packages remain pre-stable; review compatibility notes before upgrading.
 Check each release's API/data compatibility and migration notes; pin versions and
 test before upgrading. No broader support matrix, support SLA or automatic
 migration service is promised. Report security concerns privately to
@@ -225,3 +212,6 @@ engine is shipped. Method packs and host applications own those concerns. Propos
 external-reference, enrichment and extended provenance designs are not existing
 public APIs. See the [API reference](api.md) for the actual supported export surface
 and [migration guide](migration.md) for consumer checks and rollback.
+
+Incremental authoring is an [unreleased opt-in contract](authoring.md), with a
+separate envelope and commit result. Existing strict consumers remain unchanged.
