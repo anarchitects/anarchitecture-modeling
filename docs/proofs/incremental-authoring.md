@@ -117,8 +117,9 @@ The complete prior source review was reused for unchanged files, the nontruncate
 31-ADR inventory verified, and changed release controls plus ADR-0028 reviewed.
 Accepted ownership, contract, versioning, dependency, SDLC and public-consumer
 boundaries remain applicable. Local ADRs 0001–0004 govern this implementation.
-Johan owns capability outcome/compatibility; the requested PWG ecosystem review
-is not a blanket gate on compliant local implementation. No policy exception,
+Johan owns capability outcome/compatibility. PWG's review was pending when this
+implementation evidence was recorded; its later architecture-only acceptance is
+recorded below. No policy exception,
 new runtime dependency or ownership change is introduced.
 
 Archimatrix remains at `32aaaf29cd8414225ce92f861c1510aa5c13d9c2`; accepted
@@ -133,3 +134,23 @@ runtime/format pins and release-specific compatibility records remain. Staged
 documentation uses the normal transformation and was verified in installed
 archives; future public links for uncommitted files and registry landing-page
 updates cannot be certified before commit/publication.
+
+## Subsequent acceptance records — 27 November 2026 UTC
+
+The local evidence above remains a dated pre-publication snapshot. The
+[0.0.3 publication and actual-registry verification record](https://github.com/anarchitects/anarchitecture-modeling/issues/23#issuecomment-7224973673)
+was posted at `17:57:53Z`, and [Johan's #84 outcome acceptance](https://github.com/anarchitects/anarchitecture-modeling/issues/84#issuecomment-7225638664)
+at `18:34:53Z`. Those records retain their separate authority and evidence scope;
+the source suite, installed-archive checks and narrower registry example are not
+interchangeable. Host authorization/atomic persistence/failure/recovery simulation
+still does not prove a real product database or consumer adoption.
+
+PWG's [architecture-only acceptance of #88](https://github.com/anarchitects/anarchitecture-modeling/pull/88#issuecomment-7227170092)
+followed at `20:05:47Z` (28 November, 07:05:47 AEDT), after #88's merge at
+`16:03:40Z`. [ADR 0004](../adr/0004-incremental-authoring-and-admission-policies.md#pwg-architecture-acceptance--28-november-2026-australiasydney)
+records the reviewed/merged tree identity and chronology. This is not a pre-merge
+approval or retrospective acceptance of implementation or publication. It leaves
+#84's contract/proof requirements, strict defaults, comparator #77/#78 and
+ownership boundaries intact. Blueprint DEFER, stopped integration/proof gates,
+all exception conditions and the 30 November 2026 23:59:59 AEDT / 12:59:59Z expiry
+remain unchanged, without renewal.

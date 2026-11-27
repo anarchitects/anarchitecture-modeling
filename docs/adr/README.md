@@ -2,12 +2,12 @@
 
 Repository-local ADRs for the generic, intended open-source Modeling Foundation. Each record distinguishes accepted architecture from proposed mechanisms and outstanding delivery evidence. Local acceptance does not imply ecosystem registration, implementation, publication or consumer adoption.
 
-| ADR                                                               | Status                       | Topic                                                                                          |
-| ----------------------------------------------------------------- | ---------------------------- | ---------------------------------------------------------------------------------------------- |
-| [0001](0001-modeling-foundation-boundaries.md)                    | Accepted                     | Modeling Foundation scope, boundaries and responsibilities; delivery gates remain open         |
-| [0002](0002-extensible-meta-metamodel-and-governance-metadata.md) | Accepted                     | Extensible meta-metamodel, metadata and governance semantics; implementation gates remain open |
-| [0003](0003-semantic-change-comparison.md)                        | Accepted                     | Bounded semantic comparison; concrete API and implementation evidence pending review           |
-| [0004](0004-incremental-authoring-and-admission-policies.md)      | Accepted by capability owner | Bounded incremental authoring; PWG ecosystem architecture review pending                       |
+| ADR                                                               | Status                | Topic                                                                                                                        |
+| ----------------------------------------------------------------- | --------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| [0001](0001-modeling-foundation-boundaries.md)                    | Accepted              | Modeling Foundation scope, boundaries and responsibilities; delivery gates remain open                                       |
+| [0002](0002-extensible-meta-metamodel-and-governance-metadata.md) | Accepted              | Extensible meta-metamodel, metadata and governance semantics; implementation gates remain open                               |
+| [0003](0003-semantic-change-comparison.md)                        | Accepted              | Bounded semantic comparison; concrete API and implementation evidence pending review                                         |
+| [0004](0004-incremental-authoring-and-admission-policies.md)      | Accepted architecture | Bounded incremental authoring; PWG architecture-only acceptance on 28 November 2026 (Australia/Sydney), recorded after merge |
 
 ## Principles
 
