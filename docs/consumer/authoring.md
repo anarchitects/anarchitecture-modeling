@@ -1,6 +1,6 @@
-# Incremental authoring (unreleased)
+# Incremental authoring
 
-This opt-in addition is not yet available from the registry. Existing strict APIs and the comparison contract retain
+Incremental authoring is opt-in. Existing strict APIs and the comparison contract retain
 their behavior. The [executable example](examples/incremental-authoring.mts)
 shows Customer created without its definition and owner, completed in a subsequent
 command, and undone to an admitted incomplete state.

@@ -84,7 +84,7 @@ Accept package compatibility, application behavior and local-source cleanup
 separately. Successful Foundation tests or a merged migration PR are not evidence
 of a deployed application release or permission to publish one.
 
-## Opt-in incremental authoring (unreleased)
+## Opt-in incremental authoring
 
 No migration is required for strict consumers. Adopt the distinct authoring API
 and envelope explicitly; old readers reject its format and preserve original

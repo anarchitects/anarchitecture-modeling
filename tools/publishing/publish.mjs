@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
-import { readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join, basename } from 'node:path';
 import { digest, checkManifest } from '../boundaries/policy.mjs';
 import { config } from './prepare.mjs';
@@ -12,11 +12,9 @@ import {
 } from './authorization.mjs';
 import { verifyLegalFiles } from './legal.mjs';
 import { verifyDocumentation } from './documentation.mjs';
-import { executePublication } from './execute.mjs';
-import {
-  verifyPublishedArtifact,
-  waitForPublishedArtifact,
-} from './registry.mjs';
+import { createPublishWorkspace, runNxPublication } from './nx-publish.mjs';
+import { publicationGate } from './nx-publish-gate.mjs';
+import { verifyPublishedArtifact } from './registry.mjs';
 
 // Fail before any network request or external mutation while activation is pending.
 assert.equal(config.enabled, true, 'Publication disabled until #23 activation');
@@ -184,69 +182,58 @@ else {
   );
   assert.ok(process.env.ACTIONS_ID_TOKEN_REQUEST_URL, 'OIDC unavailable');
 }
-async function releasedCore(version) {
-  const response = await fetch(
-    `${config.registry}/@anarchitects%2fmodeling-core/${version}`,
-    { signal: AbortSignal.timeout(30000), redirect: 'error' },
-  );
-  assert.ok(
-    response.ok,
-    'Exact core dependency must already be available from npm',
-  );
-  const manifest = await response.json();
-  assert.equal(manifest.name, '@anarchitects/modeling-core');
-  assert.equal(manifest.version, version);
-}
 const request = (url, options) =>
-  fetch(url, { ...options, signal: AbortSignal.timeout(30000) });
-try {
-  await executePublication({
-    report,
-    histories,
-    publishNames:
-      operation === 'recover'
-        ? approval.recovery.publish
-        : ['modeling-core', 'modeling-metamodel'].filter(
-            (name) => report.artifacts[name],
-          ),
-    alreadyPublished:
-      operation === 'recover' ? approval.recovery.alreadyPublished : [],
-    registryVersions,
-    verifyPublished: (name, artifact) =>
-      artifact
-        ? verifyPublishedArtifact(name, artifact, request)
-        : releasedCore(
-            report.artifacts['modeling-metamodel'].manifest.dependencies[
-              '@anarchitects/modeling-core'
-            ],
-          ),
-    waitForPublished: waitForPublishedArtifact,
-    upload: (_name, artifact) => {
-      execFileSync(
-        'npm',
-        [
-          'publish',
-          join(directory, artifact.file),
-          '--access',
-          'public',
-          '--provenance',
-          '--ignore-scripts',
-          '--registry',
-          config.registry,
-        ],
-        { stdio: 'inherit' },
-      );
-    },
-    saveReceipt: (receipts) => {
-      writeFileSync(
-        join(directory, 'publication-receipt.json'),
-        JSON.stringify(receipts, null, 2) + '\n',
-      );
-    },
+  fetch(url, {
+    ...options,
+    signal: options?.signal ?? AbortSignal.timeout(30000),
+    redirect: 'error',
   });
+const publishNames =
+  operation === 'recover'
+    ? approval.recovery.publish
+    : Object.keys(report.artifacts);
+const alreadyPublished =
+  operation === 'recover' ? approval.recovery.alreadyPublished : [];
+const receipts = [];
+// Recovery still requires its separate exact authorization; no implicit retry.
+for (const name of alreadyPublished) {
+  await verifyPublishedArtifact(name, report.artifacts[name], request);
+  receipts.push({
+    name,
+    version: report.artifacts[name].artifactVersion,
+    sha256: report.artifacts[name].sha256,
+    status: 'already-published-verified',
+  });
+}
+const workspace = createPublishWorkspace(
+  directory,
+  join(directory, 'nx-publication'),
+  report,
+  histories,
+  publishNames,
+);
+try {
+  runNxPublication(workspace);
+  // Dependency availability is part of Nx's task graph. Verify final leaves too.
+  for (const name of publishNames)
+    await publicationGate(
+      { directory, report, histories, publishNames },
+      'after',
+      name,
+      request,
+    );
 } catch (error) {
   console.error(
     'Publication stopped; inspect registry state and receipt before any recovery. No rollback or upload retry attempted.',
   );
   throw error;
+} finally {
+  for (const name of publishNames) {
+    const path = join(directory, `receipt-${name}.json`);
+    if (existsSync(path)) receipts.push(JSON.parse(readFileSync(path)));
+  }
+  writeFileSync(
+    join(directory, 'publication-receipt.json'),
+    JSON.stringify(receipts, null, 2) + '\n',
+  );
 }

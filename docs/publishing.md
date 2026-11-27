@@ -10,7 +10,50 @@ manifests remain private. The publisher cannot create tags, credentials,
 environments or change repository visibility. Johan (@vrxj81) remains the
 accountable release owner.
 
-Both packages are public at `0.0.1`. The first attempt published core and the
+## Nx publication and controller isolation
+
+The independent-package profile uses Nx Release for source versions, changelogs
+and publication. The controller invokes `nx release publish` with the standard
+`@nx/js:release-publish` executor in a generated, isolated workspace containing
+only the authorized release set. It does not load candidate Nx plugins, build
+tasks, dotenv files or lifecycle scripts. Nx owns task scheduling and dependency
+ordering; the former custom upload loop is removed.
+
+The installed Nx publisher accepts a package directory, not a retained tarball.
+Before publication the controller extracts the approved archive, repacks it with
+the pinned npm toolchain and requires the SHA-256 to match the approved archive.
+Only those verified files are passed to Nx. No compilation or dependency install
+occurs there. Scripts remain disabled and distribution verification must match
+the approved SHA-256 and npm integrity. A mismatch stops the operation.
+
+The separate `publisher-toolchain` job installs the reviewed lockfile with build
+scripts disabled and without publishing credentials or OIDC permission. The
+protected publisher verifies that run's toolchain digest before restoring it;
+it performs no dependency installation. The controller/workflow revision is the
+exact main source SHA, with the existing same-source preview check retained.
+
+Two small uncached Nx gates retain local requirements that the standard executor
+does not provide: a fresh history check before each upload and verification of
+core's exact registry bytes before its dependent may publish. The final package
+is verified too. Conflicting history, failed upload or availability timeout stops
+the operation; no automatic upload retry or channel repair is authorized.
+
+This reconciles the publication implementation under #14/#23 with the accepted
+common release policy; it requests no policy exception. Existing owner
+readiness/authorization records, tag protections, environment approval, bounded
+recovery and documentation gates remain required. The approval parser retains
+the accepted binding of source, versions and hashes across preview and publication;
+revisit it when an equivalent platform approval binding has been demonstrated.
+The separate readiness record remains until explicitly reconciled by its owner.
+
+Retain the source/tag/version and archive identities, authorization references,
+run identities, observed receipt and verification results in the existing release
+issues for the lifetime of the supported release line (no end date is currently
+announced). npm retains the published archives and provenance. Expiring Actions
+artifacts are transfer/diagnostic copies, not the sole release record. A failed
+attempt's receipt must be recorded before authorizing recovery.
+
+Both packages have existing public releases. The first attempt published core and the
 separately authorized recovery published the original metamodel archive. Registry
 consumer checks and provenance verification passed; both temporary tokens are
 revoked and the environment has no secrets. See the
@@ -270,11 +313,10 @@ with the reviewed source; they also check bundled relative links/anchors. These
 checks do not establish remote URL accessibility or registry rendering.
 
 Before #22 sign-off, review each README and its exact candidate version, supported
-matrix, install path and limitations. The package READMEs include conditional
-registry commands pinned at staging to
-each archive's version and the exact core dependency; the local-tarball commands
-remain executable before publication. The independent consumer checks those
-registry pins but does not execute a registry install or claim public availability.
+matrix, install path and limitations. Public READMEs use normal npm package names
+with `--save-exact`; the independent consumer substitutes the reviewed archives
+for those names internally and executes the same examples. This proves the
+candidate's documentation without claiming registry availability.
 Before #23 activation, regenerate/review exact archives and run their examples. Never silently transform a
 preview into a published-availability claim. After authorized publication, inspect
 each actual npm version page and its links, and run the documented registry install

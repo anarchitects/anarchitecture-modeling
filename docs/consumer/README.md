@@ -213,5 +213,5 @@ external-reference, enrichment and extended provenance designs are not existing
 public APIs. See the [API reference](api.md) for the actual supported export surface
 and [migration guide](migration.md) for consumer checks and rollback.
 
-Incremental authoring is an [unreleased opt-in contract](authoring.md), with a
+Incremental authoring is an [opt-in contract](authoring.md), with a
 separate envelope and commit result. Existing strict consumers remain unchanged.

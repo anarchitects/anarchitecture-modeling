@@ -3,14 +3,16 @@
 Version numbers below identify releases and compatibility changes. For normal
 installation, follow the package README and keep your dependency lockfile.
 
-## Unreleased
+## 0.0.3
 
 - Metamodel adds opt-in incremental authoring for explicitly selected missing
   required scalar properties. Existing strict APIs keep their behavior.
 - Authoring uses a separate document envelope. Older readers reject that format
   and retain its original bytes. Adoption is explicit; no automatic migration or
-  downgrade is provided. See the [preview guide](authoring.md).
+  downgrade is provided. See the [authoring guide](authoring.md).
 - Package documentation now includes useful model examples and simpler installation.
+- Core's runtime API is unchanged. Metamodel declares an exact dependency on the
+  core release selected by Nx; update both packages together.
 
 ## 0.0.2 — 26 November 2026
 
