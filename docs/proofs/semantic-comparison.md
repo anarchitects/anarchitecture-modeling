@@ -9,7 +9,8 @@ Implementation landed through PR #82 and was published in 0.0.2. Johan requested
 closure of #77 after the verified release; the [acceptance record](https://github.com/anarchitects/anarchitecture-modeling/issues/77#issuecomment-7205059020)
 binds that decision to the bounded evidence. Earlier pending-review text below
 describes the initial local review. The separate [#78 proof](https://github.com/anarchitects/anarchitecture-modeling/issues/78)
-remains in progress.
+was [accepted by Johan on 27 November 2026](https://github.com/anarchitects/anarchitecture-modeling/issues/78#issuecomment-7227469972)
+for its bounded exact-0.0.2 Foundation evidence; consumer adoption remains separate.
 
 ## Contract selected before implementation
 

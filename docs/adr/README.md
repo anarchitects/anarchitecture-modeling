@@ -6,7 +6,7 @@ Repository-local ADRs for the generic, intended open-source Modeling Foundation.
 | ----------------------------------------------------------------- | --------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
 | [0001](0001-modeling-foundation-boundaries.md)                    | Accepted              | Modeling Foundation scope, boundaries and responsibilities; delivery gates remain open                                       |
 | [0002](0002-extensible-meta-metamodel-and-governance-metadata.md) | Accepted              | Extensible meta-metamodel, metadata and governance semantics; implementation gates remain open                               |
-| [0003](0003-semantic-change-comparison.md)                        | Accepted              | Bounded semantic comparison; concrete API and implementation evidence pending review                                         |
+| [0003](0003-semantic-change-comparison.md)                        | Accepted              | Bounded semantic comparison; #77 implementation and #78 exact-0.0.2 Foundation proof accepted; consumer adoption separate    |
 | [0004](0004-incremental-authoring-and-admission-policies.md)      | Accepted architecture | Bounded incremental authoring; PWG architecture-only acceptance on 28 November 2026 (Australia/Sydney), recorded after merge |
 
 ## Principles
