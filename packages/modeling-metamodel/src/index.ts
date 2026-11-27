@@ -19,3 +19,7 @@ export * from './lib/document-codec-contracts.js';
 export * from './lib/document-codec.js';
 export * from './lib/semantic-comparison-contracts.js';
 export * from './lib/semantic-comparison.js';
+export * from './lib/authoring-contracts.js';
+export { assessAuthoringCheckpoint } from './lib/authoring-assessment.js';
+export * from './lib/authoring-commands.js';
+export * from './lib/authoring-codec.js';

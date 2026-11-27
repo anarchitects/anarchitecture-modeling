@@ -7,31 +7,32 @@ the precise signatures and discriminated result shapes. No internal module path
 is a public entry. See the [consumer guide](README.md) for compatibility, limits
 and release status, and the [compiled example](examples/lifecycle.mts) for usage.
 
-The semantic comparison exports are an **unreleased addition** under #77; published
-0.0.1 does not contain them. See the [comparison contract](../proofs/semantic-comparison.md)
-and [packed TypeScript example](examples/semantic-comparison.mts).
+See the [semantic comparison contract](comparison.md) for its supported scope. Incremental authoring is an
+**unreleased opt-in addition**; see the [authoring guide](authoring.md) and
+[executable example](examples/incremental-authoring.mts). Strict APIs retain their
+valid-only guarantees.
 
 ## Choose an operation
 
-| Need                          | Public entry points / types                                                                                             | Contract boundary                                                                      |
-| ----------------------------- | ----------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| Create identities/model       | Core `createModel`, `create*Id`, `createModelRevision`, `ModelDocument`                                                 | Caller-supplied nonblank identity; no I/O or uniqueness service                        |
-| Validate structure/references | Core `validateModelStructure`, `validateModelReference`, `validateModelValue`                                           | Tagged structure, local references, containment/ownership; no method interpretation    |
-| Model independent views       | Core `DiagramView`, `ViewOccurrence`, `validateViews`                                                                   | Layout/occurrence data; no renderer                                                    |
-| Describe low-level changes    | Core `ModelChange`, `InverseModelChange`, `PropertyState`                                                               | Data contracts; core exports no transaction executor                                   |
-| Find a pack descriptor        | `resolveModelingPack`, `ModelingPack`                                                                                   | Descriptor lookup; use composition for complete profile compatibility                  |
-| Compose exact profiles        | `composeModelingProfile`, `resolveTypeDefinition`, `packReference`                                                      | Exact registry/pins, explicit collisions/dependencies; no dynamic loader               |
-| Inspect extensions            | `inspectExtensionSupport`, `ExtensionEnvelope`                                                                          | Preserve opaque payload; support availability is not semantic validation               |
-| Validate semantics            | `validateModel`, `ModelValidationResult`, `MEMBER_GROUP_OPERATOR`                                                       | Inspect invalid/unsupported and coverage/provenance, not just diagnostics length       |
-| Compare semantic snapshots | `compareDocumentSnapshots`, `SemanticComparisonRequest`, `SemanticComparisonResult` | Contract 1 / semantic-model scope; explicit incomplete/incompatible evidence; no write authority |
-| Assess notation               | `validateOccurrenceNotation`, `resolveOccurrenceNotation`                                                               | Contract/theme resolution; accessibility remains host-verified                         |
-| Propose/apply defaults        | `proposeDefaultPlan`, `generatedMemberIdentity`, `applyChangePlan`, `DEFAULTS_OPERATOR`                                 | Bounded explicit rule batch, baseline comparisons, exact retry; no rule cascade        |
-| Assess document               | `assessDocument`, `DocumentCheckpoint`, `DocumentContext`                                                               | Trusted registries plus semantic/view/notation/lifecycle assessment                    |
-| Review deletion               | `inspectDocumentDeletion`, `reviewDeletion`, `DeletionReview`                                                           | Review dependents and resolving operations; no implicit cascade                        |
-| Prepare authored changes      | `prepareSemanticCommand`, `prepareViewCommand`                                                                          | Candidate checkpoint or rejection/replay, never durable commit                         |
-| Coordinate history            | `openDocumentSession`, `prepareSessionCommand`, `inspectDocumentReversal`, `pruneDocumentHistory`, `historyDiagnostics` | Guarded live stacks with durable retry receipts; reopen does not restore stacks        |
-| Encode/decode                 | `encodeDocument`, `decodeDocument`, `DOCUMENT_CODEC_LIMITS`                                                             | Bounded envelope 1/model format 2, explicit classification and original recovery bytes |
-| Integrate persistence         | `DocumentCommitPort`                                                                                                    | Interface only; host implements authorization, concurrency and atomic storage          |
+| Need                          | Public entry points / types                                                                                             | Contract boundary                                                                                |
+| ----------------------------- | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| Create identities/model       | Core `createModel`, `create*Id`, `createModelRevision`, `ModelDocument`                                                 | Caller-supplied nonblank identity; no I/O or uniqueness service                                  |
+| Validate structure/references | Core `validateModelStructure`, `validateModelReference`, `validateModelValue`                                           | Tagged structure, local references, containment/ownership; no method interpretation              |
+| Model independent views       | Core `DiagramView`, `ViewOccurrence`, `validateViews`                                                                   | Layout/occurrence data; no renderer                                                              |
+| Describe low-level changes    | Core `ModelChange`, `InverseModelChange`, `PropertyState`                                                               | Data contracts; core exports no transaction executor                                             |
+| Find a pack descriptor        | `resolveModelingPack`, `ModelingPack`                                                                                   | Descriptor lookup; use composition for complete profile compatibility                            |
+| Compose exact profiles        | `composeModelingProfile`, `resolveTypeDefinition`, `packReference`                                                      | Exact registry/pins, explicit collisions/dependencies; no dynamic loader                         |
+| Inspect extensions            | `inspectExtensionSupport`, `ExtensionEnvelope`                                                                          | Preserve opaque payload; support availability is not semantic validation                         |
+| Validate semantics            | `validateModel`, `ModelValidationResult`, `MEMBER_GROUP_OPERATOR`                                                       | Inspect invalid/unsupported and coverage/provenance, not just diagnostics length                 |
+| Compare semantic snapshots    | `compareDocumentSnapshots`, `SemanticComparisonRequest`, `SemanticComparisonResult`                                     | Contract 1 / semantic-model scope; explicit incomplete/incompatible evidence; no write authority |
+| Assess notation               | `validateOccurrenceNotation`, `resolveOccurrenceNotation`                                                               | Contract/theme resolution; accessibility remains host-verified                                   |
+| Propose/apply defaults        | `proposeDefaultPlan`, `generatedMemberIdentity`, `applyChangePlan`, `DEFAULTS_OPERATOR`                                 | Bounded explicit rule batch, baseline comparisons, exact retry; no rule cascade                  |
+| Assess document               | `assessDocument`, `DocumentCheckpoint`, `DocumentContext`                                                               | Trusted registries plus semantic/view/notation/lifecycle assessment                              |
+| Review deletion               | `inspectDocumentDeletion`, `reviewDeletion`, `DeletionReview`                                                           | Review dependents and resolving operations; no implicit cascade                                  |
+| Prepare authored changes      | `prepareSemanticCommand`, `prepareViewCommand`                                                                          | Candidate checkpoint or rejection/replay, never durable commit                                   |
+| Coordinate history            | `openDocumentSession`, `prepareSessionCommand`, `inspectDocumentReversal`, `pruneDocumentHistory`, `historyDiagnostics` | Guarded live stacks with durable retry receipts; reopen does not restore stacks                  |
+| Encode/decode                 | `encodeDocument`, `decodeDocument`, `DOCUMENT_CODEC_LIMITS`                                                             | Bounded envelope 1/model format 2, explicit classification and original recovery bytes           |
+| Integrate persistence         | `DocumentCommitPort`                                                                                                    | Interface only; host implements authorization, concurrency and atomic storage                    |
 
 Methods accepting typed models/checkpoints expect trusted typed input. Use the
 codec at a byte boundary, then inspect its classification/assessment and apply host
@@ -115,11 +116,14 @@ ViewPoint
 ViewReference
 ```
 
-### Metamodel runtime (33)
+### Metamodel runtime (41)
 
 <!-- exports:modeling-metamodel:runtime -->
 
 ```text
+AUTHORING_ENVELOPE_FORMAT
+AUTHORING_ENVELOPE_VERSION
+AUTHORING_POLICY_CONTRACT_VERSION
 DEFAULTS_OPERATOR
 DEFAULT_DOCUMENT_HISTORY_POLICY
 DOCUMENT_CODEC_LIMITS
@@ -130,10 +134,13 @@ METAMODEL_CONTRACT_VERSION
 PROFILE_DIMENSIONS
 SEMANTIC_COMPARISON_CONTRACT_VERSION
 applyChangePlan
+assessAuthoringCheckpoint
 assessDocument
 compareDocumentSnapshots
 composeModelingProfile
+decodeAuthoringDocument
 decodeDocument
+encodeAuthoringDocument
 encodeDocument
 generatedMemberIdentity
 historyDiagnostics
@@ -142,6 +149,8 @@ inspectDocumentReversal
 inspectExtensionSupport
 openDocumentSession
 packReference
+prepareAuthoringCommand
+prepareAuthoringImport
 prepareSemanticCommand
 prepareSessionCommand
 prepareViewCommand
@@ -155,13 +164,24 @@ validateModel
 validateOccurrenceNotation
 ```
 
-### Metamodel types (92)
+### Metamodel types (104)
 
 <!-- exports:modeling-metamodel:types -->
 
 ```text
 AppliedChangeRecord
 ApplyPlanResult
+AuthoringAssessment
+AuthoringBinding
+AuthoringCheckpoint
+AuthoringCommand
+AuthoringCommitPort
+AuthoringContext
+AuthoringDecodeResult
+AuthoringDeficiency
+AuthoringEncodeResult
+AuthoringPolicy
+AuthoringSession
 Cardinality
 ChangeContext
 ChangeDiagnostic
@@ -230,6 +250,7 @@ NotationValidationResult
 OccurrenceNotationBinding
 OccurrenceNotationInput
 PackReference
+PrepareAuthoringResult
 PrepareDocumentResult
 PrepareSessionResult
 ProfileDimension
@@ -253,3 +274,14 @@ ValidationReporter
 ValidationRuleRegistration
 ValueDefinition
 ```
+
+## Incremental authoring
+
+`prepareAuthoringImport` explicitly adopts a supported checkpoint with a guarded
+empty edit and fresh revision. `prepareAuthoringCommand` accepts existing document
+commands plus an exact admission binding; `assessAuthoringCheckpoint` separates
+strict assessment from complete/incomplete/blocked admission. Use the distinct
+`PrepareAuthoringResult`, `AuthoringSession` and `AuthoringCommitPort` family.
+`decodeAuthoringDocument` and `encodeAuthoringDocument` use a separate envelope
+and the existing codec limits. See [the guide](authoring.md) for all invariants,
+recovery, authorized selection and migration restrictions.

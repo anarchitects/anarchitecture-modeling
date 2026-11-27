@@ -36,11 +36,13 @@ or inspect development-only root Nx tooling as a runtime dependency.
 ## Reviewed runtime provenance
 
 [`runtime-baseline.json`](../tools/boundaries/runtime-baseline.json) records the
-current candidate runtime: **42 source modules, 42 JavaScript modules and 42
+current candidate runtime: **48 source modules, 48 JavaScript modules and 48
 declarations**. Its `acceptedModelingCommit` identifies the original accepted #16
 extraction, not approval of later additions. Issue #77 adds three independently
-authored semantic-comparison modules and metamodel root exports; all other
-original runtime bytes remain unchanged. These candidate hashes require owner
+authored semantic-comparison modules and metamodel root exports; #84 adds four original authoring modules and extracts the existing session/plan
+engines into two internal modules. Public strict wrappers retain their guarantees;
+the shared engines add a fixed internal admission seam for the authoring path.
+Core, validation, comparison and existing codec runtime remain unchanged. These candidate hashes require owner
 review with the implementation evidence.
 
 The original Archimatrix revision is `b83c78e7a70e1434a6bf9101d7bbf43467becf7f`.
