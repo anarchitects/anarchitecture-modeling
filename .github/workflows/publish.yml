@@ -36,6 +36,47 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  publisher-toolchain:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      sha256: ${{ steps.bundle.outputs.sha256 }}
+    steps:
+      # Install only the reviewed controller dependency graph, with no candidate
+      # source, lifecycle hooks, environment secret or publishing OIDC capability.
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /package.json
+            /yarn.lock
+            /.yarnrc.yml
+            /packages/modeling-core/package.json
+            /packages/modeling-metamodel/package.json
+      - run: corepack enable
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: yarn
+      - run: yarn install --immutable --mode=skip-build
+      - run: npm install --global npm@11.19.1 --ignore-scripts
+      - name: Retain the installed controller toolchain
+        id: bundle
+        run: |
+          mkdir -p tmp/controller
+          cp -a "$(npm root -g)/npm" tmp/controller/npm
+          tar -czf tmp/controller.tgz node_modules -C tmp/controller npm
+          echo "sha256=$(sha256sum tmp/controller.tgz | cut -d ' ' -f 1)" >> "$GITHUB_OUTPUT"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: foundation-publisher-toolchain
+          path: tmp/controller.tgz
+          retention-days: 1
+          if-no-files-found: error
+
   prepare:
     runs-on: ubuntu-latest
     permissions:
@@ -81,6 +122,9 @@ jobs:
       - name: Prove the exact preview in an independent npm consumer
         if: inputs.operation == 'preview'
         run: node tools/consumer/check.mjs tmp/publish-candidate/consumer-evidence tmp/publish-candidate
+      - name: Verify Nx publication preserves the preview bytes
+        if: inputs.operation == 'preview'
+        run: node tools/publishing/nx-publish.mjs tmp/publish-candidate tmp/nx-publication-check
       - name: Verify reviewed preview run identity
         if: inputs.operation != 'preview'
         env:
@@ -104,7 +148,7 @@ jobs:
           retention-days: 7
 
   publish:
-    needs: prepare
+    needs: [prepare, publisher-toolchain]
     if: inputs.operation != 'preview' && needs.prepare.outputs.enabled == 'true' && github.ref == 'refs/heads/main' && github.actor == 'vrxj81'
     runs-on: ubuntu-latest
     timeout-minutes: 40
@@ -119,13 +163,24 @@ jobs:
         with:
           ref: ${{ github.sha }}
           persist-credentials: false
-      - run: corepack enable
       - uses: actions/setup-node@v6
         with:
           node-version: 24
           registry-url: https://registry.npmjs.org
-      - run: npm install --global npm@11.19.1 --ignore-scripts
-      - run: yarn install --immutable
+      - uses: actions/download-artifact@v8
+        with:
+          name: foundation-publisher-toolchain
+          path: tmp/controller-download/
+      - name: Verify and restore the unprivileged toolchain
+        env:
+          TOOLCHAIN_SHA256: ${{ needs.publisher-toolchain.outputs.sha256 }}
+        run: |
+          echo "$TOOLCHAIN_SHA256  tmp/controller-download/controller.tgz" | sha256sum --check --strict
+          tar -xzf tmp/controller-download/controller.tgz
+          # Nx's npm-run-path prioritizes the node executable's directory.
+          # Restore the pinned CLI there without running an installation.
+          ln -sf "$GITHUB_WORKSPACE/npm/bin/npm-cli.js" "$(dirname "$(command -v node)")/npm"
+          test "$(npm --version)" = 11.19.1
       - uses: actions/download-artifact@v8
         with:
           name: foundation-candidate
@@ -138,6 +193,12 @@ jobs:
           READINESS_COMMENT: ${{ inputs.readiness_comment }}
           OPERATION: ${{ inputs.operation }}
           CANDIDATE_RUN: ${{ inputs.candidate_run }}
+          NX_NO_CLOUD: 'true'
+          NX_DAEMON: 'false'
+          NX_ISOLATE_PLUGINS: 'false'
+          NX_LOAD_DOT_ENV_FILES: 'false'
+          npm_config_ignore_scripts: 'true'
+          npm_config_provenance: 'true'
         run: node tools/publishing/publish.mjs tmp/publish-candidate "$AUTHORIZATION_COMMENT" "$READINESS_COMMENT"
       - uses: actions/upload-artifact@v7
         if: always()

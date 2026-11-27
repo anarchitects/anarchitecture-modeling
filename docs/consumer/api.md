@@ -8,7 +8,7 @@ is a public entry. See the [consumer guide](README.md) for compatibility, limits
 and release status, and the [compiled example](examples/lifecycle.mts) for usage.
 
 See the [semantic comparison contract](comparison.md) for its supported scope. Incremental authoring is an
-**unreleased opt-in addition**; see the [authoring guide](authoring.md) and
+**opt-in addition**; see the [authoring guide](authoring.md) and
 [executable example](examples/incremental-authoring.mts). Strict APIs retain their
 valid-only guarantees.
 

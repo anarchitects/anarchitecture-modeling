@@ -1,4 +1,4 @@
-// Preview: opt-in incremental authoring through the public package API.
+// Opt-in incremental authoring through the public package API.
 import {
   createModel,
   createElementId,

@@ -148,12 +148,12 @@ Unsupported formats retain the original input bytes for recovery. Keep a separat
 backup: the returned byte array is caller-owned. Encoding has size, depth and
 receipt limits; check the result before saving. See the [codec limits](../../docs/consumer/README.md#portable-document-codec-and-recovery).
 
-### Preview: incremental authoring
+### Incremental authoring
 
-An unreleased opt-in API supports selected missing required metadata during
+An opt-in API supports selected missing required metadata during
 editing, while keeping semantic validation truthful. It uses separate result and
-storage contracts. See the [preview guide](../../docs/consumer/authoring.md);
-the registry installation above does not yet include this addition.
+storage contracts. See the [authoring guide](../../docs/consumer/authoring.md)
+for policy selection, commands and persistence requirements.
 
 ## Troubleshooting and compatibility
 
